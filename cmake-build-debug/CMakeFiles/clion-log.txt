@@ -1,9 +1,9 @@
-"Z:\Utilities\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" "C:\Users\João Portugal\Desktop\Compiladores\Projecto"
+"Z:\Utilities\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" "C:\Users\João Portugal\Desktop\Compiladores\Projecto"
 -- The C compiler identification is GNU 8.1.0
 -- The CXX compiler identification is GNU 8.1.0
 -- Check for working C compiler: Z:/Utilities/MinGW/mingw32/bin/gcc.exe
 -- Check for working C compiler: Z:/Utilities/MinGW/mingw32/bin/gcc.exe -- broken
-CMake Error at Z:/Utilities/CLion 2018.3.4/bin/cmake/win/share/cmake-3.13/Modules/CMakeTestCCompiler.cmake:52 (message):
+CMake Error at Z:/Utilities/JetBrains/CLion 2018.3.4/bin/cmake/win/share/cmake-3.13/Modules/CMakeTestCCompiler.cmake:52 (message):
   The C compiler
 
     "Z:/Utilities/MinGW/mingw32/bin/gcc.exe"
@@ -14,17 +14,17 @@ CMake Error at Z:/Utilities/CLion 2018.3.4/bin/cmake/win/share/cmake-3.13/Module
 
     Change Dir: C:/Users/JoÃ£o Portugal/Desktop/Compiladores/Projecto/cmake-build-debug/CMakeFiles/CMakeTmp
     
-    Run Build Command:"Z:/Utilities/MinGW/mingw32/bin/mingw32-make.exe" "cmTC_e0280/fast"
-    Z:/Utilities/MinGW/mingw32/bin/mingw32-make.exe -f CMakeFiles\cmTC_e0280.dir\build.make CMakeFiles/cmTC_e0280.dir/build
+    Run Build Command:"Z:/Utilities/MinGW/mingw32/bin/mingw32-make.exe" "cmTC_e0945/fast"
+    Z:/Utilities/MinGW/mingw32/bin/mingw32-make.exe -f CMakeFiles\cmTC_e0945.dir\build.make CMakeFiles/cmTC_e0945.dir/build
     mingw32-make.exe[1]: Entering directory 'C:/Users/JoÃ’o Portugal/Desktop/Compiladores/Projecto/cmake-build-debug/CMakeFiles/CMakeTmp'
-    Building C object CMakeFiles/cmTC_e0280.dir/testCCompiler.c.obj
-    Z:\Utilities\MinGW\mingw32\bin\gcc.exe    -o CMakeFiles\cmTC_e0280.dir\testCCompiler.c.obj   -c "C:\Users\Joâ”œÃºo Portugal\Desktop\Compiladores\Projecto\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c"
+    Building C object CMakeFiles/cmTC_e0945.dir/testCCompiler.c.obj
+    Z:\Utilities\MinGW\mingw32\bin\gcc.exe    -o CMakeFiles\cmTC_e0945.dir\testCCompiler.c.obj   -c "C:\Users\Joâ”œÃºo Portugal\Desktop\Compiladores\Projecto\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c"
     gcc.exe: error: C:\Users\Joâ”œÃºo Portugal\Desktop\Compiladores\Projecto\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c: No such file or directory
     gcc.exe: fatal error: no input files
     compilation terminated.
-    mingw32-make.exe[1]: *** [CMakeFiles\cmTC_e0280.dir\build.make:65: CMakeFiles/cmTC_e0280.dir/testCCompiler.c.obj] Error 1
+    mingw32-make.exe[1]: *** [CMakeFiles\cmTC_e0945.dir\build.make:65: CMakeFiles/cmTC_e0945.dir/testCCompiler.c.obj] Error 1
     mingw32-make.exe[1]: Leaving directory 'C:/Users/JoÃ’o Portugal/Desktop/Compiladores/Projecto/cmake-build-debug/CMakeFiles/CMakeTmp'
-    mingw32-make.exe: *** [Makefile:120: cmTC_e0280/fast] Error 2
+    mingw32-make.exe: *** [Makefile:120: cmTC_e0945/fast] Error 2
     
 
   

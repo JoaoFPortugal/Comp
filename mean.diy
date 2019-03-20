@@ -1,0 +1,33 @@
+public void printi(integer i)
+public integer atoi(string s)
+
+public void srand(integer x)
+public integer rand(integer x)
+
+
+public integer entry (integer argc, string *argv, string *envp) {
+    integer args;
+    args:= atoi(argv[1]);
+    numbofargs := args;
+
+    integer numbofargs;
+    number mean;
+    integer nvalue;
+    nvalue := 0;
+    mean := 0.0;
+
+    do{
+        if nvalue <> 0 then{
+         srand(nvalue);
+        }
+        nvalue := rand();
+        mean := mean + nvalue;
+        numbofargs--;
+
+    } while numbofargs <> 0;
+
+  	mean := mean/args;
+    printi(mean);
+    entry := 0
+
+};

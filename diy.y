@@ -10,10 +10,14 @@ void yyerror(char *s);
 %}
 
 %union {
-	int i;			/* integer value */
+	int i;		/* integer value */
+  	double d;	/* double value */
+  	char *s;	/* symbol name or string literal */
 };
 
 %token <i> INT
+%token <d> NUM
+%token <s> ID STR
 %token FOR
 %%
 file	:

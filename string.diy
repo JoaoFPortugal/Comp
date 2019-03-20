@@ -1,52 +1,53 @@
-public integer atoi(string s)
+public string strcpy(string dest, string src){
+
+    integer i := 0;
+
+    do {
+       dest[i] := src[i];
+       i=i+1;
+       } while src[i] <> 0;
+
+       strcpy := dest;
+};
 
 
-string cpy(string *src, string *dest){
-    integer i := 0
-    while src[i] <> "\0" do {
-    dest[i] := src[i]
-    i=i+1
-    }
-    cpy := dest[0]
-}
+public integer strcmp(string str1, string str2){
 
-integer cmp(string *str1, string *str2){
-    integer i :=0
-    while str1[i] <> "\0" do {
-        if(str2[i] = "\0") then {
-            cmp := 1
-            break
-        }
+   	i := 0;
 
-        if(str2[i] > str1[i]) then {
-            cmp := -1
-            break
-        }
+   	do {
+   		if str1[i] = 0 then{
+   		    strcmp := 0;
+   	    }
+   		i := i + 1;
+   	} while str1[i] = str2[i];
 
-        if(str1[i] > str2[i]) then {
-            cmp := 1
-            break
-        }
-        i := i+1
+   	if str1 < str2 then{
+       	strcmp := -1;
     }
 
-    if(str2[i] <> "\0") then {
-        cmp := -1
+   	if str1 > str2 then{
+   		strcmp := 1;
+   	}
+
+};
+
+
+public string strchr(string str, integer intg){
+    i := 0;
+    integer exit;
+    exit := 0;
+
+    do {
+    	if a[i] = intg then{
+    	    strchr := &a[i];
+    	    exit = 1;
+    	    break;
+    	}
+    } while a[i] <> 0;
+
+    if(exit<>1) then{
+        strchr := 0;
     }
 
-    else cmp := 0
-}
-
-public string strcpy(integer argc, string *argv){
-    if argc > 2 then {
-    strcpy := cpy(atoi(argv[1]),atoi(argv[2]))
-    }
-}
-
-public integer strcmp(integer argc, string *argv){
-    if argc > 2 then {
-    strcmp := cmp(atoi(argv[1]),atoi(argv[2]))
-    }
-}
-
-
+};
