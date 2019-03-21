@@ -16,14 +16,13 @@ OCTAL 0([0-9])+
 BIN (0b|0B)(0|1)+
 HEXA (0x|0X)[0-9a-fA-Z]+
 DIGITO [0-9]+
-EXPON [eE][+-]?{DIGITO}
-REAL {DIGITO}"."{DIGITO}({EXPON})?
+REAL {DIGITO}"."{DIGITO}
 
 
 
 
 
-%x COM
+%x COM STR
 
 %%
 
@@ -121,6 +120,8 @@ REAL {DIGITO}"."{DIGITO}({EXPON})?
 						    }
 					    }
 
+[A-Za-z][A-Za-z0-9_]*		{ yylval.s = strdup(yytext); return ID; /* ID */}
+
 
 
 ";"							return *yytext;
@@ -128,8 +129,10 @@ REAL {DIGITO}"."{DIGITO}({EXPON})?
 [-+*/%<>=|&~]				return *yytext;
 [#\[\]{}(,]					return *yytext;
 
+[ \t\r}+        ;
 
-.			yyerror("Unknown character");
+.			yyerror("Unknown character %s", yytext);
+
 %%
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
