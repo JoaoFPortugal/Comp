@@ -6,7 +6,7 @@
 #include "y.tab.h"
 
 void yyerror(char *s);
-int octal(char *text);
+int octal(char *s);
 int nest = 0;
 char buffer [100];
 %}
@@ -110,7 +110,7 @@ REAL {DIGITO}"."{DIGITO}
 
 
 
-{OCTAL}				    {   errno = 0; yylval.i = strtol(octal(yytext), 0, 8);
+{OCTAL}				    {   errno = 0; yylval.i = octal(yytext);
                             if(errno != ERANGE) {
                                 return INT;   /* Literal - Octal */
                             }
@@ -140,23 +140,15 @@ REAL {DIGITO}"."{DIGITO}
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
 
-int octal(char *s)
+int octal(char *stringmaluca)
 {
-  int i, a = 0, b = 0;
-  s[strlen(s)-1]="\0";
-  for (i = 0; i < strlen(s); i++) {
-    printf("%d",i);
-    printf("here is where it breaks");
-    if (s[i] < '0' || s[i] > '9'){
-        break;
-    }
-    if(s[i]==0){
-        break;
-    }
-    b = b * 8 + s[i] - '0';
+  int i=0, a = 0, b = 0;
+  for (i = 0; i < strlen(stringmaluca); i++) {
+    if (stringmaluca[i] < '0' || stringmaluca[i] > '9') break;
+    b = b * 8 + stringmaluca[i] - '0';
     if (b < a) {
       yyerror("octal overflow");
-      break;    
+      break;
     }
     a = b;
   }
