@@ -122,7 +122,7 @@ REAL {DIGITO}"."{DIGITO}
 						    }
 					    }
 
-[A-Za-z][A-Za-z0-9_]*		{ yylval.s = strdup(yytext); return ID; /* ID */}
+[A-Za-z][A-Za-z0-9_]*		{ nova_linha = 1; yylval.s = strdup(yytext); return ID; /* ID */}
 
 "\n"        if(nova_linha==1){
                 nova_linha=0;
