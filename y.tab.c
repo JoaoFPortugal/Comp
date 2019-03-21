@@ -26,7 +26,7 @@
 #include "tabid.h"
 
 extern int yylex();
-extern int yyerror(char *s);
+int yyerror(char *s);
 
 
 #line 15 "diy.y"

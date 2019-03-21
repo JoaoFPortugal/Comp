@@ -22,7 +22,7 @@ REAL {DIGITO}"."{DIGITO}
 
 
 
-%x COM STR
+%x COM STRN
 
 %%
 
@@ -129,9 +129,9 @@ REAL {DIGITO}"."{DIGITO}
 [-+*/%<>=|&~]				return *yytext;
 [#\[\]{}(,]					return *yytext;
 
-[ \t\r}+        ;
+[ \t\r]+        ;
 
-.			yyerror("Unknown character %s", yytext);
+.			yyerror("Unknown character");
 
 %%
 int yywrap(void) { return 1; }
@@ -146,7 +146,7 @@ int octal(char *s)
     b = b * 8 + s[i] - '0';
     if (b < a) {
       yyerror("octal overflow");
-      break;
+      break;    
     }
     a = b;
   }
