@@ -8,6 +8,7 @@
 void yyerror(char *s);
 int octal(char *s);
 int nest = 0;
+int nova_linha = 0;
 char buffer [100];
 %}
 
@@ -26,43 +27,44 @@ REAL {DIGITO}"."{DIGITO}
 
 %%
 
-"for"			return FOR;
-"in"            return IN;
-"step"          return STEP;
-"const"         return CONST;
-"if"			return IF;
-"then"          return THEN;
-"else"			return ELSE;
-"while"			return WHILE;
-"do"            return DO;
-"upto"          return UPTO;
-"downto"        return DOWNTO;
-"continue"      return CONTINUE;
-"break"         return BREAK;
-"<="			return LE;
-">="			return GE;
-"=" 			return EQ;
-"<>"			return NE;
-"++"			return INCR;
-"--"			return DECR;
-":="			return ASSIGN;
-"void"          return VOID;
-"string"        return STRING;
-"integer"       return INTEGER;
-"number"        return NUMBER;
-"public"        return PUBLIC;
+"for"			nova_linha = 0; return FOR;
+"in"            nova_linha = 0; return IN;
+"step"          nova_linha = 0; return STEP;
+"const"         nova_linha = 0; return CONST;
+"if"			nova_linha = 0; return IF;
+"then"          nova_linha = 0; return THEN;
+"else"			nova_linha = 0; return ELSE;
+"while"			nova_linha = 0; return WHILE;
+"do"            nova_linha = 0; return DO;
+"upto"          nova_linha = 0; return UPTO;
+"downto"        nova_linha = 0; return DOWNTO;
+"continue"      nova_linha = 0; return CONTINUE;
+"break"         nova_linha = 0; return BREAK;
+"<="			nova_linha = 0; return LE;
+">="			nova_linha = 0; return GE;
+"=" 			nova_linha = 0; return EQ;
+"<>"			nova_linha = 0; return NE;
+"++"			nova_linha = 0; return INCR;
+"--"			nova_linha = 0; return DECR;
+":="			nova_linha = 0; return ASSIGN;
+"void"          nova_linha = 0; return VOID;
+"string"        nova_linha = 0; return STRING;
+"integer"       nova_linha = 0; return INTEGER;
+"number"        nova_linha = 0; return NUMBER;
+"public"        nova_linha = 0; return PUBLIC;
 
-"==".\n         ;
-"=<"            BEGIN COM;
+"==".\n         nova_linha = 0;
+"=<"            BEGIN COM; nova_linha = 0; nest = 0;
 
 <COM>{
     "=<"        {nest++;}
-    ">="        { if(nest==0) nest--; else BEGIN(INITIAL);}
+    ">="        { if(nest!=0) nest--; else BEGIN(INITIAL);}
+    <<EOF>>      {yyerror("Comment reached EOF");}
     .|\n        ;
 }
 
 
-{DEC}					{ errno = 0; yylval.i = strtol(yytext, 0, 10);
+{DEC}					{ nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 10);
                                 if(errno != ERANGE) {
                                     return INT;
                                 }
@@ -74,7 +76,7 @@ REAL {DIGITO}"."{DIGITO}
 
 
 
-{BIN}					{ errno = 0; yylval.i = strtol(yytext, 0, 2);
+{BIN}					{ nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 2);
                                 if(errno != ERANGE) {
                                 return INT;
                                 }
@@ -85,7 +87,7 @@ REAL {DIGITO}"."{DIGITO}
 							}
 
 
-{HEXA}                  { errno = 0; yylval.i = strtol(yytext, 0, 16);
+{HEXA}                  { nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 16);
                                 if(errno != ERANGE) {
                                     return INT;
                                 }
@@ -98,7 +100,7 @@ REAL {DIGITO}"."{DIGITO}
 
 
 
-{REAL}				    { errno = 0; yylval.d = strtod(yytext, 0);
+{REAL}				    { nova_linha = 1; errno = 0; yylval.d = strtod(yytext, 0);
                           if(errno != ERANGE) {
                             return NUM;
                           }
@@ -122,17 +124,21 @@ REAL {DIGITO}"."{DIGITO}
 
 [A-Za-z][A-Za-z0-9_]*		{ yylval.s = strdup(yytext); return ID; /* ID */}
 
+"\n"        if(nova_linha==1){
+                nova_linha=0;
+                return ";";
+            }
 
+\"          BEGIN STRN;
 
-";"							return *yytext;
-[)!]						return *yytext;
-[-+*/%<>=|&~]				return *yytext;
-[#\[\]{}(,]					return *yytext;
+";"							nova_linha = 0; return *yytext;
+[!)]						nova_linha = 1;  return *yytext;
+[-+*/%<>=|&~]				nova_linha = 0; return *yytext;
+[#\[\]{}(,]					nova_linha = 0; return *yytext;
 
 [ \t\r]+        ;
 
 
-\"          BEGIN STRN;
 
 .			yyerror("Unknown character");
 
@@ -140,12 +146,12 @@ REAL {DIGITO}"."{DIGITO}
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
 
-int octal(char *stringmaluca)
+int octal(char *s)
 {
   int i=0, a = 0, b = 0;
-  for (i = 0; i < strlen(stringmaluca); i++) {
-    if (stringmaluca[i] < '0' || stringmaluca[i] > '9') break;
-    b = b * 8 + stringmaluca[i] - '0';
+  for (i = 0; i < strlen(s); i++) {
+    if (s[i] < '0' || s[i] > '9') break;
+    b = b * 8 + s[i] - '0';
     if (b < a) {
       yyerror("octal overflow");
       break;
