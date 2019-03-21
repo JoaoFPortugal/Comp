@@ -131,6 +131,9 @@ REAL {DIGITO}"."{DIGITO}
 
 [ \t\r]+        ;
 
+
+\"          BEGIN STRN;
+
 .			yyerror("Unknown character");
 
 %%
@@ -140,9 +143,16 @@ char *getyytext() { return yytext; }
 int octal(char *s)
 {
   int i, a = 0, b = 0;
-
+  s[strlen(s)-1]="\0";
   for (i = 0; i < strlen(s); i++) {
-    if (s[i] < '0' || s[i] > '9') break;
+    printf("%d",i);
+    printf("here is where it breaks");
+    if (s[i] < '0' || s[i] > '9'){
+        break;
+    }
+    if(s[i]==0){
+        break;
+    }
     b = b * 8 + s[i] - '0';
     if (b < a) {
       yyerror("octal overflow");
