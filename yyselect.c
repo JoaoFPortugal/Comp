@@ -1,5 +1,5 @@
 /*
-generated at Thu Mar 21 10:20:13 2019
+generated at Thu Mar 21 13:37:55 2019
 by $Id: pburg.c,v 2.5 2017/11/16 09:41:42 prs Exp $
 */
 #include <stdio.h>
@@ -69,8 +69,8 @@ static YYCONST char *yytermname[] = {
 	/* 270 */ "PUBLIC",
 	/* 271 */ "FOR",
 	/* 272 */ "ASSIGN",
-	/* 273 */ "DEC",
-	/* 274 */ "INC",
+	/* 273 */ "DECR",
+	/* 274 */ "INCR",
 	/* 275 */ "BREAK",
 	/* 276 */ "CONTINUE",
 	/* 277 */ "DOWNTO",
@@ -183,9 +183,9 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		return;
 	case 271: /* ASSIGN */
 		return;
-	case 272: /* DEC */
+	case 272: /* DECR */
 		return;
-	case 273: /* INC */
+	case 273: /* INCR */
 		return;
 	case 274: /* BREAK */
 		return;

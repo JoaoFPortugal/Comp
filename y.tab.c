@@ -24,9 +24,9 @@
 #include <string.h>
 #include "node.h"
 #include "tabid.h"
-extern int yylex();
 
-extern void yyerror(char *s);
+extern int yylex();
+extern int yyerror(char *s);
 
 
 #line 15 "diy.y"
@@ -90,8 +90,8 @@ extern int YYPARSE_DECL();
 #define PUBLIC 269
 #define FOR 270
 #define ASSIGN 271
-#define DEC 272
-#define INC 273
+#define DECR 272
+#define INCR 273
 #define BREAK 274
 #define CONTINUE 275
 #define DOWNTO 276
@@ -147,8 +147,8 @@ static const char *const yyname[] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"INT","NUM","ID","STR","EQ","NE",
-"LE","GE","STRING","NUMBER","INTEGER","VOID","PUBLIC","FOR","ASSIGN","DEC",
-"INC","BREAK","CONTINUE","DOWNTO","UPTO","DO","WHILE","THEN","ELSE","STEP",
+"LE","GE","STRING","NUMBER","INTEGER","VOID","PUBLIC","FOR","ASSIGN","DECR",
+"INCR","BREAK","CONTINUE","DOWNTO","UPTO","DO","WHILE","THEN","ELSE","STEP",
 "CONST","IF","IN",0,0,"illegal-symbol",
 };
 static const char *const yyrule[] = {
@@ -192,13 +192,28 @@ typedef struct {
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
 #line 33 "diy.y"
+
+int yyerror(char *s) { printf("%s\n",s); return 1; }
+char *dupstr(const char*s) { return strdup(s); }
+    int main(int argc, char *argv[]) {
+	    extern YYSTYPE yylval;
+	    int tk;
+	    while ((tk = yylex()))
+		    if (tk > YYERRCODE)
+			    printf("%d:\t%s\n", tk, yyname[tk]);
+		    else
+			    printf("%d:\t%c\n", tk, tk);
+	    return 0;
+    }
+
 char **yynames =
 #if YYDEBUG > 0
 		 (char**)yyname;
 #else
 		 0;
 #endif
-#line 202 "y.tab.c"
+
+#line 217 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */

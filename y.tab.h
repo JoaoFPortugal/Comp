@@ -13,8 +13,8 @@
 #define PUBLIC 269
 #define FOR 270
 #define ASSIGN 271
-#define DEC 272
-#define INC 273
+#define DECR 272
+#define INCR 273
 #define BREAK 274
 #define CONTINUE 275
 #define DOWNTO 276

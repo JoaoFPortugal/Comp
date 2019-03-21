@@ -4,31 +4,28 @@
 #include <errno.h>
 #include "node.h"
 #include "y.tab.h"
+
 void yyerror(char *s);
+int octal(char *text);
 int nest = 0;
+char buffer [100];
 %}
 
 DEC 0|[1-9][0-9]*
 OCTAL 0([0-9])+
 BIN (0b|0B)(0|1)+
 HEXA (0x|0X)[0-9a-fA-Z]+
-DIGIT [0-9]+
-EXP [Ee][+-]?{DIGIT}
-REAL {DIGIT}"."{DIGIT}({EXP})?
+DIGITO [0-9]+
+EXPON [eE][+-]?{DIGITO}
+REAL {DIGITO}"."{DIGITO}({EXPON})?
+
+
+
 
 
 %x COM
 
 %%
-<COM>{
-    "=<"        {nest++;}
-    ">="        { if(nest==0) nest--; else BEGIN(INITIAL);}
-    .|\n        ;
-}
-
-"=<"            BEGIN COM;
-
-"==".\n         ;
 
 "for"			return FOR;
 "in"            return IN;
@@ -47,8 +44,8 @@ REAL {DIGIT}"."{DIGIT}({EXP})?
 ">="			return GE;
 "=" 			return EQ;
 "<>"			return NE;
-"++"			return INC;
-"--"			return DEC;
+"++"			return INCR;
+"--"			return DECR;
 ":="			return ASSIGN;
 "void"          return VOID;
 "string"        return STRING;
@@ -56,12 +53,99 @@ REAL {DIGIT}"."{DIGIT}({EXP})?
 "number"        return NUMBER;
 "public"        return PUBLIC;
 
+"==".\n         ;
+"=<"            BEGIN COM;
+
+<COM>{
+    "=<"        {nest++;}
+    ">="        { if(nest==0) nest--; else BEGIN(INITIAL);}
+    .|\n        ;
+}
 
 
-[0-9]+			yylval.i = strtol(yytext, 0, 10); return INT;
-r
+{DEC}					{ errno = 0; yylval.i = strtol(yytext, 0, 10);
+                                if(errno != ERANGE) {
+                                    return INT;
+                                }
+						        else {
+									sprintf(buffer, "Decimal %s overflow", yytext);
+									yyerror(buffer);
+								}
+						}
+
+
+
+{BIN}					{ errno = 0; yylval.i = strtol(yytext, 0, 2);
+                                if(errno != ERANGE) {
+                                return INT;
+                                }
+						   		else {
+										sprintf(buffer, "Binary %s overflow", yytext);
+										yyerror(buffer);
+								   }
+							}
+
+
+{HEXA}                  { errno = 0; yylval.i = strtol(yytext, 0, 16);
+                                if(errno != ERANGE) {
+                                    return INT;
+                                }
+
+                                else {
+                                        sprintf(buffer, "Hexadecimal %s caused overflow", yytext);
+                                        yyerror(buffer);
+                                   }
+                            }
+
+
+
+{REAL}				    { errno = 0; yylval.d = strtod(yytext, 0);
+                          if(errno != ERANGE) {
+                            return NUM;
+                          }
+                          else {
+                             sprintf(buffer, "Real %s caused overflow", yytext);
+                             yyerror(buffer);
+                            }
+                        }
+
+
+
+{OCTAL}				    {   errno = 0; yylval.i = strtol(octal(yytext), 0, 8);
+                            if(errno != ERANGE) {
+                                return INT;   /* Literal - Octal */
+                            }
+							else {
+								 sprintf(buffer, "Octal %s caused overflow", yytext);
+								 yyerror(buffer);
+						    }
+					    }
+
+
+
+";"							return *yytext;
+[)!]						return *yytext;
+[-+*/%<>=|&~]				return *yytext;
+[#\[\]{}(,]					return *yytext;
+
 
 .			yyerror("Unknown character");
 %%
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
+
+int octal(char *s)
+{
+  int i, a = 0, b = 0;
+
+  for (i = 0; i < strlen(s); i++) {
+    if (s[i] < '0' || s[i] > '9') break;
+    b = b * 8 + s[i] - '0';
+    if (b < a) {
+      yyerror("octal overflow");
+      break;
+    }
+    a = b;
+  }
+  return a;
+}
