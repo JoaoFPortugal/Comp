@@ -1,39 +1,18 @@
-"Z:\Utilities\JetBrains\CLion 2018.3.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" "C:\Users\João Portugal\Desktop\Compiladores\Projecto"
--- The C compiler identification is GNU 8.1.0
--- The CXX compiler identification is GNU 8.1.0
--- Check for working C compiler: Z:/Utilities/MinGW/mingw32/bin/gcc.exe
--- Check for working C compiler: Z:/Utilities/MinGW/mingw32/bin/gcc.exe -- broken
-CMake Error at Z:/Utilities/JetBrains/CLion 2018.3.4/bin/cmake/win/share/cmake-3.13/Modules/CMakeTestCCompiler.cmake:52 (message):
-  The C compiler
-
-    "Z:/Utilities/MinGW/mingw32/bin/gcc.exe"
-
-  is not able to compile a simple test program.
-
-  It fails with the following output:
-
-    Change Dir: C:/Users/JoÃ£o Portugal/Desktop/Compiladores/Projecto/cmake-build-debug/CMakeFiles/CMakeTmp
-    
-    Run Build Command:"Z:/Utilities/MinGW/mingw32/bin/mingw32-make.exe" "cmTC_e0945/fast"
-    Z:/Utilities/MinGW/mingw32/bin/mingw32-make.exe -f CMakeFiles\cmTC_e0945.dir\build.make CMakeFiles/cmTC_e0945.dir/build
-    mingw32-make.exe[1]: Entering directory 'C:/Users/JoÃ’o Portugal/Desktop/Compiladores/Projecto/cmake-build-debug/CMakeFiles/CMakeTmp'
-    Building C object CMakeFiles/cmTC_e0945.dir/testCCompiler.c.obj
-    Z:\Utilities\MinGW\mingw32\bin\gcc.exe    -o CMakeFiles\cmTC_e0945.dir\testCCompiler.c.obj   -c "C:\Users\Joâ”œÃºo Portugal\Desktop\Compiladores\Projecto\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c"
-    gcc.exe: error: C:\Users\Joâ”œÃºo Portugal\Desktop\Compiladores\Projecto\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c: No such file or directory
-    gcc.exe: fatal error: no input files
-    compilation terminated.
-    mingw32-make.exe[1]: *** [CMakeFiles\cmTC_e0945.dir\build.make:65: CMakeFiles/cmTC_e0945.dir/testCCompiler.c.obj] Error 1
-    mingw32-make.exe[1]: Leaving directory 'C:/Users/JoÃ’o Portugal/Desktop/Compiladores/Projecto/cmake-build-debug/CMakeFiles/CMakeTmp'
-    mingw32-make.exe: *** [Makefile:120: cmTC_e0945/fast] Error 2
-    
-
-  
-
-  CMake will not be able to correctly generate this project.
-Call Stack (most recent call first):
-  CMakeLists.txt:2 (project)
-
-
--- Configuring incomplete, errors occurred!
-See also "C:/Users/JoÃ£o Portugal/Desktop/Compiladores/Projecto/cmake-build-debug/CMakeFiles/CMakeOutput.log".
-See also "C:/Users/JoÃ£o Portugal/Desktop/Compiladores/Projecto/cmake-build-debug/CMakeFiles/CMakeError.log".
+/home/joao/Downloads/clion-2018.3.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/joao/Desktop/compiladores/projecto/Comp
+-- The C compiler identification is GNU 7.3.0
+-- The CXX compiler identification is GNU 7.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/joao/Desktop/compiladores/projecto/Comp/cmake-build-debug

@@ -6,7 +6,10 @@
 #include "node.h"
 #include "tabid.h"
 extern int yylex();
-void yyerror(char *s);
+
+extern void yyerror(char *s);
+
+
 %}
 
 %union {
@@ -18,7 +21,11 @@ void yyerror(char *s);
 %token <i> INT
 %token <d> NUM
 %token <s> ID STR
-%token FOR
+%token EQ NE LE GE
+%token STRING NUMBER INTEGER VOID PUBLIC
+%token FOR ASSIGN DEC INC BREAK CONTINUE DOWNTO UPTO DO WHILE THEN ELSE STEP CONST IF IN
+
+
 %%
 file	:
 	;

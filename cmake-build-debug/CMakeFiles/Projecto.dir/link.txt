@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/Projecto.dir/lib/main.c.o CMakeFiles/Projecto.dir/lib/node.c.o CMakeFiles/Projecto.dir/lib/tabid.c.o  -o Projecto 
