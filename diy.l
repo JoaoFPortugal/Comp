@@ -126,7 +126,7 @@ REAL {DIGITO}"."{DIGITO}
 
 "\n"        if(nova_linha==1){
                 nova_linha=0;
-                return ";";
+                return ';';
             }
 
 \"          BEGIN STRN;
