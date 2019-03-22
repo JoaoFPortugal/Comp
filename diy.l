@@ -10,6 +10,7 @@ int octal(char *s);
 int nest = 0;
 int nova_linha = 0;
 char buffer [100];
+char *string;
 %}
 
 DEC 0|[1-9][0-9]*
@@ -18,8 +19,6 @@ BIN (0b|0B)(0|1)+
 HEXA (0x|0X)[0-9a-fA-Z]+
 DIGITO [0-9]+
 REAL {DIGITO}"."{DIGITO}
-
-
 
 
 
@@ -64,87 +63,139 @@ REAL {DIGITO}"."{DIGITO}
 }
 
 
-{DEC}					{ nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 10);
-                                if(errno != ERANGE) {
-                                    return INT;
-                                }
-						        else {
-									sprintf(buffer, "Decimal %s overflow", yytext);
-									yyerror(buffer);
-								}
+{DEC}		    { nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 10);
+                  if(errno != ERANGE) {
+                     return INT;
+                  }
+	              else {
+						sprintf(buffer, "Decimal %s overflow", yytext);
+						yyerror(buffer);
 						}
+				}
 
 
 
-{BIN}					{ nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 2);
-                                if(errno != ERANGE) {
-                                return INT;
-                                }
-						   		else {
-										sprintf(buffer, "Binary %s overflow", yytext);
-										yyerror(buffer);
-								   }
-							}
+{BIN}			{ nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 2);
+                  if(errno != ERANGE) {
+                    return INT;
+                  }
+				  else {
+					sprintf(buffer, "Binary %s overflow", yytext);
+					yyerror(buffer);
+				  }
+				  }
 
 
-{HEXA}                  { nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 16);
-                                if(errno != ERANGE) {
-                                    return INT;
-                                }
+{HEXA}          { nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 16);
+                   if(errno != ERANGE) {
+                     return INT;
+                   }
 
-                                else {
-                                        sprintf(buffer, "Hexadecimal %s caused overflow", yytext);
-                                        yyerror(buffer);
-                                   }
-                            }
-
-
-
-{REAL}				    { nova_linha = 1; errno = 0; yylval.d = strtod(yytext, 0);
-                          if(errno != ERANGE) {
-                            return NUM;
-                          }
-                          else {
-                             sprintf(buffer, "Real %s caused overflow", yytext);
-                             yyerror(buffer);
-                            }
-                        }
+                   else {
+                     sprintf(buffer, "Hexadecimal %s caused overflow", yytext);
+                     yyerror(buffer);
+                   }
+                 }
 
 
+{REAL}          { nova_linha = 1; errno = 0; yylval.d = strtod(yytext, 0);
+                  if(errno != ERANGE) {
+                     return NUM;
+                }
+                  else {
+                      sprintf(buffer, "Real %s caused overflow", yytext);
+                      yyerror(buffer);
+                  }
+                }
 
-{OCTAL}				    {   errno = 0; yylval.i = octal(yytext);
-                            if(errno != ERANGE) {
-                                return INT;   /* Literal - Octal */
-                            }
-							else {
-								 sprintf(buffer, "Octal %s caused overflow", yytext);
-								 yyerror(buffer);
-						    }
-					    }
+
+{OCTAL}		    {   errno = 0; yylval.i = octal(yytext);
+                    if(errno != ERANGE) {
+                       return INT;   /* Literal - Octal */
+                    }
+				    else {
+					   sprintf(buffer, "Octal %s caused overflow", yytext);
+					   yyerror(buffer);
+					}
+			    }
+
 
 [A-Za-z][A-Za-z0-9_]*		{ nova_linha = 1; yylval.s = strdup(yytext); return ID; /* ID */}
 
-"\n"        if(nova_linha==1){
+"\n"        {
+            if(nova_linha==1){
                 nova_linha=0;
                 return ';';
+                }
             }
 
-\"          BEGIN STRN;
+\"          {   BEGIN STRN;
+                nova_linha = 1;
+                string = (char *) malloc(sizeof(char));
+                string[0] = '\0';
+            }
 
-";"							nova_linha = 0; return *yytext;
-[!)]						nova_linha = 1;  return *yytext;
-[-+*/%<>=|&~]				nova_linha = 0; return *yytext;
-[#\[\]{}(,]					nova_linha = 0; return *yytext;
+<STRN>\\n          {
+                    string = (char *) realloc(string, sizeof(char) * (strlen(string)+2));
+                    strcat(string, "\n");
+                    }
+
+<STRN>\\t           {
+                    string = (char *) realloc(string, sizeof(char) * (strlen(string)+2));
+                    strcat(string, "\t");
+                    }
+
+<STRN>\\r           {
+                    string = (char *) realloc(string, sizeof(char) * (strlen(string)+2));
+                    strcat(string, "\r");
+                    }
+
+<STRN> (\\[0-9a-fA-F][0-9a-fA-F]?) | ([^"\\])	                            /* HEXADECIMAL ASCII */
+                    {
+                    string = (char *) realloc(string, sizeof(char) * (strlen(string) + strlen(yytext)+1));
+                    strcat(string, yytext);
+                    }
+
+<STRN>\\\"			{
+                    string = (char *) realloc(string, sizeof(char) * (strlen(string) + 2));
+                    strcat(string, "\"");
+                    }
+
+<STRN>\"			{
+                    BEGIN 0;
+                    yytext[yyleng-1] = 0;  /* remove " */
+					string = (char *) realloc(string, sizeof(char) * (strlen(string) + strlen(yytext) + 1));
+					strcat(string, yytext);
+					yylval.s = strdup(string);
+					if(strlen(yytext)==1){
+					    yyerror("String cannot be null");
+					}
+					return STR;
+					}
+
+
+<STRN><<EOF>>		{
+                    yyerror("Error, EOF");
+                    yyterminate();}
+                    }
+
+<STRN>.             {
+                    yyerror("Character unknown");
+                    }
+
+";"					    nova_linha = 0; return *yytext;
+[!)]					nova_linha = 1;  return *yytext;
+[-+*/%<>=|&~]			nova_linha = 0; return *yytext;
+[#\[\]{}(,]				nova_linha = 0; return *yytext;
 
 [ \t\r]+        ;
-
-
 
 .			yyerror("Unknown character");
 
 %%
 int yywrap(void) { return 1; }
 char *getyytext() { return yytext; }
+
 
 int octal(char *s)
 {
