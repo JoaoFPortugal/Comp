@@ -13,6 +13,8 @@ char buffer [100];
 char *string;
 %}
 
+    /* DEFINING ALL TYPES OF NUMBERS */
+
 DEC 0|[1-9][0-9]*
 OCTAL 0([0-9])+
 BIN (0b|0B)(0|1)+
@@ -25,6 +27,8 @@ REAL {DIGITO}"."{DIGITO}
 %x COM STRN
 
 %%
+
+    /* DEFINING ALL TYPES OF NUMBERS */
 
 "for"			nova_linha = 0; return FOR;
 "in"            nova_linha = 0; return IN;
@@ -55,6 +59,8 @@ REAL {DIGITO}"."{DIGITO}
 "==".\n         nova_linha = 0;
 "=<"            BEGIN COM; nova_linha = 0; nest = 0;
 
+    /* when receiving a comment, it maybe nested so a verification is performed */
+
 <COM>{
     "=<"        {nest++;}
     ">="        { if(nest!=0) nest--; else BEGIN(INITIAL);}
@@ -65,62 +71,67 @@ REAL {DIGITO}"."{DIGITO}
 
 {DEC}		    { nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 10);
                   if(errno != ERANGE) {
-                     return INT;
                   }
 	              else {
 						sprintf(buffer, "Decimal %s overflow", yytext);
 						yyerror(buffer);
 						}
+			      return INT;
 				}
 
 
 
 {BIN}			{ nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 2);
                   if(errno != ERANGE) {
-                    return INT;
                   }
 				  else {
 					sprintf(buffer, "Binary %s overflow", yytext);
 					yyerror(buffer);
 				  }
-				  }
+				  return INT;
+				 }
 
 
 {HEXA}          { nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 16);
                    if(errno != ERANGE) {
-                     return INT;
                    }
 
                    else {
                      sprintf(buffer, "Hexadecimal %s caused overflow", yytext);
                      yyerror(buffer);
                    }
+                   return INT;
                  }
 
 
 {REAL}          { nova_linha = 1; errno = 0; yylval.d = strtod(yytext, 0);
                   if(errno != ERANGE) {
-                     return NUM;
+
                 }
                   else {
                       sprintf(buffer, "Real %s caused overflow", yytext);
                       yyerror(buffer);
                   }
+                  return NUM;
                 }
 
 
 {OCTAL}		    {   errno = 0; yylval.i = octal(yytext);
                     if(errno != ERANGE) {
-                       return INT;   /* Literal - Octal */
+                       /* Literal - Octal */
                     }
 				    else {
 					   sprintf(buffer, "Octal %s caused overflow", yytext);
 					   yyerror(buffer);
 					}
+					return INT;
 			    }
 
 
+
 [A-Za-z][A-Za-z0-9_]*		{ nova_linha = 1; yylval.s = strdup(yytext); return ID; /* ID */}
+
+    /* if newline escape is received, it will verify if it needs to implicitly return a ; . */
 
 "\n"        {
             if(nova_linha==1){
@@ -128,6 +139,8 @@ REAL {DIGITO}"."{DIGITO}
                 return ';';
                 }
             }
+
+    /* Identification of strings begins when a " is received */
 
 \"          {   BEGIN STRN;
                 str_begin = 0;
@@ -137,16 +150,19 @@ REAL {DIGITO}"."{DIGITO}
             }
 
 <STRN>\\n          {
+                    str_begin = 1;
                     string = (char *) realloc(string, sizeof(char) * (strlen(string)+2));
                     strcat(string, "\n");
                     }
 
 <STRN>\\t           {
+                    str_begin = 1;
                     string = (char *) realloc(string, sizeof(char) * (strlen(string)+2));
                     strcat(string, "\t");
                     }
 
 <STRN>\\r           {
+                    str_begin = 1;
                     string = (char *) realloc(string, sizeof(char) * (strlen(string)+2));
                     strcat(string, "\r");
                     }
@@ -174,6 +190,11 @@ REAL {DIGITO}"."{DIGITO}
 					}
 					return STR;
 					}
+
+<STRN><<EOF>>       {
+                    yyerror("String not terminated, EOF reached");
+                    yyterminate();
+                    }
 
 <STRN>.             {
                     yyerror("Character unknown");

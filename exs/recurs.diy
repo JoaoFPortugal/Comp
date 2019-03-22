@@ -1,9 +1,9 @@
 public number factorial(integer fact){
 
         if(fact = 1) then{
-            factorial := 1.0;
+            factorial := 1.0
         }
         else{
-        factorial := fact * factorial(fact-1);
+        factorial := fact * factorial(fact-1)
         }
 };

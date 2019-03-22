@@ -1,1 +1,7 @@
-=< "ola"
+=< OLA >=
+
+while do 1
+
+=< OLA >=
+
+now 1

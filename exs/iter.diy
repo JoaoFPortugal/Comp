@@ -1,12 +1,12 @@
 public number factorial(integer fact){
-        integer num;
-        num := 1;
-        number sum;
-        sum := 1.0;
+        integer num
+        num := 1
+        number sum
+        sum := 1.0
         do{
-            sum := sum * (num+1);
+            sum := sum * (num+1)
             num++;
-        }while num <> (fact);
+        }while num <> (fact)
 
-        factorial := sum;
+        factorial := sum
 };

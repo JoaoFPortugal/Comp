@@ -6,28 +6,27 @@ public integer rand(integer x)
 
 
 public integer entry (integer argc, string *argv, string *envp) {
-    integer args;
-    args:= atoi(argv[1]);
-    numbofargs := args;
+    integer args
+    args:= atoi(argv[1])
+    numbofargs := args
 
-    integer numbofargs;
-    number mean;
-    integer nvalue;
-    nvalue := 0;
-    mean := 0.0;
+    integer numbofargs
+    number mean
+    integer nvalue
+    nvalue := 0
+    mean := 0.0
 
     do{
         if nvalue <> 0 then{
-         srand(nvalue);
+         srand(nvalue)
         }
-        nvalue := rand();
-        mean := mean + nvalue;
+        nvalue := rand()
+        mean := mean + nvalue
         numbofargs--;
 
     } while numbofargs <> 0;
 
-  	mean := mean/args;
-    printi(mean);
+  	mean := mean/args
+    printi(mean)
     entry := 0
-
 };

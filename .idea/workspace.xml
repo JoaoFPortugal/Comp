@@ -10,9 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36bb93ca-f40c-438c-8470-bc7877b8a9e1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/diy" beforeDir="false" afterPath="$PROJECT_DIR$/diy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/diy.l" beforeDir="false" afterPath="$PROJECT_DIR$/diy.l" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exs/iter.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/iter.diy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exs/mean.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/mean.diy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exs/rand.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/rand.diy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exs/recurs.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/recurs.diy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exs/string.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/string.diy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lex.yy.c" beforeDir="false" afterPath="$PROJECT_DIR$/lex.yy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/oquefalta.txt" beforeDir="false" afterPath="$PROJECT_DIR$/oquefalta.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/test.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yyselect.c" beforeDir="false" afterPath="$PROJECT_DIR$/yyselect.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -36,8 +44,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/diy.l">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="178" column="12" selection-start-line="178" selection-start-column="12" selection-end-line="178" selection-end-column="12" />
+            <state relative-caret-position="630">
+              <caret line="114" column="29" selection-start-line="114" selection-start-column="29" selection-end-line="114" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -69,8 +77,12 @@
         <option value="$PROJECT_DIR$/recurs.diy" />
         <option value="$PROJECT_DIR$/rand.diy" />
         <option value="$PROJECT_DIR$/mean.diy" />
-        <option value="$PROJECT_DIR$/exs/rand.diy" />
         <option value="$PROJECT_DIR$/diy.y" />
+        <option value="$PROJECT_DIR$/exs/iter.diy" />
+        <option value="$PROJECT_DIR$/exs/mean.diy" />
+        <option value="$PROJECT_DIR$/exs/rand.diy" />
+        <option value="$PROJECT_DIR$/exs/recurs.diy" />
+        <option value="$PROJECT_DIR$/exs/string.diy" />
         <option value="$PROJECT_DIR$/oquefalta.txt" />
         <option value="$PROJECT_DIR$/diy.l" />
       </list>
@@ -94,6 +106,11 @@
               <item name="Comp" type="b2602c69:ProjectViewProjectNode" />
               <item name="Comp" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="Comp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Comp" type="462c0819:PsiDirectoryNode" />
+              <item name="exs" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -104,6 +121,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Compilers" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -148,7 +166,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40016000" />
+    <option name="totallyTimeSpent" value="42837000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -168,14 +186,14 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="CMake" order="11" visible="true" weight="0.048859935" />
+      <window_info anchor="bottom" id="CMake" order="11" weight="0.048859935" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18550107" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19848485" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -189,7 +207,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info active="true" anchor="bottom" id="CMake" order="11" visible="true" weight="0.032502707" />
+      <window_info anchor="bottom" id="CMake" order="11" visible="true" weight="0.048859935" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -215,10 +233,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt" />
-    <entry file="file://$PROJECT_DIR$/exs/string.diy" />
-    <entry file="file://$PROJECT_DIR$/exs/iter.diy" />
-    <entry file="file://$PROJECT_DIR$/exs/recurs.diy" />
-    <entry file="file://$PROJECT_DIR$/exs/mean.diy" />
     <entry file="file://$PROJECT_DIR$/lib/libutil.a" />
     <entry file="file://$PROJECT_DIR$/run/dbl.asm">
       <provider selected="true" editor-type-id="text-editor">
@@ -240,7 +254,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/exs/rand.diy" />
     <entry file="file://$PROJECT_DIR$/exs/ack.diy">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -276,13 +289,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/oquefalta.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="25" lean-forward="true" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run/linux.asm">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
@@ -297,10 +303,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/diy.l">
+    <entry file="file://$PROJECT_DIR$/exs/mean.diy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="21" lean-forward="true" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exs/rand.diy">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
-          <caret line="178" column="12" selection-start-line="178" selection-start-column="12" selection-end-line="178" selection-end-column="12" />
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exs/recurs.diy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="2" lean-forward="true" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exs/string.diy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="46" lean-forward="true" selection-start-column="46" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/exs/iter.diy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="2" lean-forward="true" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/oquefalta.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/diy.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="114" column="29" selection-start-line="114" selection-start-column="29" selection-end-line="114" selection-end-column="29" />
         </state>
       </provider>
     </entry>
