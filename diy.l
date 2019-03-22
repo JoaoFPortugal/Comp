@@ -8,7 +8,7 @@
 void yyerror(char *s);
 int octal(char *s);
 int nest = 0;
-int nova_linha = 0;
+int nova_linha = 0,str_begin=0;
 char buffer [100];
 char *string;
 %}
@@ -58,7 +58,7 @@ REAL {DIGITO}"."{DIGITO}
 <COM>{
     "=<"        {nest++;}
     ">="        { if(nest!=0) nest--; else BEGIN(INITIAL);}
-    <<EOF>>      {yyerror("Comment reached EOF");}
+    <<EOF>>      {yyerror("Comment reached EOF"); yyterminate();}
     .|\n        ;
 }
 
@@ -130,6 +130,7 @@ REAL {DIGITO}"."{DIGITO}
             }
 
 \"          {   BEGIN STRN;
+                str_begin = 0;
                 nova_linha = 1;
                 string = (char *) malloc(sizeof(char));
                 string[0] = '\0';
@@ -150,13 +151,14 @@ REAL {DIGITO}"."{DIGITO}
                     strcat(string, "\r");
                     }
 
-<STRN> (\\[0-9a-fA-F][0-9a-fA-F]?) | ([^"\\])	                            /* HEXADECIMAL ASCII */
-                    {
+<STRN>(\\[0-9a-fA-F][0-9a-fA-F]?)|([^"\\]) {
+                    str_begin = 1;
                     string = (char *) realloc(string, sizeof(char) * (strlen(string) + strlen(yytext)+1));
                     strcat(string, yytext);
                     }
 
 <STRN>\\\"			{
+                    str_begin = 1;
                     string = (char *) realloc(string, sizeof(char) * (strlen(string) + 2));
                     strcat(string, "\"");
                     }
@@ -167,17 +169,11 @@ REAL {DIGITO}"."{DIGITO}
 					string = (char *) realloc(string, sizeof(char) * (strlen(string) + strlen(yytext) + 1));
 					strcat(string, yytext);
 					yylval.s = strdup(string);
-					if(strlen(yytext)==1){
+					if(str_begin == 0){
 					    yyerror("String cannot be null");
 					}
 					return STR;
 					}
-
-
-<STRN><<EOF>>		{
-                    yyerror("Error, EOF");
-                    yyterminate();}
-                    }
 
 <STRN>.             {
                     yyerror("Character unknown");
