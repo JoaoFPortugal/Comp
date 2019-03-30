@@ -107,35 +107,39 @@ extern int YYPARSE_DECL();
 #define YYERRCODE 256
 typedef short YYINT;
 static const YYINT yylhs[] = {                           -1,
-    0,
+    0,    0,    1,    1,    2,    2,    3,    3,    3,    3,
 };
 static const YYINT yylen[] = {                            2,
-    0,
+    1,    0,    1,    2,    1,    1,    1,    1,    1,    1,
 };
-static const YYINT yydefred[] = {                         1,
-    0,
+static const YYINT yydefred[] = {                         0,
+    8,    9,    7,   10,    0,    0,    3,    6,    4,
 };
-static const YYINT yydgoto[] = {                          1,
+static const YYINT yydgoto[] = {                          5,
+    6,    7,    8,
 };
-static const YYINT yysindex[] = {                         0,
-    0,
+static const YYINT yysindex[] = {                      -265,
+    0,    0,    0,    0,    0, -265,    0,    0,    0,
 };
-static const YYINT yyrindex[] = {                         0,
-    0,
+static const YYINT yyrindex[] = {                         4,
+    0,    0,    0,    0,    0,    5,    0,    0,    0,
 };
 static const YYINT yygindex[] = {                         0,
+    0,    1,    0,
 };
-#define YYTABLESIZE 0
-static const YYINT yytable[] = {                          0,
+#define YYTABLESIZE 7
+static const YYINT yytable[] = {                          1,
+    2,    3,    4,    2,    1,    0,    9,
 };
-static const YYINT yycheck[] = {                         -1,
+static const YYINT yycheck[] = {                        265,
+  266,  267,  268,    0,    0,   -1,    6,
 };
-#define YYFINAL 1
+#define YYFINAL 5
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
 #define YYMAXTOKEN 285
-#define YYUNDFTOKEN 288
+#define YYUNDFTOKEN 291
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
 static const char *const yyname[] = {
@@ -149,11 +153,20 @@ static const char *const yyname[] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"INT","NUM","ID","STR","EQ","NE",
 "LE","GE","STRING","NUMBER","INTEGER","VOID","PUBLIC","FOR","ASSIGN","DECR",
 "INCR","BREAK","CONTINUE","DOWNTO","UPTO","DO","WHILE","THEN","ELSE","STEP",
-"CONST","IF","IN",0,0,"illegal-symbol",
+"CONST","IF","IN",0,0,0,0,0,"illegal-symbol",
 };
 static const char *const yyrule[] = {
 "$accept : file",
+"file : seq",
 "file :",
+"seq : declaracao",
+"seq : seq declaracao",
+"declaracao : declaracao",
+"declaracao : tipo",
+"tipo : INTEGER",
+"tipo : STRING",
+"tipo : NUMBER",
+"tipo : VOID",
 
 };
 #endif
@@ -191,7 +204,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 33 "diy.y"
+#line 40 "diy.y"
 
 int yyerror(char *s) { printf("%s\n",s); return 1; }
 char *dupstr(const char*s) { return strdup(s); }
@@ -213,7 +226,7 @@ char **yynames =
 		 0;
 #endif
 
-#line 217 "y.tab.c"
+#line 230 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */

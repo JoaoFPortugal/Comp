@@ -8,9 +8,9 @@ public integer rand(integer x)
 public integer entry (integer argc, string *argv, string *envp) {
     integer args
     args:= atoi(argv[1])
+    integer numbofargs
     numbofargs := args
 
-    integer numbofargs
     number mean
     integer nvalue
     nvalue := 0

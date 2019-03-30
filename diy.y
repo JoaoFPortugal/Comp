@@ -27,8 +27,15 @@ int yyerror(char *s);
 
 
 %%
-file	:
+file	: seq
+	|
 	;
+
+seq: declaracao
+	| seq declaracao
+	;
+declaracao: declaracao |  tipo;
+tipo: INTEGER | STRING | NUMBER | VOID;
 %%
 
 int yyerror(char *s) { printf("%s\n",s); return 1; }

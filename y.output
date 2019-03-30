@@ -1,21 +1,81 @@
    0  $accept : file $end
 
-   1  file :
+   1  file : declaracao
+   2       |
+
+   3  declaracao : tipo
+   4             | declaracao
+
+   5  tipo : INTEGER
+   6       | STRING
+   7       | NUMBER
+   8       | VOID
 
 state 0
 	$accept : . file $end  (0)
-	file : .  (1)
+	file : .  (2)
 
-	.  reduce 1
+	STRING  shift 1
+	NUMBER  shift 2
+	INTEGER  shift 3
+	VOID  shift 4
+	$end  reduce 2
 
-	file  goto 1
+	file  goto 5
+	declaracao  goto 6
+	tipo  goto 7
 
 
 state 1
+	tipo : STRING .  (6)
+
+	.  reduce 6
+
+
+state 2
+	tipo : NUMBER .  (7)
+
+	.  reduce 7
+
+
+state 3
+	tipo : INTEGER .  (5)
+
+	.  reduce 5
+
+
+state 4
+	tipo : VOID .  (8)
+
+	.  reduce 8
+
+
+state 5
 	$accept : file . $end  (0)
 
 	$end  accept
 
 
-31 terminals, 2 nonterminals
-2 grammar rules, 2 states
+6: reduce/reduce conflict (reduce 1, reduce 4) on $end
+state 6
+	file : declaracao .  (1)
+	declaracao : declaracao .  (4)
+
+	.  reduce 1
+
+
+state 7
+	declaracao : tipo .  (3)
+
+	.  reduce 3
+
+
+Rules never reduced:
+	declaracao : declaracao  (4)
+
+
+State 6 contains 1 reduce/reduce conflict.
+
+
+31 terminals, 4 nonterminals
+9 grammar rules, 8 states
