@@ -26,6 +26,7 @@ int yyerror(char *s);
 %token FOR ASSIGN DECR INCR BREAK CONTINUE DOWNTO UPTO DO WHILE THEN ELSE STEP CONST IF IN
 
 
+
 %%
 file	: seq
 	|
@@ -34,8 +35,23 @@ file	: seq
 seq: declaracao
 	| seq declaracao
 	;
-declaracao: declaracao |  tipo;
+
+declaracao:  pub const tipo ptr ID ;
+
+pub	:
+	| PUBLIC
+	;
+
+const	:
+	| CONST
+	;
+
+ptr	:
+	| '*'
+	;
+
 tipo: INTEGER | STRING | NUMBER | VOID;
+
 %%
 
 int yyerror(char *s) { printf("%s\n",s); return 1; }
