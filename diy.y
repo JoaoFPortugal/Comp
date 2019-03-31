@@ -1,76 +1,83 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #include <string.h>
-#include "node.h"
-#include "tabid.h"
-
 extern int yylex();
 int yyerror(char *s);
 
-
 %}
-
 %union {
-	int i;		/* integer value */
-  	double d;	/* double value */
-  	char *s;	/* symbol name or string literal */
+	int i;			/* integer value */
+	double r;		/* real value */
+	char *s;		/* symbol name or string literal */
 };
-
 %token <i> INT
-%token <d> NUM
+%token <r> REAL
 %token <s> ID STR
-%token EQ NE LE GE
-%token STRING NUMBER INTEGER VOID PUBLIC
-%token FOR ASSIGN DECR INCR BREAK CONTINUE DOWNTO UPTO DO WHILE THEN ELSE STEP CONST IF IN
-
-
+%token DO WHILE IF THEN FOR IN UPTO DOWNTO STEP BREAK CONTINUE
+%token VOID INTEGER STRING NUMBER CONST PUBLIC INCR DECR
+%token ASSIGN NE GE LE ELSE
 
 %%
-file	: seq
-	|
-	;
+file: seq
+      | //empty
+      ;
 
 seq: declaracao
 	| seq declaracao
 	;
 
-declaracao:  pub const tipo ptr ID ;
+declaracao :  pub const type ptr ID ';'
+	| pub const type ptr ID ini ';'
+	| pub const type ptr ID '(' ')' ';'
+	| pub const type ptr ID '('  ')' '{' body '}' ';'
+	| pub const type ptr ID '(' ')' ';'
+	| error ';'
 
-pub	:
+pub	: //empty
 	| PUBLIC
 	;
 
-const	:
+const	: //empty
 	| CONST
 	;
 
-ptr	:
+ptr	: //empty
 	| '*'
 	;
 
-tipo: INTEGER | STRING | NUMBER | VOID;
+
+type: INTEGER | STRING | NUMBER | VOID;
+
+
+ini: ASSIGN INT
+   | ASSIGN '-' INT
+   | ASSIGN NUMBER
+   | ASSIGN '-' NUMBER
+   | ASSIGN ID
+   | ASSIGN cons STR
+   ;
+
+body: //empty
+     | instr
+     | args
+     | args instr
+     ;
+
+args: //empty
+    ;
 
 %%
 
 int yyerror(char *s) { printf("%s\n",s); return 1; }
 char *dupstr(const char*s) { return strdup(s); }
-    int main(int argc, char *argv[]) {
-	    extern YYSTYPE yylval;
-	    int tk;
-	    while ((tk = yylex()))
-		    if (tk > YYERRCODE)
-			    printf("%d:\t%s\n", tk, yyname[tk]);
-		    else
-			    printf("%d:\t%c\n", tk, tk);
-	    return 0;
-    }
-
-char **yynames =
-#if YYDEBUG > 0
-		 (char**)yyname;
-#else
-		 0;
-#endif
-
+int main(int argc, char *argv[]) {
+ extern YYSTYPE yylval;
+ int tk;
+ while ((tk = yylex())) 
+  if (tk > YYERRCODE)
+   printf("%d:\t%s\n", tk, yyname[tk]);
+  else
+   printf("%d:\t%c\n", tk, tk);
+ return 0;
+}

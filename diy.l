@@ -1,222 +1,82 @@
 %{
+/* $Id: diy.l,v 1.0 2019/02/15 11:13:32 prs Exp $ */
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include "node.h"
 #include "y.tab.h"
-
+static int eoi; /* end of instruction */
+static int ncom; /* comment nesting level */
+static int in; /* in string */
 void yyerror(char *s);
 int octal(char *s);
-int nest = 0;
-int nova_linha = 0,str_begin=0;
-char buffer [100];
-char *string;
 %}
-
-    /* DEFINING ALL TYPES OF NUMBERS */
-
-DEC 0|[1-9][0-9]*
-OCTAL 0([0-9])+
-BIN (0b|0B)(0|1)+
-HEXA (0x|0X)[0-9a-fA-Z]+
-DIGITO [0-9]+
-REAL {DIGITO}"."{DIGITO}
-
-
-
-%x COM STRN
-
+%x COM CHR
+FLT	[0-9]+\.[0-9]+([Ee][+-]?[0-9]+)?
 %%
+"==".*                  ;
+"=<"			ncom = 1; BEGIN COM;
+<COM>.|\n		;
+<COM>\"([^"\\]|\\.)*\"	;
+<COM>"=<"		ncom++;
+<COM>"=>"		if (--ncom == 0) BEGIN 0;
 
-    /* DEFINING ALL TYPES OF NUMBERS */
+">="			eoi = 0; return GE;
+"<="			eoi = 0; return LE;
+"<>"			eoi = 0; return NE;
+":="			eoi = 0; return ASSIGN;
+"++"			eoi = 0; return INCR;
+"--"			eoi = 0; return DECR;
+"if"			eoi = 0; return IF;
+"then"			eoi = 0; return THEN;
+"else"			eoi = 0; return ELSE;
+"while"			eoi = 0; return WHILE;
+"do"			eoi = 0; return DO;
+"for"			eoi = 0; return FOR;
+"in"			eoi = 0; return IN;
+"upto"			eoi = 0; return UPTO;
+"downto"		eoi = 0; return DOWNTO;
+"step"			eoi = 0; return STEP;
+"void"			eoi = 0; return VOID;
+"integer"		eoi = 0; return INTEGER;
+"string"		eoi = 0; return STRING;
+"number"		eoi = 0; return NUMBER;
+"public"		eoi = 0; return PUBLIC;
+"const"			eoi = 0; return CONST;
+"break"			eoi = 0; return BREAK;
+"continue"		eoi = 0; return CONTINUE;
 
-"for"			nova_linha = 0; return FOR;
-"in"            nova_linha = 0; return IN;
-"step"          nova_linha = 0; return STEP;
-"const"         nova_linha = 0; return CONST;
-"if"			nova_linha = 0; return IF;
-"then"          nova_linha = 0; return THEN;
-"else"			nova_linha = 0; return ELSE;
-"while"			nova_linha = 0; return WHILE;
-"do"            nova_linha = 0; return DO;
-"upto"          nova_linha = 0; return UPTO;
-"downto"        nova_linha = 0; return DOWNTO;
-"continue"      nova_linha = 0; return CONTINUE;
-"break"         nova_linha = 0; return BREAK;
-"<="			nova_linha = 0; return LE;
-">="			nova_linha = 0; return GE;
-"=" 			nova_linha = 0; return EQ;
-"<>"			nova_linha = 0; return NE;
-"++"			nova_linha = 0; return INCR;
-"--"			nova_linha = 0; return DECR;
-":="			nova_linha = 0; return ASSIGN;
-"void"          nova_linha = 0; return VOID;
-"string"        nova_linha = 0; return STRING;
-"integer"       nova_linha = 0; return INTEGER;
-"number"        nova_linha = 0; return NUMBER;
-"public"        nova_linha = 0; return PUBLIC;
+[A-Za-z][A-Za-z0-9_]*	eoi = 1; yylval.s = strdup(yytext); return ID;
+\"([^"\\]|\\(.|\n))*\"	eoi = 1; yylval.s = malloc(yyleng); *yylval.s = 0; in = 1; REJECT;
+\"			if (in) BEGIN CHR; else { yyerror("unterminated string"); return 0; }
+<CHR>\"			eoi = 1; BEGIN 0; return STR;
+<CHR>\\\"		strcat(yylval.s, "\"");
+<CHR>\\n		strcat(yylval.s, "\n");
+<CHR>\\r		strcat(yylval.s, "\n");
+<CHR>\\t		strcat(yylval.s, "\n");
+<CHR>\\[0-9a-fA-F][0-9a-fA-F]?	{ char s[2]; s[1] = 0; s[0] = strtol(yytext+1,0,16); strcat(yylval.s, s); }
+<CHR>\\.		yyerror("invalid escape sequence in string");
+<CHR>[^"]		strcat(yylval.s, yytext);
+0[0-9]+			eoi = 1; yylval.i = octal(yytext); return INT;
+[0-9]+			eoi = 1; errno = 0; yylval.i = strtol(yytext, 0, 10); if (errno == ERANGE) yyerror("overflow in decimal constant"); return INT;
+0b[01]+			eoi = 1; errno = 0; yylval.i = strtol(yytext+2, 0, 2); if (errno == ERANGE) yyerror("overflow in binary constant"); return INT;
+{FLT}			eoi = 1; yylval.r = strtod(yytext, 0); return REAL;
+[-<>+*/%=|&!;#{},\[\](]	eoi = 0; return *yytext;
+[)!]			eoi = 1; return *yytext;
 
-"==".\n         nova_linha = 0;
-"=<"            BEGIN COM; nova_linha = 0; nest = 0;
-
-    /* when receiving a comment, it maybe nested so a verification is performed */
-
-<COM>{
-    "=<"        {nest++;}
-    ">="        { if(nest!=0) nest--; else BEGIN(INITIAL);}
-    <<EOF>>      {yyerror("Comment reached EOF"); yyterminate();}
-    .|\n        ;
-}
-
-
-{DEC}		    { nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 10);
-                  if(errno != ERANGE) {
-                  }
-	              else {
-						sprintf(buffer, "Decimal %s overflow", yytext);
-						yyerror(buffer);
-						}
-			      return INT;
-				}
-
-
-
-{BIN}			{ nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 2);
-                  if(errno != ERANGE) {
-                  }
-				  else {
-					sprintf(buffer, "Binary %s overflow", yytext);
-					yyerror(buffer);
-				  }
-				  return INT;
-				 }
-
-
-{HEXA}          { nova_linha = 1; errno = 0; yylval.i = strtol(yytext, 0, 16);
-                   if(errno != ERANGE) {
-                   }
-
-                   else {
-                     sprintf(buffer, "Hexadecimal %s caused overflow", yytext);
-                     yyerror(buffer);
-                   }
-                   return INT;
-                 }
-
-
-{REAL}          { nova_linha = 1; errno = 0; yylval.d = strtod(yytext, 0);
-                  if(errno != ERANGE) {
-
-                }
-                  else {
-                      sprintf(buffer, "Real %s caused overflow", yytext);
-                      yyerror(buffer);
-                  }
-                  return NUM;
-                }
-
-
-{OCTAL}		    {   errno = 0; yylval.i = octal(yytext);
-                    if(errno != ERANGE) {
-                       /* Literal - Octal */
-                    }
-				    else {
-					   sprintf(buffer, "Octal %s caused overflow", yytext);
-					   yyerror(buffer);
-					}
-					return INT;
-			    }
-
-
-
-[A-Za-z][A-Za-z0-9_]*		{ nova_linha = 1; yylval.s = strdup(yytext); return ID; /* ID */}
-
-    /* if newline escape is received, it will verify if it needs to implicitly return a ; . */
-
-"\n"        {
-            if(nova_linha==1){
-                nova_linha=0;
-                return ';';
-                }
-            }
-
-    /* Identification of strings begins when a " is received */
-
-\"          {   BEGIN STRN;
-                str_begin = 0;
-                nova_linha = 1;
-                string = (char *) malloc(sizeof(char));
-                string[0] = '\0';
-            }
-
-<STRN>\\n          {
-                    str_begin = 1;
-                    string = (char *) realloc(string, sizeof(char) * (strlen(string)+2));
-                    strcat(string, "\n");
-                    }
-
-<STRN>\\t           {
-                    str_begin = 1;
-                    string = (char *) realloc(string, sizeof(char) * (strlen(string)+2));
-                    strcat(string, "\t");
-                    }
-
-<STRN>\\r           {
-                    str_begin = 1;
-                    string = (char *) realloc(string, sizeof(char) * (strlen(string)+2));
-                    strcat(string, "\r");
-                    }
-
-<STRN>(\\[0-9a-fA-F][0-9a-fA-F]?)|([^"\\]) {
-                    str_begin = 1;
-                    string = (char *) realloc(string, sizeof(char) * (strlen(string) + strlen(yytext)+1));
-                    strcat(string, yytext);
-                    }
-
-<STRN>\\\"			{
-                    str_begin = 1;
-                    string = (char *) realloc(string, sizeof(char) * (strlen(string) + 2));
-                    strcat(string, "\"");
-                    }
-
-<STRN>\"			{
-                    BEGIN 0;
-                    yytext[yyleng-1] = 0;  /* remove " */
-					string = (char *) realloc(string, sizeof(char) * (strlen(string) + strlen(yytext) + 1));
-					strcat(string, yytext);
-					yylval.s = strdup(string);
-					if(str_begin == 0){
-					    yyerror("String cannot be null");
-					}
-					return STR;
-					}
-
-<STRN><<EOF>>       {
-                    yyerror("String not terminated, EOF reached");
-                    yyterminate();
-                    }
-
-<STRN>.             {
-                    yyerror("Character unknown");
-                    }
-
-";"					    nova_linha = 0; return *yytext;
-[!)]					nova_linha = 1;  return *yytext;
-[-+*/%<>=|&~]			nova_linha = 0; return *yytext;
-[#\[\]{}(,]				nova_linha = 0; return *yytext;
-
-[ \t\r]+        ;
+[ \t\r]+		; /* ignore whitespace */
+[\n]+			if (eoi == 1) { eoi = 0; return ';'; }
 
 .			yyerror("Unknown character");
-
 %%
-int yywrap(void) { return 1; }
-char *getyytext() { return yytext; }
-
+int yywrap(void) {
+  if (YYSTATE == COM) yyerror("unterminated comment");
+  return 1;
+}
 
 int octal(char *s)
 {
-  int i=0, a = 0, b = 0;
+  int i, a = 0, b = 0;
+
   for (i = 0; i < strlen(s); i++) {
     if (s[i] < '0' || s[i] > '9') break;
     b = b * 8 + s[i] - '0';
@@ -228,3 +88,5 @@ int octal(char *s)
   }
   return a;
 }
+
+char *getyytext() { return yytext; }

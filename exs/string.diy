@@ -1,52 +1,34 @@
-public string strcpy(string dest, string src){
-
-    integer i := 0
-
-    do {
-       dest[i] := src[i];
-       i=i+1
-       } while src[i] <> 0;
-
-       strcpy := dest
+public integer strcmp(string a, string b) {
+  integer i
+  i := 0
+  if a[i] <> 0 & b[i] <> 0 & a[i] = b[i] then
+    do
+      ++i
+    while a[i] <> 0 & b[i] <> 0 & a[i] = b[i];
+  strcmp := b[i] - a[i];
 };
 
-
-public integer strcmp(string str1, string str2){
-
-   	i := 0
-
-   	do {
-   		if str1[i] = 0 then{
-   		    strcmp := 0
-   	    }
-   		i := i + 1
-   	} while str1[i] = str2[i];
-
-   	if str1 < str2 then{
-       	strcmp := -1
-    }
-
-   	if str1 > str2 then{
-   		strcmp := 1
-   	}
-
+public string strcpy(string a, string b) {
+  integer i
+  i := 0
+  strcpy := a
+  if b <> 0 & *b <> 0 then
+    do {
+      a[i] := b[i];
+      i++;
+    } while b[i] <> 0
+  a[i] := 0
 };
 
-
-public string strchr(string str, integer intg){
-    i := 0
-    integer exit
-    exit := 0
-
-    do {
-    	if str[i] = intg then{
-    	    strchr := str[i];
-    	    exit = 1
-    	    break;
-    	}
-    } while str[i] <> 0;
-
-    if(exit<>1) then{
-        strchr := 0
-    }
+public string strchr(string a, integer b) {
+  integer i
+  i := 0
+  strchr := 0
+  if *a <> 0 then
+    do
+      if a[i] = b then {
+        strchr := &a[i];
+        break;
+      } else ++i
+    while a[i] <> 0
 };

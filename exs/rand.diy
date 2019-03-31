@@ -1,16 +1,4 @@
-integer init := 100003
-integer mul := 27983
-integer incr := 149
-integer mod := 1000000
-
-
-public void srand(integer newx){
-	x := newx
-};
-
-
-public integer rand(){
-	init := ( init * mul + incr ) % mod
-	rand:= init
-};
-
+integer seed := 100003
+const integer mod := 1000000
+public void srand(integer s) { if s >= 0 & s < mod then seed := s; };
+public integer rand() { rand := seed := (seed * 27983 + 149) % mod; };
