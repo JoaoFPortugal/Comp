@@ -10,13 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36bb93ca-f40c-438c-8470-bc7877b8a9e1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/diy.l" beforeDir="false" afterPath="$PROJECT_DIR$/diy.l" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diy" beforeDir="false" afterPath="$PROJECT_DIR$/diy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/diy.y" beforeDir="false" afterPath="$PROJECT_DIR$/diy.y" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exs/iter.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/iter.diy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exs/mean.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/mean.diy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exs/rand.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/rand.diy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exs/recurs.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/recurs.diy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exs/string.diy" beforeDir="false" afterPath="$PROJECT_DIR$/exs/string.diy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lex.yy.c" beforeDir="false" afterPath="$PROJECT_DIR$/lex.yy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/y.output" beforeDir="false" afterPath="$PROJECT_DIR$/y.output" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/y.tab.c" beforeDir="false" afterPath="$PROJECT_DIR$/y.tab.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/y.tab.h" beforeDir="false" afterPath="$PROJECT_DIR$/y.tab.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yyselect.c" beforeDir="false" afterPath="$PROJECT_DIR$/yyselect.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,24 +31,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/diy.y">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="63" column="17" lean-forward="true" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+            <state relative-caret-position="135">
+              <caret line="59" column="13" lean-forward="true" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/diy.l">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="68" column="41" lean-forward="true" selection-start-line="68" selection-start-column="41" selection-end-line="68" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/oquefalta.txt">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -97,13 +84,18 @@
         <subPane>
           <expand>
             <path>
-              <item name="Projecto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projecto" type="462c0819:PsiDirectoryNode" />
+              <item name="Comp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Comp" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Projecto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projecto" type="462c0819:PsiDirectoryNode" />
+              <item name="Comp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Comp" type="462c0819:PsiDirectoryNode" />
               <item name="exs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Comp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Comp" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -161,13 +153,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44495000" />
+    <option name="totallyTimeSpent" value="44778000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20895523" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21363637" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -318,31 +310,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/inicial.l">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="55" column="59" lean-forward="true" selection-start-line="55" selection-start-column="59" selection-end-line="55" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/initial.y">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="2" lean-forward="true" selection-start-line="20" selection-start-column="2" selection-end-line="20" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/inicial.l" />
+    <entry file="file://$PROJECT_DIR$/initial.y" />
     <entry file="file://$PROJECT_DIR$/diy.l">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="68" column="41" lean-forward="true" selection-start-line="68" selection-start-column="41" selection-end-line="68" selection-end-column="41" />
+        <state relative-caret-position="1020">
+          <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/y.output">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="311" lean-forward="true" selection-start-line="311" selection-end-line="311" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/node.h">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/diy.y">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="63" column="17" lean-forward="true" selection-start-line="63" selection-start-column="17" selection-end-line="63" selection-end-column="17" />
+        <state relative-caret-position="135">
+          <caret line="59" column="13" lean-forward="true" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
         </state>
       </provider>
     </entry>

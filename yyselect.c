@@ -1,5 +1,5 @@
 /*
-generated at Fri Mar 22 15:03:53 2019
+generated at Sun Mar 31 03:48:46 2019
 by $Id: pburg.c,v 2.5 2017/11/16 09:41:42 prs Exp $
 */
 #include <stdio.h>
@@ -55,34 +55,35 @@ static YYCONST char *yytermname[] = {
  "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
  "", "", "", "", "",
 	/* 258 */ "INT",
-	/* 259 */ "NUM",
+	/* 259 */ "REAL",
 	/* 260 */ "ID",
 	/* 261 */ "STR",
-	/* 262 */ "EQ",
-	/* 263 */ "NE",
-	/* 264 */ "LE",
-	/* 265 */ "GE",
-	/* 266 */ "STRING",
-	/* 267 */ "NUMBER",
-	/* 268 */ "INTEGER",
-	/* 269 */ "VOID",
-	/* 270 */ "PUBLIC",
-	/* 271 */ "FOR",
-	/* 272 */ "ASSIGN",
-	/* 273 */ "DECR",
-	/* 274 */ "INCR",
-	/* 275 */ "BREAK",
-	/* 276 */ "CONTINUE",
-	/* 277 */ "DOWNTO",
-	/* 278 */ "UPTO",
-	/* 279 */ "DO",
-	/* 280 */ "WHILE",
-	/* 281 */ "THEN",
-	/* 282 */ "ELSE",
-	/* 283 */ "STEP",
-	/* 284 */ "CONST",
-	/* 285 */ "IF",
-	/* 286 */ "IN",
+	/* 262 */ "DO",
+	/* 263 */ "WHILE",
+	/* 264 */ "IF",
+	/* 265 */ "THEN",
+	/* 266 */ "FOR",
+	/* 267 */ "IN",
+	/* 268 */ "UPTO",
+	/* 269 */ "DOWNTO",
+	/* 270 */ "STEP",
+	/* 271 */ "BREAK",
+	/* 272 */ "CONTINUE",
+	/* 273 */ "VOID",
+	/* 274 */ "INTEGER",
+	/* 275 */ "STRING",
+	/* 276 */ "NUMBER",
+	/* 277 */ "CONST",
+	/* 278 */ "PUBLIC",
+	/* 279 */ "INCR",
+	/* 280 */ "DECR",
+	/* 281 */ "ASSIGN",
+	/* 282 */ "NE",
+	/* 283 */ "GE",
+	/* 284 */ "LE",
+	/* 285 */ "ELSE",
+	/* 286 */ "cons",
+	/* 287 */ "instr",
 	""
 };
 
@@ -155,61 +156,63 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		break;
 	case 257: /* INT */
 		return;
-	case 258: /* NUM */
+	case 258: /* REAL */
 		return;
 	case 259: /* ID */
 		return;
 	case 260: /* STR */
 		return;
-	case 261: /* EQ */
+	case 261: /* DO */
 		return;
-	case 262: /* NE */
+	case 262: /* WHILE */
 		return;
-	case 263: /* LE */
+	case 263: /* IF */
 		return;
-	case 264: /* GE */
+	case 264: /* THEN */
 		return;
-	case 265: /* STRING */
+	case 265: /* FOR */
 		return;
-	case 266: /* NUMBER */
+	case 266: /* IN */
 		return;
-	case 267: /* INTEGER */
+	case 267: /* UPTO */
 		return;
-	case 268: /* VOID */
+	case 268: /* DOWNTO */
 		return;
-	case 269: /* PUBLIC */
+	case 269: /* STEP */
 		return;
-	case 270: /* FOR */
+	case 270: /* BREAK */
 		return;
-	case 271: /* ASSIGN */
+	case 271: /* CONTINUE */
 		return;
-	case 272: /* DECR */
+	case 272: /* VOID */
 		return;
-	case 273: /* INCR */
+	case 273: /* INTEGER */
 		return;
-	case 274: /* BREAK */
+	case 274: /* STRING */
 		return;
-	case 275: /* CONTINUE */
+	case 275: /* NUMBER */
 		return;
-	case 276: /* DOWNTO */
+	case 276: /* CONST */
 		return;
-	case 277: /* UPTO */
+	case 277: /* PUBLIC */
 		return;
-	case 278: /* DO */
+	case 278: /* INCR */
 		return;
-	case 279: /* WHILE */
+	case 279: /* DECR */
 		return;
-	case 280: /* THEN */
+	case 280: /* ASSIGN */
 		return;
-	case 281: /* ELSE */
+	case 281: /* NE */
 		return;
-	case 282: /* STEP */
+	case 282: /* GE */
 		return;
-	case 283: /* CONST */
+	case 283: /* LE */
 		return;
-	case 284: /* IF */
+	case 284: /* ELSE */
 		return;
-	case 285: /* IN */
+	case 285: /* cons */
+		return;
+	case 286: /* instr */
 		return;
 	default:
 		PANIC("yylabel", "Bad terminal", OP_LABEL(a));

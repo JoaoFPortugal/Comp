@@ -1,81 +1,413 @@
    0  $accept : file $end
 
-   1  file : declaracao
+   1  file : seq
    2       |
 
-   3  declaracao : tipo
-   4             | declaracao
+   3  seq : declaracao
+   4      | seq declaracao
 
-   5  tipo : INTEGER
-   6       | STRING
-   7       | NUMBER
-   8       | VOID
+   5  declaracao : pub const type ptr ID ';'
+   6             | pub const type ptr ID ini ';'
+   7             | pub const type ptr ID '(' ')' ';'
+   8             | pub const type ptr ID '(' ')' '{' body '}' ';'
+   9             | pub const type ptr ID '(' ')' ';'
+  10             | error ';'
+
+  11  pub :
+  12      | PUBLIC
+
+  13  const :
+  14        | CONST
+
+  15  ptr :
+  16      | '*'
+
+  17  type : INTEGER
+  18       | STRING
+  19       | NUMBER
+  20       | VOID
+
+  21  ini : ASSIGN INT
+  22      | ASSIGN '-' INT
+  23      | ASSIGN NUMBER
+  24      | ASSIGN '-' NUMBER
+  25      | ASSIGN ID
+  26      | ASSIGN cons STR
+
+  27  body :
+  28       | instr
+  29       | args
+  30       | args instr
+
+  31  args :
 
 state 0
 	$accept : . file $end  (0)
 	file : .  (2)
+	pub : .  (11)
 
-	STRING  shift 1
-	NUMBER  shift 2
-	INTEGER  shift 3
-	VOID  shift 4
+	error  shift 1
+	PUBLIC  shift 2
 	$end  reduce 2
+	VOID  reduce 11
+	INTEGER  reduce 11
+	STRING  reduce 11
+	NUMBER  reduce 11
+	CONST  reduce 11
 
-	file  goto 5
-	declaracao  goto 6
-	tipo  goto 7
+	file  goto 3
+	seq  goto 4
+	declaracao  goto 5
+	pub  goto 6
 
 
 state 1
-	tipo : STRING .  (6)
+	declaracao : error . ';'  (10)
 
-	.  reduce 6
+	';'  shift 7
+	.  error
 
 
 state 2
-	tipo : NUMBER .  (7)
+	pub : PUBLIC .  (12)
 
-	.  reduce 7
+	.  reduce 12
 
 
 state 3
-	tipo : INTEGER .  (5)
-
-	.  reduce 5
-
-
-state 4
-	tipo : VOID .  (8)
-
-	.  reduce 8
-
-
-state 5
 	$accept : file . $end  (0)
 
 	$end  accept
 
 
-6: reduce/reduce conflict (reduce 1, reduce 4) on $end
-state 6
-	file : declaracao .  (1)
-	declaracao : declaracao .  (4)
+state 4
+	file : seq .  (1)
+	seq : seq . declaracao  (4)
+	pub : .  (11)
 
-	.  reduce 1
+	error  shift 1
+	PUBLIC  shift 2
+	$end  reduce 1
+	VOID  reduce 11
+	INTEGER  reduce 11
+	STRING  reduce 11
+	NUMBER  reduce 11
+	CONST  reduce 11
+
+	declaracao  goto 8
+	pub  goto 6
 
 
-state 7
-	declaracao : tipo .  (3)
+state 5
+	seq : declaracao .  (3)
 
 	.  reduce 3
 
 
+state 6
+	declaracao : pub . const type ptr ID ';'  (5)
+	declaracao : pub . const type ptr ID ini ';'  (6)
+	declaracao : pub . const type ptr ID '(' ')' ';'  (7)
+	declaracao : pub . const type ptr ID '(' ')' '{' body '}' ';'  (8)
+	declaracao : pub . const type ptr ID '(' ')' ';'  (9)
+	const : .  (13)
+
+	CONST  shift 9
+	VOID  reduce 13
+	INTEGER  reduce 13
+	STRING  reduce 13
+	NUMBER  reduce 13
+
+	const  goto 10
+
+
+state 7
+	declaracao : error ';' .  (10)
+
+	.  reduce 10
+
+
+state 8
+	seq : seq declaracao .  (4)
+
+	.  reduce 4
+
+
+state 9
+	const : CONST .  (14)
+
+	.  reduce 14
+
+
+state 10
+	declaracao : pub const . type ptr ID ';'  (5)
+	declaracao : pub const . type ptr ID ini ';'  (6)
+	declaracao : pub const . type ptr ID '(' ')' ';'  (7)
+	declaracao : pub const . type ptr ID '(' ')' '{' body '}' ';'  (8)
+	declaracao : pub const . type ptr ID '(' ')' ';'  (9)
+
+	VOID  shift 11
+	INTEGER  shift 12
+	STRING  shift 13
+	NUMBER  shift 14
+	.  error
+
+	type  goto 15
+
+
+state 11
+	type : VOID .  (20)
+
+	.  reduce 20
+
+
+state 12
+	type : INTEGER .  (17)
+
+	.  reduce 17
+
+
+state 13
+	type : STRING .  (18)
+
+	.  reduce 18
+
+
+state 14
+	type : NUMBER .  (19)
+
+	.  reduce 19
+
+
+state 15
+	declaracao : pub const type . ptr ID ';'  (5)
+	declaracao : pub const type . ptr ID ini ';'  (6)
+	declaracao : pub const type . ptr ID '(' ')' ';'  (7)
+	declaracao : pub const type . ptr ID '(' ')' '{' body '}' ';'  (8)
+	declaracao : pub const type . ptr ID '(' ')' ';'  (9)
+	ptr : .  (15)
+
+	'*'  shift 16
+	ID  reduce 15
+
+	ptr  goto 17
+
+
+state 16
+	ptr : '*' .  (16)
+
+	.  reduce 16
+
+
+state 17
+	declaracao : pub const type ptr . ID ';'  (5)
+	declaracao : pub const type ptr . ID ini ';'  (6)
+	declaracao : pub const type ptr . ID '(' ')' ';'  (7)
+	declaracao : pub const type ptr . ID '(' ')' '{' body '}' ';'  (8)
+	declaracao : pub const type ptr . ID '(' ')' ';'  (9)
+
+	ID  shift 18
+	.  error
+
+
+state 18
+	declaracao : pub const type ptr ID . ';'  (5)
+	declaracao : pub const type ptr ID . ini ';'  (6)
+	declaracao : pub const type ptr ID . '(' ')' ';'  (7)
+	declaracao : pub const type ptr ID . '(' ')' '{' body '}' ';'  (8)
+	declaracao : pub const type ptr ID . '(' ')' ';'  (9)
+
+	ASSIGN  shift 19
+	';'  shift 20
+	'('  shift 21
+	.  error
+
+	ini  goto 22
+
+
+state 19
+	ini : ASSIGN . INT  (21)
+	ini : ASSIGN . '-' INT  (22)
+	ini : ASSIGN . NUMBER  (23)
+	ini : ASSIGN . '-' NUMBER  (24)
+	ini : ASSIGN . ID  (25)
+	ini : ASSIGN . cons STR  (26)
+
+	INT  shift 23
+	ID  shift 24
+	NUMBER  shift 25
+	'-'  shift 26
+	cons  shift 27
+	.  error
+
+
+state 20
+	declaracao : pub const type ptr ID ';' .  (5)
+
+	.  reduce 5
+
+
+state 21
+	declaracao : pub const type ptr ID '(' . ')' ';'  (7)
+	declaracao : pub const type ptr ID '(' . ')' '{' body '}' ';'  (8)
+	declaracao : pub const type ptr ID '(' . ')' ';'  (9)
+
+	')'  shift 28
+	.  error
+
+
+state 22
+	declaracao : pub const type ptr ID ini . ';'  (6)
+
+	';'  shift 29
+	.  error
+
+
+state 23
+	ini : ASSIGN INT .  (21)
+
+	.  reduce 21
+
+
+state 24
+	ini : ASSIGN ID .  (25)
+
+	.  reduce 25
+
+
+state 25
+	ini : ASSIGN NUMBER .  (23)
+
+	.  reduce 23
+
+
+state 26
+	ini : ASSIGN '-' . INT  (22)
+	ini : ASSIGN '-' . NUMBER  (24)
+
+	INT  shift 30
+	NUMBER  shift 31
+	.  error
+
+
+state 27
+	ini : ASSIGN cons . STR  (26)
+
+	STR  shift 32
+	.  error
+
+
+state 28
+	declaracao : pub const type ptr ID '(' ')' . ';'  (7)
+	declaracao : pub const type ptr ID '(' ')' . '{' body '}' ';'  (8)
+	declaracao : pub const type ptr ID '(' ')' . ';'  (9)
+
+	';'  shift 33
+	'{'  shift 34
+	.  error
+
+
+state 29
+	declaracao : pub const type ptr ID ini ';' .  (6)
+
+	.  reduce 6
+
+
+state 30
+	ini : ASSIGN '-' INT .  (22)
+
+	.  reduce 22
+
+
+state 31
+	ini : ASSIGN '-' NUMBER .  (24)
+
+	.  reduce 24
+
+
+state 32
+	ini : ASSIGN cons STR .  (26)
+
+	.  reduce 26
+
+
+33: reduce/reduce conflict (reduce 7, reduce 9) on $end
+33: reduce/reduce conflict (reduce 7, reduce 9) on error
+33: reduce/reduce conflict (reduce 7, reduce 9) on VOID
+33: reduce/reduce conflict (reduce 7, reduce 9) on INTEGER
+33: reduce/reduce conflict (reduce 7, reduce 9) on STRING
+33: reduce/reduce conflict (reduce 7, reduce 9) on NUMBER
+33: reduce/reduce conflict (reduce 7, reduce 9) on CONST
+33: reduce/reduce conflict (reduce 7, reduce 9) on PUBLIC
+state 33
+	declaracao : pub const type ptr ID '(' ')' ';' .  (7)
+	declaracao : pub const type ptr ID '(' ')' ';' .  (9)
+
+	.  reduce 7
+
+
+34: reduce/reduce conflict (reduce 27, reduce 31) on '}'
+34: shift/reduce conflict (shift 35, reduce 31) on instr
+state 34
+	declaracao : pub const type ptr ID '(' ')' '{' . body '}' ';'  (8)
+	body : .  (27)
+	args : .  (31)
+
+	instr  shift 35
+	'}'  reduce 27
+
+	body  goto 36
+	args  goto 37
+
+
+state 35
+	body : instr .  (28)
+
+	.  reduce 28
+
+
+state 36
+	declaracao : pub const type ptr ID '(' ')' '{' body . '}' ';'  (8)
+
+	'}'  shift 38
+	.  error
+
+
+state 37
+	body : args .  (29)
+	body : args . instr  (30)
+
+	instr  shift 39
+	'}'  reduce 29
+
+
+state 38
+	declaracao : pub const type ptr ID '(' ')' '{' body '}' . ';'  (8)
+
+	';'  shift 40
+	.  error
+
+
+state 39
+	body : args instr .  (30)
+
+	.  reduce 30
+
+
+state 40
+	declaracao : pub const type ptr ID '(' ')' '{' body '}' ';' .  (8)
+
+	.  reduce 8
+
+
 Rules never reduced:
-	declaracao : declaracao  (4)
+	declaracao : pub const type ptr ID '(' ')' ';'  (9)
+	args :  (31)
 
 
-State 6 contains 1 reduce/reduce conflict.
+State 33 contains 8 reduce/reduce conflicts.
+State 34 contains 1 shift/reduce conflict, 1 reduce/reduce conflict.
 
 
-31 terminals, 4 nonterminals
-9 grammar rules, 8 states
+39 terminals, 11 nonterminals
+32 grammar rules, 41 states

@@ -31,7 +31,6 @@ declaracao :  pub const type ptr ID ';'
 	| pub const type ptr ID ini ';'
 	| pub const type ptr ID '(' ')' ';'
 	| pub const type ptr ID '('  ')' '{' body '}' ';'
-	| pub const type ptr ID '(' ')' ';'
 	| error ';'
 
 pub	: //empty
@@ -55,7 +54,7 @@ ini: ASSIGN INT
    | ASSIGN NUMBER
    | ASSIGN '-' NUMBER
    | ASSIGN ID
-   | ASSIGN cons STR
+   | ASSIGN const STR
    ;
 
 body: //empty
@@ -65,7 +64,10 @@ body: //empty
      ;
 
 args: //empty
-    ;
+     ;
+
+instr: //empty
+     ;
 
 %%
 
