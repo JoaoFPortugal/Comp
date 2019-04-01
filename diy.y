@@ -27,11 +27,13 @@ seq: declaracao
 	| seq declaracao
 	;
 
-declaracao :  pub const type ptr ID ';'
-	| pub const type ptr ID ini ';'
+declaracao :
+	  pub const type ptr ID ini ';'
 	| pub const type ptr ID '(' ')' ';'
 	| pub const type ptr ID '('  ')' '{' body '}' ';'
+	| pub const type ptr ID '(' params ')' '{' body '}' ';'
 	| error ';'
+	;
 
 pub	: //empty
 	| PUBLIC
@@ -48,8 +50,16 @@ ptr	: //empty
 
 type: INTEGER | STRING | NUMBER | VOID;
 
+params: params ',' param
+      | param
+      ;
 
-ini: ASSIGN INT
+param: type ptr ID
+     ;
+
+
+ini: //empty
+   | ASSIGN INT
    | ASSIGN '-' INT
    | ASSIGN NUMBER
    | ASSIGN '-' NUMBER
@@ -63,11 +73,23 @@ body: //empty
      | args instr
      ;
 
-args: //empty
+args: arg ';'
+     | args arg ';'
      ;
 
-instr: //empty
+arg: tipo ptr ID
+    ;
+
+instrs: instr
+      | instrs instr
+      ;
+
+instr: IF expressao THEN instrucao
+     | IF expressao THEN instrucao ELSE instr
+     | DO instr WHILE expr ';'
      ;
+
+
 
 %%
 
