@@ -16,7 +16,7 @@ int yyerror(char *s);
 %token <s> ID STR
 %token DO WHILE IF THEN FOR IN UPTO DOWNTO STEP BREAK CONTINUE
 %token VOID INTEGER STRING NUMBER CONST PUBLIC INCR DECR
-%token ASSIGN NE GE LE ELSE
+%token ASSIGN NE GE LE EQ ELSE
 
 %%
 file: seq
@@ -29,6 +29,7 @@ seq: declaracao
 
 declaracao :
 	  pub const type ptr ID ini ';'
+	| pub const type ptr ID ';'
 	| pub const type ptr ID '(' ')' ';'
 	| pub const type ptr ID '('  ')' '{' body '}' ';'
 	| pub const type ptr ID '(' params ')' '{' body '}' ';'
@@ -50,44 +51,97 @@ ptr	: //empty
 
 type: INTEGER | STRING | NUMBER | VOID;
 
+
 params: params ',' param
       | param
       ;
+
 
 param: type ptr ID
      ;
 
 
-ini: //empty
-   | ASSIGN INT
+ini: ASSIGN INT
    | ASSIGN '-' INT
-   | ASSIGN NUMBER
-   | ASSIGN '-' NUMBER
+   | ASSIGN REAL
+   | ASSIGN '-' REAL
    | ASSIGN ID
    | ASSIGN const STR
    ;
 
-body: //empty
-     | instr
+body:
+     | instrs
      | args
      | args instr
      ;
 
-args: arg ';'
-     | args arg ';'
+args: param ';'
+     | args param ';'
      ;
-
-arg: tipo ptr ID
-    ;
 
 instrs: instr
       | instrs instr
       ;
 
-instr: IF expressao THEN instrucao
-     | IF expressao THEN instrucao ELSE instr
+instr: IF expr THEN instr
+     | IF INT THEN instr ELSE instr
      | DO instr WHILE expr ';'
+     | FOR leftvalue IN expr updw expr step DO instr
+     | expr ';'
+     | '{' body '}'
+     | BREAK INT ';'
+     | BREAK ';'
+     | CONTINUE INT ';'
+     | CONTINUE ';'
+     | leftvalue '#' expr ';'
+     | error ';'
      ;
+
+
+updw: UPTO
+    | DOWNTO
+    ;
+
+
+step: //empty
+    | STEP expr
+    ;
+
+leftvalue: ID
+	  | ID '[' expr ']'
+
+exprs: exprs ',' expr
+     | expr
+     ;
+
+expr: INT
+    | REAL
+    | STR
+    | leftvalue
+    | expr '+' expr
+    | expr '-' expr
+    | expr '*' expr
+    | expr '/' expr
+    | expr '%' expr
+    | expr '>' expr
+    | expr '<' expr
+    | expr EQ expr
+    | expr NE expr
+    | expr GE expr
+    | expr LE expr
+    | expr '&' expr
+    | expr '|' expr
+    | leftvalue ASSIGN expr
+    | INCR leftvalue
+    | DECR leftvalue
+    | leftvalue INCR
+    | leftvalue DECR
+    | ID '(' ')'
+    | ID '(' exprs ')'
+    | '(' expr ')'
+    | '-' expr
+    ;
+
 
 
 

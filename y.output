@@ -6,11 +6,11 @@
    3  seq : declaracao
    4      | seq declaracao
 
-   5  declaracao : pub const type ptr ID ';'
-   6             | pub const type ptr ID ini ';'
+   5  declaracao : pub const type ptr ID ini ';'
+   6             | pub const type ptr ID ';'
    7             | pub const type ptr ID '(' ')' ';'
    8             | pub const type ptr ID '(' ')' '{' body '}' ';'
-   9             | pub const type ptr ID '(' ')' ';'
+   9             | pub const type ptr ID '(' params ')' '{' body '}' ';'
   10             | error ';'
 
   11  pub :
@@ -27,19 +27,80 @@
   19       | NUMBER
   20       | VOID
 
-  21  ini : ASSIGN INT
-  22      | ASSIGN '-' INT
-  23      | ASSIGN NUMBER
-  24      | ASSIGN '-' NUMBER
-  25      | ASSIGN ID
-  26      | ASSIGN cons STR
+  21  params : params ',' param
+  22         | param
 
-  27  body :
-  28       | instr
-  29       | args
-  30       | args instr
+  23  param : type ptr ID
 
-  31  args :
+  24  ini : ASSIGN INT
+  25      | ASSIGN '-' INT
+  26      | ASSIGN REAL
+  27      | ASSIGN '-' REAL
+  28      | ASSIGN ID
+  29      | ASSIGN const STR
+
+  30  body :
+  31       | instrs
+  32       | args
+  33       | args instr
+
+  34  args : param ';'
+  35       | args param ';'
+
+  36  instrs : instr
+  37         | instrs instr
+
+  38  instr : IF expr THEN instr
+  39        | IF INT THEN instr ELSE instr
+  40        | DO instr WHILE expr ';'
+  41        | FOR leftvalue IN expr updw expr step DO instr
+  42        | expr ';'
+  43        | '{' body '}'
+  44        | BREAK INT ';'
+  45        | BREAK ';'
+  46        | CONTINUE INT ';'
+  47        | CONTINUE ';'
+  48        | leftvalue '#' expr ';'
+  49        | error ';'
+
+  50  updw : UPTO
+  51       | DOWNTO
+
+  52  step :
+  53       | STEP expr
+
+  54  leftvalue : ID
+  55            | ID '[' expr ']'
+
+  56  exprs : exprs ',' expr
+  57        | expr
+
+  58  expr : INT
+  59       | REAL
+  60       | STR
+  61       | leftvalue
+  62       | expr '+' expr
+  63       | expr '-' expr
+  64       | expr '*' expr
+  65       | expr '/' expr
+  66       | expr '%' expr
+  67       | expr '>' expr
+  68       | expr '<' expr
+  69       | expr EQ expr
+  70       | expr NE expr
+  71       | expr GE expr
+  72       | expr LE expr
+  73       | expr '&' expr
+  74       | expr '|' expr
+  75       | leftvalue ASSIGN expr
+  76       | INCR leftvalue
+  77       | DECR leftvalue
+  78       | leftvalue INCR
+  79       | leftvalue DECR
+  80       | ID '(' ')'
+  81       | ID '(' exprs ')'
+  82       | '(' expr ')'
+  83       | '-' expr
 
 state 0
 	$accept : . file $end  (0)
@@ -105,11 +166,11 @@ state 5
 
 
 state 6
-	declaracao : pub . const type ptr ID ';'  (5)
-	declaracao : pub . const type ptr ID ini ';'  (6)
+	declaracao : pub . const type ptr ID ini ';'  (5)
+	declaracao : pub . const type ptr ID ';'  (6)
 	declaracao : pub . const type ptr ID '(' ')' ';'  (7)
 	declaracao : pub . const type ptr ID '(' ')' '{' body '}' ';'  (8)
-	declaracao : pub . const type ptr ID '(' ')' ';'  (9)
+	declaracao : pub . const type ptr ID '(' params ')' '{' body '}' ';'  (9)
 	const : .  (13)
 
 	CONST  shift 9
@@ -140,11 +201,11 @@ state 9
 
 
 state 10
-	declaracao : pub const . type ptr ID ';'  (5)
-	declaracao : pub const . type ptr ID ini ';'  (6)
+	declaracao : pub const . type ptr ID ini ';'  (5)
+	declaracao : pub const . type ptr ID ';'  (6)
 	declaracao : pub const . type ptr ID '(' ')' ';'  (7)
 	declaracao : pub const . type ptr ID '(' ')' '{' body '}' ';'  (8)
-	declaracao : pub const . type ptr ID '(' ')' ';'  (9)
+	declaracao : pub const . type ptr ID '(' params ')' '{' body '}' ';'  (9)
 
 	VOID  shift 11
 	INTEGER  shift 12
@@ -180,11 +241,11 @@ state 14
 
 
 state 15
-	declaracao : pub const type . ptr ID ';'  (5)
-	declaracao : pub const type . ptr ID ini ';'  (6)
+	declaracao : pub const type . ptr ID ini ';'  (5)
+	declaracao : pub const type . ptr ID ';'  (6)
 	declaracao : pub const type . ptr ID '(' ')' ';'  (7)
 	declaracao : pub const type . ptr ID '(' ')' '{' body '}' ';'  (8)
-	declaracao : pub const type . ptr ID '(' ')' ';'  (9)
+	declaracao : pub const type . ptr ID '(' params ')' '{' body '}' ';'  (9)
 	ptr : .  (15)
 
 	'*'  shift 16
@@ -200,22 +261,22 @@ state 16
 
 
 state 17
-	declaracao : pub const type ptr . ID ';'  (5)
-	declaracao : pub const type ptr . ID ini ';'  (6)
+	declaracao : pub const type ptr . ID ini ';'  (5)
+	declaracao : pub const type ptr . ID ';'  (6)
 	declaracao : pub const type ptr . ID '(' ')' ';'  (7)
 	declaracao : pub const type ptr . ID '(' ')' '{' body '}' ';'  (8)
-	declaracao : pub const type ptr . ID '(' ')' ';'  (9)
+	declaracao : pub const type ptr . ID '(' params ')' '{' body '}' ';'  (9)
 
 	ID  shift 18
 	.  error
 
 
 state 18
-	declaracao : pub const type ptr ID . ';'  (5)
-	declaracao : pub const type ptr ID . ini ';'  (6)
+	declaracao : pub const type ptr ID . ini ';'  (5)
+	declaracao : pub const type ptr ID . ';'  (6)
 	declaracao : pub const type ptr ID . '(' ')' ';'  (7)
 	declaracao : pub const type ptr ID . '(' ')' '{' body '}' ';'  (8)
-	declaracao : pub const type ptr ID . '(' ')' ';'  (9)
+	declaracao : pub const type ptr ID . '(' params ')' '{' body '}' ';'  (9)
 
 	ASSIGN  shift 19
 	';'  shift 20
@@ -226,188 +287,2580 @@ state 18
 
 
 state 19
-	ini : ASSIGN . INT  (21)
-	ini : ASSIGN . '-' INT  (22)
-	ini : ASSIGN . NUMBER  (23)
-	ini : ASSIGN . '-' NUMBER  (24)
-	ini : ASSIGN . ID  (25)
-	ini : ASSIGN . cons STR  (26)
+	ini : ASSIGN . INT  (24)
+	ini : ASSIGN . '-' INT  (25)
+	ini : ASSIGN . REAL  (26)
+	ini : ASSIGN . '-' REAL  (27)
+	ini : ASSIGN . ID  (28)
+	ini : ASSIGN . const STR  (29)
+	const : .  (13)
 
 	INT  shift 23
-	ID  shift 24
-	NUMBER  shift 25
+	REAL  shift 24
+	ID  shift 25
+	CONST  shift 9
 	'-'  shift 26
-	cons  shift 27
-	.  error
+	STR  reduce 13
+
+	const  goto 27
 
 
 state 20
-	declaracao : pub const type ptr ID ';' .  (5)
+	declaracao : pub const type ptr ID ';' .  (6)
 
-	.  reduce 5
+	.  reduce 6
 
 
 state 21
 	declaracao : pub const type ptr ID '(' . ')' ';'  (7)
 	declaracao : pub const type ptr ID '(' . ')' '{' body '}' ';'  (8)
-	declaracao : pub const type ptr ID '(' . ')' ';'  (9)
+	declaracao : pub const type ptr ID '(' . params ')' '{' body '}' ';'  (9)
 
+	VOID  shift 11
+	INTEGER  shift 12
+	STRING  shift 13
+	NUMBER  shift 14
 	')'  shift 28
 	.  error
 
+	type  goto 29
+	params  goto 30
+	param  goto 31
+
 
 state 22
-	declaracao : pub const type ptr ID ini . ';'  (6)
+	declaracao : pub const type ptr ID ini . ';'  (5)
 
-	';'  shift 29
+	';'  shift 32
 	.  error
 
 
 state 23
-	ini : ASSIGN INT .  (21)
+	ini : ASSIGN INT .  (24)
 
-	.  reduce 21
+	.  reduce 24
 
 
 state 24
-	ini : ASSIGN ID .  (25)
+	ini : ASSIGN REAL .  (26)
 
-	.  reduce 25
+	.  reduce 26
 
 
 state 25
-	ini : ASSIGN NUMBER .  (23)
+	ini : ASSIGN ID .  (28)
 
-	.  reduce 23
+	.  reduce 28
 
 
 state 26
-	ini : ASSIGN '-' . INT  (22)
-	ini : ASSIGN '-' . NUMBER  (24)
+	ini : ASSIGN '-' . INT  (25)
+	ini : ASSIGN '-' . REAL  (27)
 
-	INT  shift 30
-	NUMBER  shift 31
+	INT  shift 33
+	REAL  shift 34
 	.  error
 
 
 state 27
-	ini : ASSIGN cons . STR  (26)
+	ini : ASSIGN const . STR  (29)
 
-	STR  shift 32
+	STR  shift 35
 	.  error
 
 
 state 28
 	declaracao : pub const type ptr ID '(' ')' . ';'  (7)
 	declaracao : pub const type ptr ID '(' ')' . '{' body '}' ';'  (8)
-	declaracao : pub const type ptr ID '(' ')' . ';'  (9)
 
-	';'  shift 33
-	'{'  shift 34
+	';'  shift 36
+	'{'  shift 37
 	.  error
 
 
 state 29
-	declaracao : pub const type ptr ID ini ';' .  (6)
+	param : type . ptr ID  (23)
+	ptr : .  (15)
 
-	.  reduce 6
+	'*'  shift 16
+	ID  reduce 15
+
+	ptr  goto 38
 
 
 state 30
-	ini : ASSIGN '-' INT .  (22)
+	declaracao : pub const type ptr ID '(' params . ')' '{' body '}' ';'  (9)
+	params : params . ',' param  (21)
+
+	')'  shift 39
+	','  shift 40
+	.  error
+
+
+state 31
+	params : param .  (22)
 
 	.  reduce 22
 
 
-state 31
-	ini : ASSIGN '-' NUMBER .  (24)
-
-	.  reduce 24
-
-
 state 32
-	ini : ASSIGN cons STR .  (26)
+	declaracao : pub const type ptr ID ini ';' .  (5)
 
-	.  reduce 26
+	.  reduce 5
 
 
-33: reduce/reduce conflict (reduce 7, reduce 9) on $end
-33: reduce/reduce conflict (reduce 7, reduce 9) on error
-33: reduce/reduce conflict (reduce 7, reduce 9) on VOID
-33: reduce/reduce conflict (reduce 7, reduce 9) on INTEGER
-33: reduce/reduce conflict (reduce 7, reduce 9) on STRING
-33: reduce/reduce conflict (reduce 7, reduce 9) on NUMBER
-33: reduce/reduce conflict (reduce 7, reduce 9) on CONST
-33: reduce/reduce conflict (reduce 7, reduce 9) on PUBLIC
 state 33
+	ini : ASSIGN '-' INT .  (25)
+
+	.  reduce 25
+
+
+state 34
+	ini : ASSIGN '-' REAL .  (27)
+
+	.  reduce 27
+
+
+state 35
+	ini : ASSIGN const STR .  (29)
+
+	.  reduce 29
+
+
+state 36
 	declaracao : pub const type ptr ID '(' ')' ';' .  (7)
-	declaracao : pub const type ptr ID '(' ')' ';' .  (9)
 
 	.  reduce 7
 
 
-34: reduce/reduce conflict (reduce 27, reduce 31) on '}'
-34: shift/reduce conflict (shift 35, reduce 31) on instr
-state 34
-	declaracao : pub const type ptr ID '(' ')' '{' . body '}' ';'  (8)
-	body : .  (27)
-	args : .  (31)
-
-	instr  shift 35
-	'}'  reduce 27
-
-	body  goto 36
-	args  goto 37
-
-
-state 35
-	body : instr .  (28)
-
-	.  reduce 28
-
-
-state 36
-	declaracao : pub const type ptr ID '(' ')' '{' body . '}' ';'  (8)
-
-	'}'  shift 38
-	.  error
-
-
 state 37
-	body : args .  (29)
-	body : args . instr  (30)
+	declaracao : pub const type ptr ID '(' ')' '{' . body '}' ';'  (8)
+	body : .  (30)
 
-	instr  shift 39
-	'}'  reduce 29
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	VOID  shift 11
+	INTEGER  shift 12
+	STRING  shift 13
+	NUMBER  shift 14
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	'}'  reduce 30
+
+	type  goto 29
+	body  goto 56
+	param  goto 57
+	instrs  goto 58
+	args  goto 59
+	instr  goto 60
+	expr  goto 61
+	leftvalue  goto 62
 
 
 state 38
-	declaracao : pub const type ptr ID '(' ')' '{' body '}' . ';'  (8)
+	param : type ptr . ID  (23)
 
-	';'  shift 40
+	ID  shift 63
 	.  error
 
 
 state 39
-	body : args instr .  (30)
+	declaracao : pub const type ptr ID '(' params ')' . '{' body '}' ';'  (9)
 
-	.  reduce 30
+	'{'  shift 64
+	.  error
 
 
 state 40
+	params : params ',' . param  (21)
+
+	VOID  shift 11
+	INTEGER  shift 12
+	STRING  shift 13
+	NUMBER  shift 14
+	.  error
+
+	type  goto 29
+	param  goto 65
+
+
+state 41
+	instr : error . ';'  (49)
+
+	';'  shift 66
+	.  error
+
+
+state 42
+	expr : INT .  (58)
+
+	.  reduce 58
+
+
+state 43
+	expr : REAL .  (59)
+
+	.  reduce 59
+
+
+state 44
+	leftvalue : ID .  (54)
+	leftvalue : ID . '[' expr ']'  (55)
+	expr : ID . '(' ')'  (80)
+	expr : ID . '(' exprs ')'  (81)
+
+	'('  shift 67
+	'['  shift 68
+	DO  reduce 54
+	THEN  reduce 54
+	UPTO  reduce 54
+	DOWNTO  reduce 54
+	STEP  reduce 54
+	INCR  reduce 54
+	DECR  reduce 54
+	ASSIGN  reduce 54
+	NE  reduce 54
+	GE  reduce 54
+	LE  reduce 54
+	EQ  reduce 54
+	';'  reduce 54
+	')'  reduce 54
+	'*'  reduce 54
+	','  reduce 54
+	'-'  reduce 54
+	'#'  reduce 54
+	']'  reduce 54
+	'+'  reduce 54
+	'/'  reduce 54
+	'%'  reduce 54
+	'>'  reduce 54
+	'<'  reduce 54
+	'&'  reduce 54
+	'|'  reduce 54
+
+
+state 45
+	expr : STR .  (60)
+
+	.  reduce 60
+
+
+state 46
+	instr : DO . instr WHILE expr ';'  (40)
+
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	.  error
+
+	instr  goto 69
+	expr  goto 61
+	leftvalue  goto 62
+
+
+state 47
+	instr : IF . expr THEN instr  (38)
+	instr : IF . INT THEN instr ELSE instr  (39)
+
+	INT  shift 70
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 71
+	leftvalue  goto 72
+
+
+state 48
+	instr : FOR . leftvalue IN expr updw expr step DO instr  (41)
+
+	ID  shift 73
+	.  error
+
+	leftvalue  goto 74
+
+
+state 49
+	instr : BREAK . INT ';'  (44)
+	instr : BREAK . ';'  (45)
+
+	INT  shift 75
+	';'  shift 76
+	.  error
+
+
+state 50
+	instr : CONTINUE . INT ';'  (46)
+	instr : CONTINUE . ';'  (47)
+
+	INT  shift 77
+	';'  shift 78
+	.  error
+
+
+state 51
+	expr : INCR . leftvalue  (76)
+
+	ID  shift 73
+	.  error
+
+	leftvalue  goto 79
+
+
+state 52
+	expr : DECR . leftvalue  (77)
+
+	ID  shift 73
+	.  error
+
+	leftvalue  goto 80
+
+
+state 53
+	expr : '(' . expr ')'  (82)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 81
+	leftvalue  goto 72
+
+
+state 54
+	instr : '{' . body '}'  (43)
+	body : .  (30)
+
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	VOID  shift 11
+	INTEGER  shift 12
+	STRING  shift 13
+	NUMBER  shift 14
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	'}'  reduce 30
+
+	type  goto 29
+	body  goto 82
+	param  goto 57
+	instrs  goto 58
+	args  goto 59
+	instr  goto 60
+	expr  goto 61
+	leftvalue  goto 62
+
+
+state 55
+	expr : '-' . expr  (83)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 83
+	leftvalue  goto 72
+
+
+state 56
+	declaracao : pub const type ptr ID '(' ')' '{' body . '}' ';'  (8)
+
+	'}'  shift 84
+	.  error
+
+
+state 57
+	args : param . ';'  (34)
+
+	';'  shift 85
+	.  error
+
+
+state 58
+	body : instrs .  (31)
+	instrs : instrs . instr  (37)
+
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	'}'  reduce 31
+
+	instr  goto 86
+	expr  goto 61
+	leftvalue  goto 62
+
+
+state 59
+	body : args .  (32)
+	body : args . instr  (33)
+	args : args . param ';'  (35)
+
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	VOID  shift 11
+	INTEGER  shift 12
+	STRING  shift 13
+	NUMBER  shift 14
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	'}'  reduce 32
+
+	type  goto 29
+	param  goto 87
+	instr  goto 88
+	expr  goto 61
+	leftvalue  goto 62
+
+
+state 60
+	instrs : instr .  (36)
+
+	.  reduce 36
+
+
+state 61
+	instr : expr . ';'  (42)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	';'  shift 93
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	.  error
+
+
+state 62
+	instr : leftvalue . '#' expr ';'  (48)
+	expr : leftvalue .  (61)
+	expr : leftvalue . ASSIGN expr  (75)
+	expr : leftvalue . INCR  (78)
+	expr : leftvalue . DECR  (79)
+
+	INCR  shift 103
+	DECR  shift 104
+	ASSIGN  shift 105
+	'#'  shift 106
+	NE  reduce 61
+	GE  reduce 61
+	LE  reduce 61
+	EQ  reduce 61
+	';'  reduce 61
+	'*'  reduce 61
+	'-'  reduce 61
+	'+'  reduce 61
+	'/'  reduce 61
+	'%'  reduce 61
+	'>'  reduce 61
+	'<'  reduce 61
+	'&'  reduce 61
+	'|'  reduce 61
+
+
+state 63
+	param : type ptr ID .  (23)
+
+	.  reduce 23
+
+
+state 64
+	declaracao : pub const type ptr ID '(' params ')' '{' . body '}' ';'  (9)
+	body : .  (30)
+
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	VOID  shift 11
+	INTEGER  shift 12
+	STRING  shift 13
+	NUMBER  shift 14
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	'}'  reduce 30
+
+	type  goto 29
+	body  goto 107
+	param  goto 57
+	instrs  goto 58
+	args  goto 59
+	instr  goto 60
+	expr  goto 61
+	leftvalue  goto 62
+
+
+state 65
+	params : params ',' param .  (21)
+
+	.  reduce 21
+
+
+state 66
+	instr : error ';' .  (49)
+
+	.  reduce 49
+
+
+state 67
+	expr : ID '(' . ')'  (80)
+	expr : ID '(' . exprs ')'  (81)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	')'  shift 108
+	'-'  shift 55
+	.  error
+
+	expr  goto 109
+	leftvalue  goto 72
+	exprs  goto 110
+
+
+state 68
+	leftvalue : ID '[' . expr ']'  (55)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 111
+	leftvalue  goto 72
+
+
+state 69
+	instr : DO instr . WHILE expr ';'  (40)
+
+	WHILE  shift 112
+	.  error
+
+
+70: shift/reduce conflict (shift 113, reduce 58) on THEN
+state 70
+	instr : IF INT . THEN instr ELSE instr  (39)
+	expr : INT .  (58)
+
+	THEN  shift 113
+	NE  reduce 58
+	GE  reduce 58
+	LE  reduce 58
+	EQ  reduce 58
+	'*'  reduce 58
+	'-'  reduce 58
+	'+'  reduce 58
+	'/'  reduce 58
+	'%'  reduce 58
+	'>'  reduce 58
+	'<'  reduce 58
+	'&'  reduce 58
+	'|'  reduce 58
+
+
+state 71
+	instr : IF expr . THEN instr  (38)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	THEN  shift 114
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	.  error
+
+
+state 72
+	expr : leftvalue .  (61)
+	expr : leftvalue . ASSIGN expr  (75)
+	expr : leftvalue . INCR  (78)
+	expr : leftvalue . DECR  (79)
+
+	INCR  shift 103
+	DECR  shift 104
+	ASSIGN  shift 105
+	DO  reduce 61
+	THEN  reduce 61
+	UPTO  reduce 61
+	DOWNTO  reduce 61
+	STEP  reduce 61
+	NE  reduce 61
+	GE  reduce 61
+	LE  reduce 61
+	EQ  reduce 61
+	';'  reduce 61
+	')'  reduce 61
+	'*'  reduce 61
+	','  reduce 61
+	'-'  reduce 61
+	']'  reduce 61
+	'+'  reduce 61
+	'/'  reduce 61
+	'%'  reduce 61
+	'>'  reduce 61
+	'<'  reduce 61
+	'&'  reduce 61
+	'|'  reduce 61
+
+
+state 73
+	leftvalue : ID .  (54)
+	leftvalue : ID . '[' expr ']'  (55)
+
+	'['  shift 68
+	DO  reduce 54
+	THEN  reduce 54
+	IN  reduce 54
+	UPTO  reduce 54
+	DOWNTO  reduce 54
+	STEP  reduce 54
+	NE  reduce 54
+	GE  reduce 54
+	LE  reduce 54
+	EQ  reduce 54
+	';'  reduce 54
+	')'  reduce 54
+	'*'  reduce 54
+	','  reduce 54
+	'-'  reduce 54
+	']'  reduce 54
+	'+'  reduce 54
+	'/'  reduce 54
+	'%'  reduce 54
+	'>'  reduce 54
+	'<'  reduce 54
+	'&'  reduce 54
+	'|'  reduce 54
+
+
+state 74
+	instr : FOR leftvalue . IN expr updw expr step DO instr  (41)
+
+	IN  shift 115
+	.  error
+
+
+state 75
+	instr : BREAK INT . ';'  (44)
+
+	';'  shift 116
+	.  error
+
+
+state 76
+	instr : BREAK ';' .  (45)
+
+	.  reduce 45
+
+
+state 77
+	instr : CONTINUE INT . ';'  (46)
+
+	';'  shift 117
+	.  error
+
+
+state 78
+	instr : CONTINUE ';' .  (47)
+
+	.  reduce 47
+
+
+state 79
+	expr : INCR leftvalue .  (76)
+
+	.  reduce 76
+
+
+state 80
+	expr : DECR leftvalue .  (77)
+
+	.  reduce 77
+
+
+state 81
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+	expr : '(' expr . ')'  (82)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	')'  shift 118
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	.  error
+
+
+state 82
+	instr : '{' body . '}'  (43)
+
+	'}'  shift 119
+	.  error
+
+
+83: shift/reduce conflict (shift 89, reduce 83) on NE
+83: shift/reduce conflict (shift 90, reduce 83) on GE
+83: shift/reduce conflict (shift 91, reduce 83) on LE
+83: shift/reduce conflict (shift 92, reduce 83) on EQ
+83: shift/reduce conflict (shift 94, reduce 83) on '*'
+83: shift/reduce conflict (shift 95, reduce 83) on '-'
+83: shift/reduce conflict (shift 96, reduce 83) on '+'
+83: shift/reduce conflict (shift 97, reduce 83) on '/'
+83: shift/reduce conflict (shift 98, reduce 83) on '%'
+83: shift/reduce conflict (shift 99, reduce 83) on '>'
+83: shift/reduce conflict (shift 100, reduce 83) on '<'
+83: shift/reduce conflict (shift 101, reduce 83) on '&'
+83: shift/reduce conflict (shift 102, reduce 83) on '|'
+state 83
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+	expr : '-' expr .  (83)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 83
+	THEN  reduce 83
+	UPTO  reduce 83
+	DOWNTO  reduce 83
+	STEP  reduce 83
+	';'  reduce 83
+	')'  reduce 83
+	','  reduce 83
+	']'  reduce 83
+
+
+state 84
+	declaracao : pub const type ptr ID '(' ')' '{' body '}' . ';'  (8)
+
+	';'  shift 120
+	.  error
+
+
+state 85
+	args : param ';' .  (34)
+
+	.  reduce 34
+
+
+state 86
+	instrs : instrs instr .  (37)
+
+	.  reduce 37
+
+
+state 87
+	args : args param . ';'  (35)
+
+	';'  shift 121
+	.  error
+
+
+state 88
+	body : args instr .  (33)
+
+	.  reduce 33
+
+
+state 89
+	expr : expr NE . expr  (70)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 122
+	leftvalue  goto 72
+
+
+state 90
+	expr : expr GE . expr  (71)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 123
+	leftvalue  goto 72
+
+
+state 91
+	expr : expr LE . expr  (72)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 124
+	leftvalue  goto 72
+
+
+state 92
+	expr : expr EQ . expr  (69)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 125
+	leftvalue  goto 72
+
+
+state 93
+	instr : expr ';' .  (42)
+
+	.  reduce 42
+
+
+state 94
+	expr : expr '*' . expr  (64)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 126
+	leftvalue  goto 72
+
+
+state 95
+	expr : expr '-' . expr  (63)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 127
+	leftvalue  goto 72
+
+
+state 96
+	expr : expr '+' . expr  (62)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 128
+	leftvalue  goto 72
+
+
+state 97
+	expr : expr '/' . expr  (65)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 129
+	leftvalue  goto 72
+
+
+state 98
+	expr : expr '%' . expr  (66)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 130
+	leftvalue  goto 72
+
+
+state 99
+	expr : expr '>' . expr  (67)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 131
+	leftvalue  goto 72
+
+
+state 100
+	expr : expr '<' . expr  (68)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 132
+	leftvalue  goto 72
+
+
+state 101
+	expr : expr '&' . expr  (73)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 133
+	leftvalue  goto 72
+
+
+state 102
+	expr : expr '|' . expr  (74)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 134
+	leftvalue  goto 72
+
+
+state 103
+	expr : leftvalue INCR .  (78)
+
+	.  reduce 78
+
+
+state 104
+	expr : leftvalue DECR .  (79)
+
+	.  reduce 79
+
+
+state 105
+	expr : leftvalue ASSIGN . expr  (75)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 135
+	leftvalue  goto 72
+
+
+state 106
+	instr : leftvalue '#' . expr ';'  (48)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 136
+	leftvalue  goto 72
+
+
+state 107
+	declaracao : pub const type ptr ID '(' params ')' '{' body . '}' ';'  (9)
+
+	'}'  shift 137
+	.  error
+
+
+state 108
+	expr : ID '(' ')' .  (80)
+
+	.  reduce 80
+
+
+state 109
+	exprs : expr .  (57)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	')'  reduce 57
+	','  reduce 57
+
+
+state 110
+	exprs : exprs . ',' expr  (56)
+	expr : ID '(' exprs . ')'  (81)
+
+	')'  shift 138
+	','  shift 139
+	.  error
+
+
+state 111
+	leftvalue : ID '[' expr . ']'  (55)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	']'  shift 140
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	.  error
+
+
+state 112
+	instr : DO instr WHILE . expr ';'  (40)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 141
+	leftvalue  goto 72
+
+
+state 113
+	instr : IF INT THEN . instr ELSE instr  (39)
+
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	.  error
+
+	instr  goto 142
+	expr  goto 61
+	leftvalue  goto 62
+
+
+state 114
+	instr : IF expr THEN . instr  (38)
+
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	.  error
+
+	instr  goto 143
+	expr  goto 61
+	leftvalue  goto 62
+
+
+state 115
+	instr : FOR leftvalue IN . expr updw expr step DO instr  (41)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 144
+	leftvalue  goto 72
+
+
+state 116
+	instr : BREAK INT ';' .  (44)
+
+	.  reduce 44
+
+
+state 117
+	instr : CONTINUE INT ';' .  (46)
+
+	.  reduce 46
+
+
+state 118
+	expr : '(' expr ')' .  (82)
+
+	.  reduce 82
+
+
+state 119
+	instr : '{' body '}' .  (43)
+
+	.  reduce 43
+
+
+state 120
 	declaracao : pub const type ptr ID '(' ')' '{' body '}' ';' .  (8)
 
 	.  reduce 8
 
 
-Rules never reduced:
-	declaracao : pub const type ptr ID '(' ')' ';'  (9)
-	args :  (31)
+state 121
+	args : args param ';' .  (35)
+
+	.  reduce 35
 
 
-State 33 contains 8 reduce/reduce conflicts.
-State 34 contains 1 shift/reduce conflict, 1 reduce/reduce conflict.
+122: shift/reduce conflict (shift 89, reduce 70) on NE
+122: shift/reduce conflict (shift 90, reduce 70) on GE
+122: shift/reduce conflict (shift 91, reduce 70) on LE
+122: shift/reduce conflict (shift 92, reduce 70) on EQ
+122: shift/reduce conflict (shift 94, reduce 70) on '*'
+122: shift/reduce conflict (shift 95, reduce 70) on '-'
+122: shift/reduce conflict (shift 96, reduce 70) on '+'
+122: shift/reduce conflict (shift 97, reduce 70) on '/'
+122: shift/reduce conflict (shift 98, reduce 70) on '%'
+122: shift/reduce conflict (shift 99, reduce 70) on '>'
+122: shift/reduce conflict (shift 100, reduce 70) on '<'
+122: shift/reduce conflict (shift 101, reduce 70) on '&'
+122: shift/reduce conflict (shift 102, reduce 70) on '|'
+state 122
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr NE expr .  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 70
+	THEN  reduce 70
+	UPTO  reduce 70
+	DOWNTO  reduce 70
+	STEP  reduce 70
+	';'  reduce 70
+	')'  reduce 70
+	','  reduce 70
+	']'  reduce 70
 
 
-39 terminals, 11 nonterminals
-32 grammar rules, 41 states
+123: shift/reduce conflict (shift 89, reduce 71) on NE
+123: shift/reduce conflict (shift 90, reduce 71) on GE
+123: shift/reduce conflict (shift 91, reduce 71) on LE
+123: shift/reduce conflict (shift 92, reduce 71) on EQ
+123: shift/reduce conflict (shift 94, reduce 71) on '*'
+123: shift/reduce conflict (shift 95, reduce 71) on '-'
+123: shift/reduce conflict (shift 96, reduce 71) on '+'
+123: shift/reduce conflict (shift 97, reduce 71) on '/'
+123: shift/reduce conflict (shift 98, reduce 71) on '%'
+123: shift/reduce conflict (shift 99, reduce 71) on '>'
+123: shift/reduce conflict (shift 100, reduce 71) on '<'
+123: shift/reduce conflict (shift 101, reduce 71) on '&'
+123: shift/reduce conflict (shift 102, reduce 71) on '|'
+state 123
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr GE expr .  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 71
+	THEN  reduce 71
+	UPTO  reduce 71
+	DOWNTO  reduce 71
+	STEP  reduce 71
+	';'  reduce 71
+	')'  reduce 71
+	','  reduce 71
+	']'  reduce 71
+
+
+124: shift/reduce conflict (shift 89, reduce 72) on NE
+124: shift/reduce conflict (shift 90, reduce 72) on GE
+124: shift/reduce conflict (shift 91, reduce 72) on LE
+124: shift/reduce conflict (shift 92, reduce 72) on EQ
+124: shift/reduce conflict (shift 94, reduce 72) on '*'
+124: shift/reduce conflict (shift 95, reduce 72) on '-'
+124: shift/reduce conflict (shift 96, reduce 72) on '+'
+124: shift/reduce conflict (shift 97, reduce 72) on '/'
+124: shift/reduce conflict (shift 98, reduce 72) on '%'
+124: shift/reduce conflict (shift 99, reduce 72) on '>'
+124: shift/reduce conflict (shift 100, reduce 72) on '<'
+124: shift/reduce conflict (shift 101, reduce 72) on '&'
+124: shift/reduce conflict (shift 102, reduce 72) on '|'
+state 124
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr LE expr .  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 72
+	THEN  reduce 72
+	UPTO  reduce 72
+	DOWNTO  reduce 72
+	STEP  reduce 72
+	';'  reduce 72
+	')'  reduce 72
+	','  reduce 72
+	']'  reduce 72
+
+
+125: shift/reduce conflict (shift 89, reduce 69) on NE
+125: shift/reduce conflict (shift 90, reduce 69) on GE
+125: shift/reduce conflict (shift 91, reduce 69) on LE
+125: shift/reduce conflict (shift 92, reduce 69) on EQ
+125: shift/reduce conflict (shift 94, reduce 69) on '*'
+125: shift/reduce conflict (shift 95, reduce 69) on '-'
+125: shift/reduce conflict (shift 96, reduce 69) on '+'
+125: shift/reduce conflict (shift 97, reduce 69) on '/'
+125: shift/reduce conflict (shift 98, reduce 69) on '%'
+125: shift/reduce conflict (shift 99, reduce 69) on '>'
+125: shift/reduce conflict (shift 100, reduce 69) on '<'
+125: shift/reduce conflict (shift 101, reduce 69) on '&'
+125: shift/reduce conflict (shift 102, reduce 69) on '|'
+state 125
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr EQ expr .  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 69
+	THEN  reduce 69
+	UPTO  reduce 69
+	DOWNTO  reduce 69
+	STEP  reduce 69
+	';'  reduce 69
+	')'  reduce 69
+	','  reduce 69
+	']'  reduce 69
+
+
+126: shift/reduce conflict (shift 89, reduce 64) on NE
+126: shift/reduce conflict (shift 90, reduce 64) on GE
+126: shift/reduce conflict (shift 91, reduce 64) on LE
+126: shift/reduce conflict (shift 92, reduce 64) on EQ
+126: shift/reduce conflict (shift 94, reduce 64) on '*'
+126: shift/reduce conflict (shift 95, reduce 64) on '-'
+126: shift/reduce conflict (shift 96, reduce 64) on '+'
+126: shift/reduce conflict (shift 97, reduce 64) on '/'
+126: shift/reduce conflict (shift 98, reduce 64) on '%'
+126: shift/reduce conflict (shift 99, reduce 64) on '>'
+126: shift/reduce conflict (shift 100, reduce 64) on '<'
+126: shift/reduce conflict (shift 101, reduce 64) on '&'
+126: shift/reduce conflict (shift 102, reduce 64) on '|'
+state 126
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr '*' expr .  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 64
+	THEN  reduce 64
+	UPTO  reduce 64
+	DOWNTO  reduce 64
+	STEP  reduce 64
+	';'  reduce 64
+	')'  reduce 64
+	','  reduce 64
+	']'  reduce 64
+
+
+127: shift/reduce conflict (shift 89, reduce 63) on NE
+127: shift/reduce conflict (shift 90, reduce 63) on GE
+127: shift/reduce conflict (shift 91, reduce 63) on LE
+127: shift/reduce conflict (shift 92, reduce 63) on EQ
+127: shift/reduce conflict (shift 94, reduce 63) on '*'
+127: shift/reduce conflict (shift 95, reduce 63) on '-'
+127: shift/reduce conflict (shift 96, reduce 63) on '+'
+127: shift/reduce conflict (shift 97, reduce 63) on '/'
+127: shift/reduce conflict (shift 98, reduce 63) on '%'
+127: shift/reduce conflict (shift 99, reduce 63) on '>'
+127: shift/reduce conflict (shift 100, reduce 63) on '<'
+127: shift/reduce conflict (shift 101, reduce 63) on '&'
+127: shift/reduce conflict (shift 102, reduce 63) on '|'
+state 127
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr '-' expr .  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 63
+	THEN  reduce 63
+	UPTO  reduce 63
+	DOWNTO  reduce 63
+	STEP  reduce 63
+	';'  reduce 63
+	')'  reduce 63
+	','  reduce 63
+	']'  reduce 63
+
+
+128: shift/reduce conflict (shift 89, reduce 62) on NE
+128: shift/reduce conflict (shift 90, reduce 62) on GE
+128: shift/reduce conflict (shift 91, reduce 62) on LE
+128: shift/reduce conflict (shift 92, reduce 62) on EQ
+128: shift/reduce conflict (shift 94, reduce 62) on '*'
+128: shift/reduce conflict (shift 95, reduce 62) on '-'
+128: shift/reduce conflict (shift 96, reduce 62) on '+'
+128: shift/reduce conflict (shift 97, reduce 62) on '/'
+128: shift/reduce conflict (shift 98, reduce 62) on '%'
+128: shift/reduce conflict (shift 99, reduce 62) on '>'
+128: shift/reduce conflict (shift 100, reduce 62) on '<'
+128: shift/reduce conflict (shift 101, reduce 62) on '&'
+128: shift/reduce conflict (shift 102, reduce 62) on '|'
+state 128
+	expr : expr . '+' expr  (62)
+	expr : expr '+' expr .  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 62
+	THEN  reduce 62
+	UPTO  reduce 62
+	DOWNTO  reduce 62
+	STEP  reduce 62
+	';'  reduce 62
+	')'  reduce 62
+	','  reduce 62
+	']'  reduce 62
+
+
+129: shift/reduce conflict (shift 89, reduce 65) on NE
+129: shift/reduce conflict (shift 90, reduce 65) on GE
+129: shift/reduce conflict (shift 91, reduce 65) on LE
+129: shift/reduce conflict (shift 92, reduce 65) on EQ
+129: shift/reduce conflict (shift 94, reduce 65) on '*'
+129: shift/reduce conflict (shift 95, reduce 65) on '-'
+129: shift/reduce conflict (shift 96, reduce 65) on '+'
+129: shift/reduce conflict (shift 97, reduce 65) on '/'
+129: shift/reduce conflict (shift 98, reduce 65) on '%'
+129: shift/reduce conflict (shift 99, reduce 65) on '>'
+129: shift/reduce conflict (shift 100, reduce 65) on '<'
+129: shift/reduce conflict (shift 101, reduce 65) on '&'
+129: shift/reduce conflict (shift 102, reduce 65) on '|'
+state 129
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr '/' expr .  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 65
+	THEN  reduce 65
+	UPTO  reduce 65
+	DOWNTO  reduce 65
+	STEP  reduce 65
+	';'  reduce 65
+	')'  reduce 65
+	','  reduce 65
+	']'  reduce 65
+
+
+130: shift/reduce conflict (shift 89, reduce 66) on NE
+130: shift/reduce conflict (shift 90, reduce 66) on GE
+130: shift/reduce conflict (shift 91, reduce 66) on LE
+130: shift/reduce conflict (shift 92, reduce 66) on EQ
+130: shift/reduce conflict (shift 94, reduce 66) on '*'
+130: shift/reduce conflict (shift 95, reduce 66) on '-'
+130: shift/reduce conflict (shift 96, reduce 66) on '+'
+130: shift/reduce conflict (shift 97, reduce 66) on '/'
+130: shift/reduce conflict (shift 98, reduce 66) on '%'
+130: shift/reduce conflict (shift 99, reduce 66) on '>'
+130: shift/reduce conflict (shift 100, reduce 66) on '<'
+130: shift/reduce conflict (shift 101, reduce 66) on '&'
+130: shift/reduce conflict (shift 102, reduce 66) on '|'
+state 130
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr '%' expr .  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 66
+	THEN  reduce 66
+	UPTO  reduce 66
+	DOWNTO  reduce 66
+	STEP  reduce 66
+	';'  reduce 66
+	')'  reduce 66
+	','  reduce 66
+	']'  reduce 66
+
+
+131: shift/reduce conflict (shift 89, reduce 67) on NE
+131: shift/reduce conflict (shift 90, reduce 67) on GE
+131: shift/reduce conflict (shift 91, reduce 67) on LE
+131: shift/reduce conflict (shift 92, reduce 67) on EQ
+131: shift/reduce conflict (shift 94, reduce 67) on '*'
+131: shift/reduce conflict (shift 95, reduce 67) on '-'
+131: shift/reduce conflict (shift 96, reduce 67) on '+'
+131: shift/reduce conflict (shift 97, reduce 67) on '/'
+131: shift/reduce conflict (shift 98, reduce 67) on '%'
+131: shift/reduce conflict (shift 99, reduce 67) on '>'
+131: shift/reduce conflict (shift 100, reduce 67) on '<'
+131: shift/reduce conflict (shift 101, reduce 67) on '&'
+131: shift/reduce conflict (shift 102, reduce 67) on '|'
+state 131
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr '>' expr .  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 67
+	THEN  reduce 67
+	UPTO  reduce 67
+	DOWNTO  reduce 67
+	STEP  reduce 67
+	';'  reduce 67
+	')'  reduce 67
+	','  reduce 67
+	']'  reduce 67
+
+
+132: shift/reduce conflict (shift 89, reduce 68) on NE
+132: shift/reduce conflict (shift 90, reduce 68) on GE
+132: shift/reduce conflict (shift 91, reduce 68) on LE
+132: shift/reduce conflict (shift 92, reduce 68) on EQ
+132: shift/reduce conflict (shift 94, reduce 68) on '*'
+132: shift/reduce conflict (shift 95, reduce 68) on '-'
+132: shift/reduce conflict (shift 96, reduce 68) on '+'
+132: shift/reduce conflict (shift 97, reduce 68) on '/'
+132: shift/reduce conflict (shift 98, reduce 68) on '%'
+132: shift/reduce conflict (shift 99, reduce 68) on '>'
+132: shift/reduce conflict (shift 100, reduce 68) on '<'
+132: shift/reduce conflict (shift 101, reduce 68) on '&'
+132: shift/reduce conflict (shift 102, reduce 68) on '|'
+state 132
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr '<' expr .  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 68
+	THEN  reduce 68
+	UPTO  reduce 68
+	DOWNTO  reduce 68
+	STEP  reduce 68
+	';'  reduce 68
+	')'  reduce 68
+	','  reduce 68
+	']'  reduce 68
+
+
+133: shift/reduce conflict (shift 89, reduce 73) on NE
+133: shift/reduce conflict (shift 90, reduce 73) on GE
+133: shift/reduce conflict (shift 91, reduce 73) on LE
+133: shift/reduce conflict (shift 92, reduce 73) on EQ
+133: shift/reduce conflict (shift 94, reduce 73) on '*'
+133: shift/reduce conflict (shift 95, reduce 73) on '-'
+133: shift/reduce conflict (shift 96, reduce 73) on '+'
+133: shift/reduce conflict (shift 97, reduce 73) on '/'
+133: shift/reduce conflict (shift 98, reduce 73) on '%'
+133: shift/reduce conflict (shift 99, reduce 73) on '>'
+133: shift/reduce conflict (shift 100, reduce 73) on '<'
+133: shift/reduce conflict (shift 101, reduce 73) on '&'
+133: shift/reduce conflict (shift 102, reduce 73) on '|'
+state 133
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr '&' expr .  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 73
+	THEN  reduce 73
+	UPTO  reduce 73
+	DOWNTO  reduce 73
+	STEP  reduce 73
+	';'  reduce 73
+	')'  reduce 73
+	','  reduce 73
+	']'  reduce 73
+
+
+134: shift/reduce conflict (shift 89, reduce 74) on NE
+134: shift/reduce conflict (shift 90, reduce 74) on GE
+134: shift/reduce conflict (shift 91, reduce 74) on LE
+134: shift/reduce conflict (shift 92, reduce 74) on EQ
+134: shift/reduce conflict (shift 94, reduce 74) on '*'
+134: shift/reduce conflict (shift 95, reduce 74) on '-'
+134: shift/reduce conflict (shift 96, reduce 74) on '+'
+134: shift/reduce conflict (shift 97, reduce 74) on '/'
+134: shift/reduce conflict (shift 98, reduce 74) on '%'
+134: shift/reduce conflict (shift 99, reduce 74) on '>'
+134: shift/reduce conflict (shift 100, reduce 74) on '<'
+134: shift/reduce conflict (shift 101, reduce 74) on '&'
+134: shift/reduce conflict (shift 102, reduce 74) on '|'
+state 134
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+	expr : expr '|' expr .  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 74
+	THEN  reduce 74
+	UPTO  reduce 74
+	DOWNTO  reduce 74
+	STEP  reduce 74
+	';'  reduce 74
+	')'  reduce 74
+	','  reduce 74
+	']'  reduce 74
+
+
+135: shift/reduce conflict (shift 89, reduce 75) on NE
+135: shift/reduce conflict (shift 90, reduce 75) on GE
+135: shift/reduce conflict (shift 91, reduce 75) on LE
+135: shift/reduce conflict (shift 92, reduce 75) on EQ
+135: shift/reduce conflict (shift 94, reduce 75) on '*'
+135: shift/reduce conflict (shift 95, reduce 75) on '-'
+135: shift/reduce conflict (shift 96, reduce 75) on '+'
+135: shift/reduce conflict (shift 97, reduce 75) on '/'
+135: shift/reduce conflict (shift 98, reduce 75) on '%'
+135: shift/reduce conflict (shift 99, reduce 75) on '>'
+135: shift/reduce conflict (shift 100, reduce 75) on '<'
+135: shift/reduce conflict (shift 101, reduce 75) on '&'
+135: shift/reduce conflict (shift 102, reduce 75) on '|'
+state 135
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+	expr : leftvalue ASSIGN expr .  (75)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 75
+	THEN  reduce 75
+	UPTO  reduce 75
+	DOWNTO  reduce 75
+	STEP  reduce 75
+	';'  reduce 75
+	')'  reduce 75
+	','  reduce 75
+	']'  reduce 75
+
+
+state 136
+	instr : leftvalue '#' expr . ';'  (48)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	';'  shift 145
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	.  error
+
+
+state 137
+	declaracao : pub const type ptr ID '(' params ')' '{' body '}' . ';'  (9)
+
+	';'  shift 146
+	.  error
+
+
+state 138
+	expr : ID '(' exprs ')' .  (81)
+
+	.  reduce 81
+
+
+state 139
+	exprs : exprs ',' . expr  (56)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 147
+	leftvalue  goto 72
+
+
+state 140
+	leftvalue : ID '[' expr ']' .  (55)
+
+	.  reduce 55
+
+
+state 141
+	instr : DO instr WHILE expr . ';'  (40)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	';'  shift 148
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	.  error
+
+
+state 142
+	instr : IF INT THEN instr . ELSE instr  (39)
+
+	ELSE  shift 149
+	.  error
+
+
+state 143
+	instr : IF expr THEN instr .  (38)
+
+	.  reduce 38
+
+
+state 144
+	instr : FOR leftvalue IN expr . updw expr step DO instr  (41)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	UPTO  shift 150
+	DOWNTO  shift 151
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	.  error
+
+	updw  goto 152
+
+
+state 145
+	instr : leftvalue '#' expr ';' .  (48)
+
+	.  reduce 48
+
+
+state 146
+	declaracao : pub const type ptr ID '(' params ')' '{' body '}' ';' .  (9)
+
+	.  reduce 9
+
+
+state 147
+	exprs : exprs ',' expr .  (56)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	')'  reduce 56
+	','  reduce 56
+
+
+state 148
+	instr : DO instr WHILE expr ';' .  (40)
+
+	.  reduce 40
+
+
+state 149
+	instr : IF INT THEN instr ELSE . instr  (39)
+
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	.  error
+
+	instr  goto 153
+	expr  goto 61
+	leftvalue  goto 62
+
+
+state 150
+	updw : UPTO .  (50)
+
+	.  reduce 50
+
+
+state 151
+	updw : DOWNTO .  (51)
+
+	.  reduce 51
+
+
+state 152
+	instr : FOR leftvalue IN expr updw . expr step DO instr  (41)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 154
+	leftvalue  goto 72
+
+
+state 153
+	instr : IF INT THEN instr ELSE instr .  (39)
+
+	.  reduce 39
+
+
+state 154
+	instr : FOR leftvalue IN expr updw expr . step DO instr  (41)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+	step : .  (52)
+
+	STEP  shift 155
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 52
+
+	step  goto 156
+
+
+state 155
+	step : STEP . expr  (53)
+
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'-'  shift 55
+	.  error
+
+	expr  goto 157
+	leftvalue  goto 72
+
+
+state 156
+	instr : FOR leftvalue IN expr updw expr step . DO instr  (41)
+
+	DO  shift 158
+	.  error
+
+
+state 157
+	step : STEP expr .  (53)
+	expr : expr . '+' expr  (62)
+	expr : expr . '-' expr  (63)
+	expr : expr . '*' expr  (64)
+	expr : expr . '/' expr  (65)
+	expr : expr . '%' expr  (66)
+	expr : expr . '>' expr  (67)
+	expr : expr . '<' expr  (68)
+	expr : expr . EQ expr  (69)
+	expr : expr . NE expr  (70)
+	expr : expr . GE expr  (71)
+	expr : expr . LE expr  (72)
+	expr : expr . '&' expr  (73)
+	expr : expr . '|' expr  (74)
+
+	NE  shift 89
+	GE  shift 90
+	LE  shift 91
+	EQ  shift 92
+	'*'  shift 94
+	'-'  shift 95
+	'+'  shift 96
+	'/'  shift 97
+	'%'  shift 98
+	'>'  shift 99
+	'<'  shift 100
+	'&'  shift 101
+	'|'  shift 102
+	DO  reduce 53
+
+
+state 158
+	instr : FOR leftvalue IN expr updw expr step DO . instr  (41)
+
+	error  shift 41
+	INT  shift 42
+	REAL  shift 43
+	ID  shift 44
+	STR  shift 45
+	DO  shift 46
+	IF  shift 47
+	FOR  shift 48
+	BREAK  shift 49
+	CONTINUE  shift 50
+	INCR  shift 51
+	DECR  shift 52
+	'('  shift 53
+	'{'  shift 54
+	'-'  shift 55
+	.  error
+
+	instr  goto 159
+	expr  goto 61
+	leftvalue  goto 62
+
+
+state 159
+	instr : FOR leftvalue IN expr updw expr step DO instr .  (41)
+
+	.  reduce 41
+
+
+State 70 contains 1 shift/reduce conflict.
+State 83 contains 13 shift/reduce conflicts.
+State 122 contains 13 shift/reduce conflicts.
+State 123 contains 13 shift/reduce conflicts.
+State 124 contains 13 shift/reduce conflicts.
+State 125 contains 13 shift/reduce conflicts.
+State 126 contains 13 shift/reduce conflicts.
+State 127 contains 13 shift/reduce conflicts.
+State 128 contains 13 shift/reduce conflicts.
+State 129 contains 13 shift/reduce conflicts.
+State 130 contains 13 shift/reduce conflicts.
+State 131 contains 13 shift/reduce conflicts.
+State 132 contains 13 shift/reduce conflicts.
+State 133 contains 13 shift/reduce conflicts.
+State 134 contains 13 shift/reduce conflicts.
+State 135 contains 13 shift/reduce conflicts.
+
+
+49 terminals, 20 nonterminals
+84 grammar rules, 160 states

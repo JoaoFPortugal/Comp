@@ -1,5 +1,5 @@
 /*
-generated at Sun Mar 31 03:48:46 2019
+generated at Tue Apr  2 02:21:10 2019
 by $Id: pburg.c,v 2.5 2017/11/16 09:41:42 prs Exp $
 */
 #include <stdio.h>
@@ -81,9 +81,8 @@ static YYCONST char *yytermname[] = {
 	/* 282 */ "NE",
 	/* 283 */ "GE",
 	/* 284 */ "LE",
-	/* 285 */ "ELSE",
-	/* 286 */ "cons",
-	/* 287 */ "instr",
+	/* 285 */ "EQ",
+	/* 286 */ "ELSE",
 	""
 };
 
@@ -208,11 +207,9 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		return;
 	case 283: /* LE */
 		return;
-	case 284: /* ELSE */
+	case 284: /* EQ */
 		return;
-	case 285: /* cons */
-		return;
-	case 286: /* instr */
+	case 285: /* ELSE */
 		return;
 	default:
 		PANIC("yylabel", "Bad terminal", OP_LABEL(a));

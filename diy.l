@@ -23,6 +23,7 @@ FLT	[0-9]+\.[0-9]+([Ee][+-]?[0-9]+)?
 ">="			eoi = 0; return GE;
 "<="			eoi = 0; return LE;
 "<>"			eoi = 0; return NE;
+"="             eoi = 0; return EQ;
 ":="			eoi = 0; return ASSIGN;
 "++"			eoi = 0; return INCR;
 "--"			eoi = 0; return DECR;

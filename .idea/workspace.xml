@@ -11,7 +11,20 @@
   <component name="ChangeListManager">
     <list default="true" id="36bb93ca-f40c-438c-8470-bc7877b8a9e1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diy" beforeDir="false" afterPath="$PROJECT_DIR$/diy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diy.l" beforeDir="false" afterPath="$PROJECT_DIR$/diy.l" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/diy.y" beforeDir="false" afterPath="$PROJECT_DIR$/diy.y" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lex.yy.c" beforeDir="false" afterPath="$PROJECT_DIR$/lex.yy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/dbl.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/lib.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/libdiy.a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/linux.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/sys.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/y.output" beforeDir="false" afterPath="$PROJECT_DIR$/y.output" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/y.tab.c" beforeDir="false" afterPath="$PROJECT_DIR$/y.tab.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/y.tab.h" beforeDir="false" afterPath="$PROJECT_DIR$/y.tab.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yyselect.c" beforeDir="false" afterPath="$PROJECT_DIR$/yyselect.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,8 +38,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/diy.y">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
-              <caret line="87" column="39" selection-start-line="87" selection-start-column="39" selection-end-line="87" selection-end-column="39" />
+            <state relative-caret-position="-388">
+              <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/diy.l">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="20" column="41" lean-forward="true" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -78,13 +100,8 @@
         <subPane>
           <expand>
             <path>
-              <item name="Projecto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projecto" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Projecto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projecto" type="462c0819:PsiDirectoryNode" />
-              <item name="exs" type="462c0819:PsiDirectoryNode" />
+              <item name="Comp" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Comp" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -94,7 +111,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Compilers" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -141,17 +158,18 @@
       <workItem from="1554061818965" duration="946000" />
       <workItem from="1554152221883" duration="2625000" />
       <workItem from="1554161159338" duration="1251000" />
+      <workItem from="1554163393667" duration="5238000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49609000" />
+    <option name="totallyTimeSpent" value="54847000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2153518" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2189394" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -165,7 +183,7 @@
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.30552545" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info active="true" anchor="bottom" id="CMake" order="11" visible="true" weight="0.048754063" />
+      <window_info anchor="bottom" id="CMake" order="11" visible="true" weight="0.048859935" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -301,30 +319,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/inicial.l" />
     <entry file="file://$PROJECT_DIR$/initial.y" />
-    <entry file="file://$PROJECT_DIR$/y.output">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="311" lean-forward="true" selection-start-line="311" selection-end-line="311" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/node.h">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/diy.l">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1156">
-          <caret line="68" column="41" selection-start-line="68" selection-start-column="41" selection-end-line="68" selection-end-column="41" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/oquefalta.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/diy.l">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="20" column="41" lean-forward="true" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/y.output">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1127">
+          <caret line="1576" column="19" lean-forward="true" selection-start-line="1576" selection-start-column="19" selection-end-line="1576" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/diy.y">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="87" column="39" selection-start-line="87" selection-start-column="39" selection-end-line="87" selection-end-column="39" />
+        <state relative-caret-position="-388">
+          <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
         </state>
       </provider>
     </entry>

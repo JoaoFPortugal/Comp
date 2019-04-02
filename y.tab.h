@@ -25,9 +25,8 @@
 #define NE 281
 #define GE 282
 #define LE 283
-#define ELSE 284
-#define cons 285
-#define instr 286
+#define EQ 284
+#define ELSE 285
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
