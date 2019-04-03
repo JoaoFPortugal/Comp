@@ -20,41 +20,64 @@ int yyerror(char *s);
 
 %%
 
+
+
+
+
+
+
 file: seq
       | //empty
       ;
 
 seq: declaracao
-	| seq declaracao
-	;
+    | seq declaracao
+    ;
 
 declaracao :
-	| pub const type ptr ID ';'
 	| pub const type ptr ID ini ';'
-	| pub const type ptr ID '(' ')' ';'
-	| pub const type ptr ID '(' ')' body ';'
+	| pub const type ptr ID ';'
 	| pub const type ptr ID '(' params ')' bodys ';'
+	| pub const type ptr ID '(' ')' body ';'
+	| pub const type ptr ID '(' ')' ';'
 	| error ';'
 	;
 
-pub	: //empty
-	| PUBLIC
+
+bodys:
+     | body
+     ;
+
+
+
+ptr	: //empty
+	| '*'
 	;
 
 const	: //empty
 	| CONST
 	;
 
-ptr	: //empty
-	| '*'
+
+pub	: //empty
+	| PUBLIC
 	;
 
 
-type: INTEGER
+type: VOID
+    | INTEGER
     | STRING
     | NUMBER
-    | VOID;
+    ;
 
+
+ini: ASSIGN INT
+   | ASSIGN '-' INT
+   | ASSIGN const STR
+   | ASSIGN REAL
+   | ASSIGN '-' REAL
+   | ASSIGN ID
+   ;
 
 params: params ',' param
       | param
@@ -65,40 +88,29 @@ param: type ptr ID
      ;
 
 
-ini: ASSIGN INT
-   | ASSIGN '-' INT
-   | ASSIGN REAL
-   | ASSIGN '-' REAL
-   | ASSIGN ID
-   | ASSIGN const STR
-   ;
-
-bodys:
-     | body
-     ;
-
-
-
-body: '{' '}'
-     | '{' instrs '}'
-     | '{' args '}'
-     | '{' args instr '}'
-     ;
-
 args: param ';'
      | args param ';'
      ;
 
+body: '{' '}'
+     | '{' args '}'
+     | '{' instrs '}'
+     | '{' args instr '}'
+     ;
+
+
+
 instrs: instr
       | instrs instr
       ;
+
 
 instr: IF expr THEN instr
      | IF expr THEN instr ELSE instr
      | DO instr WHILE expr ';'
      | FOR leftvalue IN expr updw expr step DO instr
      | expr ';'
-     | '{' body '}'
+     | body
      | BREAK INT ';'
      | BREAK ';'
      | CONTINUE INT ';'
@@ -106,6 +118,7 @@ instr: IF expr THEN instr
      | leftvalue '#' expr ';'
      | error ';'
      ;
+
 
 
 updw: UPTO
@@ -117,17 +130,25 @@ step: //empty
     | STEP expr
     ;
 
-leftvalue: ID
-	  | ID '[' expr ']'
 
 exprs: exprs ',' expr
      | expr
      ;
 
+
 expr: INT
     | REAL
     | STR
     | leftvalue
+    | ID '(' exprs ')'
+    | ID '(' ')'
+    | '(' expr ')'
+    | leftvalue ASSIGN expr
+    | '-' expr
+    | leftvalue DECR
+    | leftvalue INCR
+    | DECR leftvalue
+    | INCR leftvalue
     | expr '+' expr
     | expr '-' expr
     | expr '*' expr
@@ -141,17 +162,15 @@ expr: INT
     | expr LE expr
     | expr '&' expr
     | expr '|' expr
-    | leftvalue ASSIGN expr
-    | INCR leftvalue
-    | DECR leftvalue
-    | leftvalue INCR
-    | leftvalue DECR
-    | ID '(' ')'
-    | ID '(' exprs ')'
-    | '(' expr ')'
-    | '-' expr
     | expr '!'
     ;
+
+
+
+leftvalue: ID
+	  | ID '[' expr ']'
+	  ;
+
 
 
 %%
