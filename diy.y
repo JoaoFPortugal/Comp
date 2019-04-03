@@ -19,6 +19,7 @@ int yyerror(char *s);
 %token ASSIGN NE GE LE EQ ELSE
 
 %%
+
 file: seq
       | //empty
       ;
@@ -28,11 +29,11 @@ seq: declaracao
 	;
 
 declaracao :
-	  pub const type ptr ID ini ';'
 	| pub const type ptr ID ';'
+	| pub const type ptr ID ini ';'
 	| pub const type ptr ID '(' ')' ';'
-	| pub const type ptr ID '('  ')' '{' body '}' ';'
-	| pub const type ptr ID '(' params ')' '{' bodys '}' ';'
+	| pub const type ptr ID '(' ')' body ';'
+	| pub const type ptr ID '(' params ')' bodys ';'
 	| error ';'
 	;
 
@@ -73,12 +74,15 @@ ini: ASSIGN INT
    ;
 
 bodys:
-     | body;
+     | body
+     ;
 
-body:
-     | instrs
-     | args
-     | args instr
+
+
+body: '{' '}'
+     | '{' instrs '}'
+     | '{' args '}'
+     | '{' args instr '}'
      ;
 
 args: param ';'
