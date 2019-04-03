@@ -32,7 +32,7 @@ declaracao :
 	| pub const type ptr ID ';'
 	| pub const type ptr ID '(' ')' ';'
 	| pub const type ptr ID '('  ')' '{' body '}' ';'
-	| pub const type ptr ID '(' params ')' '{' body '}' ';'
+	| pub const type ptr ID '(' params ')' '{' bodys '}' ';'
 	| error ';'
 	;
 
@@ -49,7 +49,10 @@ ptr	: //empty
 	;
 
 
-type: INTEGER | STRING | NUMBER | VOID;
+type: INTEGER
+    | STRING
+    | NUMBER
+    | VOID;
 
 
 params: params ',' param
@@ -69,6 +72,9 @@ ini: ASSIGN INT
    | ASSIGN const STR
    ;
 
+bodys:
+     | body;
+
 body:
      | instrs
      | args
@@ -84,7 +90,7 @@ instrs: instr
       ;
 
 instr: IF expr THEN instr
-     | IF INT THEN instr ELSE instr
+     | IF expr THEN instr ELSE instr
      | DO instr WHILE expr ';'
      | FOR leftvalue IN expr updw expr step DO instr
      | expr ';'
@@ -140,9 +146,8 @@ expr: INT
     | ID '(' exprs ')'
     | '(' expr ')'
     | '-' expr
+    | expr '!'
     ;
-
-
 
 
 %%
