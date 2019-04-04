@@ -27,6 +27,13 @@
 #define LE 283
 #define EQ 284
 #define ELSE 285
+#define IFX 286
+#define SHIFT 287
+#define POINTER 288
+#define ADDR 289
+#define UMINUS 290
+#define INC 291
+#define DEC 292
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1

@@ -11,12 +11,6 @@ int yyerror(char *s);
 	double r;		/* real value */
 	char *s;		/* symbol name or string literal */
 };
-%token <i> INT
-%token <r> REAL
-%token <s> ID STR
-%token DO WHILE IF THEN FOR IN UPTO DOWNTO STEP BREAK CONTINUE
-%token VOID INTEGER STRING NUMBER CONST PUBLIC INCR DECR
-%token ASSIGN NE GE LE EQ ELSE
 
 %%
 
@@ -79,9 +73,11 @@ ini: ASSIGN INT
    | ASSIGN ID
    ;
 
+
 params: params ',' param
       | param
       ;
+
 
 
 param: type ptr ID
@@ -91,6 +87,7 @@ param: type ptr ID
 args: param ';'
      | args param ';'
      ;
+
 
 body: '{' '}'
      | '{' args '}'
