@@ -8,7 +8,7 @@
 #include "y.tab.h"
 
 extern int yylex();
-int yyerror(char *s);/
+int yyerror(char *s);
 
 
 %}

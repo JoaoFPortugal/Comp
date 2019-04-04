@@ -11,10 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="36bb93ca-f40c-438c-8470-bc7877b8a9e1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/diy" beforeDir="false" afterPath="$PROJECT_DIR$/diy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/diy.y" beforeDir="false" afterPath="$PROJECT_DIR$/diy.y" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old.y" beforeDir="false" afterPath="$PROJECT_DIR$/old.y" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/y.output" beforeDir="false" afterPath="$PROJECT_DIR$/y.output" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/y.tab.c" beforeDir="false" afterPath="$PROJECT_DIR$/y.tab.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/y.tab.h" beforeDir="false" afterPath="$PROJECT_DIR$/y.tab.h" afterDir="false" />
@@ -32,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/diy.y">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1076">
-              <caret line="143" column="16" lean-forward="true" selection-start-line="143" selection-start-column="16" selection-end-line="143" selection-end-column="16" />
+            <state relative-caret-position="-1459">
+              <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
             </state>
           </provider>
         </entry>
@@ -165,12 +163,12 @@
       <workItem from="1554161159338" duration="1251000" />
       <workItem from="1554163393667" duration="5238000" />
       <workItem from="1554329672634" duration="2995000" />
-      <workItem from="1554335958976" duration="2978000" />
+      <workItem from="1554335958976" duration="4355000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60820000" />
+    <option name="totallyTimeSpent" value="62197000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
@@ -355,8 +353,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/diy.y">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1076">
-          <caret line="143" column="16" lean-forward="true" selection-start-line="143" selection-start-column="16" selection-end-line="143" selection-end-column="16" />
+        <state relative-caret-position="-1459">
+          <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
         </state>
       </provider>
     </entry>

@@ -27,13 +27,9 @@
 #define LE 283
 #define EQ 284
 #define ELSE 285
-#define IFX 286
-#define SHIFT 287
-#define POINTER 288
-#define ADDR 289
-#define UMINUS 290
-#define INC 291
-#define DEC 292
+#define INC 286
+#define DEC 287
+#define IFX 288
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -41,9 +37,9 @@
 #ifndef YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
 typedef union {
-	int i;			/* integer value */
-	double r;		/* real value */
-	char *s;		/* symbol name or string literal */
+  int i;      /* integer value */
+  double r;    /* real value */
+  char *s;    /* symbol name or string literal */
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
 extern YYSTYPE yylval;
