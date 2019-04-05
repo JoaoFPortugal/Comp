@@ -29,7 +29,7 @@
 #define ELSE 285
 #define INC 286
 #define DEC 287
-#define IFX 288
+#define BATATA 288
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -38,8 +38,9 @@
 #define YYSTYPE_IS_DECLARED 1
 typedef union {
   int i;      /* integer value */
-  double r;    /* real value */
+  double r;    /* double value */
   char *s;    /* symbol name or string literal */
+  Node *n ;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
 extern YYSTYPE yylval;

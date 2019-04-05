@@ -2,21 +2,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#include <string.h> 
+#include <string.h>
 #include "node.h"
 #include "tabid.h"
 #include "y.tab.h"
 
 extern int yylex();
 int yyerror(char *s);
+extern void program(int enter, Node *body), declare(char *name, Node * value);
+extern void function(char *name, int enter, Node *body);
+int pos; /* local variable offset (no functions inside a function) */
+int lbl; /* label counter for generated labels */
+int cclbl; /* label counter for generated cicle labels */
+char *mklbl(int n); /* generate counter based label */
 
 
 %}
 
 %union {
   int i;      /* integer value */
-  double r;    /* real value */
+  double r;    /* double value */
   char *s;    /* symbol name or string literal */
+  Node *n ;
 };
 
 
@@ -27,8 +34,7 @@ int yyerror(char *s);
 %token VOID INTEGER STRING NUMBER CONST PUBLIC INCR DECR
 %token ASSIGN NE GE LE EQ ELSE INC DEC
 
-
-%nonassoc IFX
+%nonassoc BATATA
 %nonassoc ELSE
 %right ASSIGN
 %left '|'
@@ -38,6 +44,8 @@ int yyerror(char *s);
 %left '+' '-'
 %left '*' '/' '%'
 %nonassoc '!' INC DEC
+
+%type <n> leftvalue ini expr exprs body bodys instr instrs args seq declaracao type ptr const pub param params  updw step
 
 
 %%
@@ -49,6 +57,7 @@ file: seq
 seq: declaracao
     | seq declaracao
     ;
+
 
 declaracao  : pub const type ptr ID ';'
 
@@ -126,7 +135,7 @@ instrs : instr
 
 
 
-instr : IF expr THEN instr  %prec IFX
+instr : IF expr THEN instr  %prec BATATA
 
           | IF expr THEN instr ELSE instr
 

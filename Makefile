@@ -13,7 +13,9 @@ $(LANG): $(LANG).y $(LANG).l $(LANG).brg
 	byacc -dv $(LANG).y
 	flex -l $(LANG).l
 	pburg -T $(LANG).brg
-	$(LINK.c) -o $(LANG) $(ARCH) -I$(LIB) lex.yy.c y.tab.c yyselect.c -L$(LIB) -l$(UTIL)
+	$(LINK.c) -o $(LANG) -DYYDEBUG=1 -Ilib lex.yy.c y.tab.c yyselect.c lib/libutil.a
+
+
 
 examples:: $(LANG)
 	make -C $(EXS)
