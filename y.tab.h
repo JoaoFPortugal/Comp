@@ -29,7 +29,20 @@
 #define ELSE 285
 #define INC 286
 #define DEC 287
-#define BATATA 288
+#define PROG 288
+#define DECLS 289
+#define DECL 290
+#define INI 291
+#define NIL 292
+#define EXPRS 293
+#define ALLOC 294
+#define ARGINST 295
+#define PARAMS 296
+#define PARAM 297
+#define INSTRS 298
+#define ARGS 299
+#define BATATA 300
+#define PMINUS 301
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1

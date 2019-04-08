@@ -10,13 +10,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36bb93ca-f40c-438c-8470-bc7877b8a9e1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/diy" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/diy.y" beforeDir="false" afterPath="$PROJECT_DIR$/diy.y" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old.y" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/oquefalta.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libdiy.a" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/y.output" beforeDir="false" afterPath="$PROJECT_DIR$/y.output" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/y.tab.c" beforeDir="false" afterPath="$PROJECT_DIR$/y.tab.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/y.tab.h" beforeDir="false" afterPath="$PROJECT_DIR$/y.tab.h" afterDir="false" />
@@ -37,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/diy.y">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="51" selection-start-line="51" selection-end-line="51" />
+            <state relative-caret-position="147">
+              <caret line="102" column="32" lean-forward="true" selection-start-line="102" selection-start-column="32" selection-end-line="102" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -77,8 +73,8 @@
         <option value="$PROJECT_DIR$/diy.l" />
         <option value="$PROJECT_DIR$/old.y" />
         <option value="$PROJECT_DIR$/y.tab.h" />
-        <option value="$PROJECT_DIR$/diy.y" />
         <option value="$PROJECT_DIR$/Makefile" />
+        <option value="$PROJECT_DIR$/diy.y" />
       </list>
     </option>
   </component>
@@ -173,18 +169,19 @@
       <workItem from="1554390509153" duration="786000" />
       <workItem from="1554391631649" duration="170000" />
       <workItem from="1554425188020" duration="284000" />
-      <workItem from="1554425576701" duration="2403000" />
+      <workItem from="1554425576701" duration="2738000" />
+      <workItem from="1554680700117" duration="5589000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65870000" />
+    <option name="totallyTimeSpent" value="71794000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23257576" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23636363" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -379,8 +376,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/diy.y">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
+        <state relative-caret-position="147">
+          <caret line="102" column="32" lean-forward="true" selection-start-line="102" selection-start-column="32" selection-end-line="102" selection-end-column="32" />
         </state>
       </provider>
     </entry>

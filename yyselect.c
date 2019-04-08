@@ -1,5 +1,5 @@
 /*
-generated at Fri Apr  5 02:31:14 2019
+generated at Mon Apr  8 02:21:45 2019
 by $Id: pburg.c,v 2.5 2017/11/16 09:41:42 prs Exp $
 */
 #include <stdio.h>
@@ -85,7 +85,20 @@ static YYCONST char *yytermname[] = {
 	/* 286 */ "ELSE",
 	/* 287 */ "INC",
 	/* 288 */ "DEC",
-	/* 289 */ "BATATA",
+	/* 289 */ "PROG",
+	/* 290 */ "DECLS",
+	/* 291 */ "DECL",
+	/* 292 */ "INI",
+	/* 293 */ "NIL",
+	/* 294 */ "EXPRS",
+	/* 295 */ "ALLOC",
+	/* 296 */ "ARGINST",
+	/* 297 */ "PARAMS",
+	/* 298 */ "PARAM",
+	/* 299 */ "INSTRS",
+	/* 300 */ "ARGS",
+	/* 301 */ "BATATA",
+	/* 302 */ "PMINUS",
 	""
 };
 
@@ -218,7 +231,33 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		return;
 	case 287: /* DEC */
 		return;
-	case 288: /* BATATA */
+	case 288: /* PROG */
+		return;
+	case 289: /* DECLS */
+		return;
+	case 290: /* DECL */
+		return;
+	case 291: /* INI */
+		return;
+	case 292: /* NIL */
+		return;
+	case 293: /* EXPRS */
+		return;
+	case 294: /* ALLOC */
+		return;
+	case 295: /* ARGINST */
+		return;
+	case 296: /* PARAMS */
+		return;
+	case 297: /* PARAM */
+		return;
+	case 298: /* INSTRS */
+		return;
+	case 299: /* ARGS */
+		return;
+	case 300: /* BATATA */
+		return;
+	case 301: /* PMINUS */
 		return;
 	default:
 		PANIC("yylabel", "Bad terminal", OP_LABEL(a));
