@@ -15,6 +15,7 @@ int pos; /* local variable offset (no functions inside a function) */
 int lbl; /* label counter for generated labels */
 int cclbl; /* label counter for generated cicle labels */
 char *mklbl(int n); /* generate counter based label */
+int ciclo=0;
 
 
 %}
@@ -153,21 +154,21 @@ instrs : instr			{$$ = $1;}
 
 
 
-instr : IF expr THEN instr  %prec IFX
+instr : IF expr THEN instr  %prec IFX				 {$$ = binNode(THEN,binNode(IF,$2,nilNode(NIL)),$4);}
 
-       | IF expr THEN instr ELSE instr
+       | IF expr THEN instr ELSE instr				 {$$ = binNode(ELSE,binNode(THEN,binNode(IF,$2,nilNode(NIL)),$4),$6);}
 
 
-       | DO instr  WHILE expr ';'
+       | DO {ciclo++;} instr  WHILE {ciclo--;} expr ';'		{$$ = binNode(DO,binNode(WHILE,$4,nilNode(WHILE)),$3);}
 
-       | FOR leftvalue IN expr updw expr step DO instr
+       | FOR leftvalue IN expr updw expr step DO {ciclo++;} instr {ciclo--;}
 
        | expr ';'		{$$ = $1;}
        | body			{$$ = $1;}
-       | BREAK INT ';'
-       | CONTINUE INT ';'
-       | BREAK ';'
-       | CONTINUE ';'
+       | BREAK INT ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");} $$ = uniNode(BREAK,intNode($2));}
+       | CONTINUE INT ';'	{if(ciclo==0){yyerror("Error; Continue outside of a loop");} $$ = uniNode(CONTINUE, intNode($2));}
+       | BREAK ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");}  $$ = uniNode(BREAK,1);}
+       | CONTINUE ';'		{if(ciclo==0){yyerror("Error; Continue outside of a loop");}  $$ = uniNode(CONTINUE,1);}
        | leftvalue '#' expr ';'	{$$ = binNode(ALLOC,$1,$3); $$->info = $1->info;}
        | error ';'		{yyerrok;}
        ;
