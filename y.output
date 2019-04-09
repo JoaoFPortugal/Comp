@@ -92,12 +92,12 @@
   72       | expr '%' expr
   73       | expr '+' expr
   74       | expr '-' expr
-  75       | expr '>' expr
-  76       | expr '<' expr
-  77       | expr EQ expr
-  78       | expr NE expr
-  79       | expr GE expr
-  80       | expr LE expr
+  75       | expr EQ expr
+  76       | expr NE expr
+  77       | expr GE expr
+  78       | expr LE expr
+  79       | expr '>' expr
+  80       | expr '<' expr
   81       | expr '&' expr
   82       | expr '|' expr
   83       | expr '!'
@@ -741,12 +741,12 @@ state 58
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -975,12 +975,12 @@ state 74
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -1085,12 +1085,12 @@ state 83
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -1106,12 +1106,12 @@ state 84
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -1181,7 +1181,7 @@ state 88
 
 
 state 89
-	expr : expr NE . expr  (78)
+	expr : expr NE . expr  (76)
 
 	INT  shift 43
 	REAL  shift 44
@@ -1198,7 +1198,7 @@ state 89
 
 
 state 90
-	expr : expr GE . expr  (79)
+	expr : expr GE . expr  (77)
 
 	INT  shift 43
 	REAL  shift 44
@@ -1215,7 +1215,7 @@ state 90
 
 
 state 91
-	expr : expr LE . expr  (80)
+	expr : expr LE . expr  (78)
 
 	INT  shift 43
 	REAL  shift 44
@@ -1232,7 +1232,7 @@ state 91
 
 
 state 92
-	expr : expr EQ . expr  (77)
+	expr : expr EQ . expr  (75)
 
 	INT  shift 43
 	REAL  shift 44
@@ -1283,7 +1283,7 @@ state 94
 
 
 state 95
-	expr : expr '>' . expr  (75)
+	expr : expr '>' . expr  (79)
 
 	INT  shift 43
 	REAL  shift 44
@@ -1300,7 +1300,7 @@ state 95
 
 
 state 96
-	expr : expr '<' . expr  (76)
+	expr : expr '<' . expr  (80)
 
 	INT  shift 43
 	REAL  shift 44
@@ -1491,12 +1491,12 @@ state 112
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -1534,12 +1534,12 @@ state 114
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -1649,12 +1649,12 @@ state 121
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -1691,12 +1691,12 @@ state 122
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -1725,13 +1725,13 @@ state 123
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr NE expr .  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr NE expr .  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -1746,19 +1746,19 @@ state 123
 	'/'  shift 100
 	'%'  shift 101
 	'!'  shift 102
-	DO  reduce 78
-	THEN  reduce 78
-	UPTO  reduce 78
-	DOWNTO  reduce 78
-	STEP  reduce 78
-	NE  reduce 78
-	EQ  reduce 78
-	'|'  reduce 78
-	'&'  reduce 78
-	')'  reduce 78
-	']'  reduce 78
-	';'  reduce 78
-	','  reduce 78
+	DO  reduce 76
+	THEN  reduce 76
+	UPTO  reduce 76
+	DOWNTO  reduce 76
+	STEP  reduce 76
+	NE  reduce 76
+	EQ  reduce 76
+	'|'  reduce 76
+	'&'  reduce 76
+	')'  reduce 76
+	']'  reduce 76
+	';'  reduce 76
+	','  reduce 76
 
 
 state 124
@@ -1767,105 +1767,17 @@ state 124
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr GE expr .  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr GE expr .  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
 
-	'+'  shift 97
-	'-'  shift 98
-	'*'  shift 99
-	'/'  shift 100
-	'%'  shift 101
-	'!'  shift 102
-	DO  reduce 79
-	THEN  reduce 79
-	UPTO  reduce 79
-	DOWNTO  reduce 79
-	STEP  reduce 79
-	NE  reduce 79
-	GE  reduce 79
-	LE  reduce 79
-	EQ  reduce 79
-	'|'  reduce 79
-	'&'  reduce 79
-	'>'  reduce 79
-	'<'  reduce 79
-	')'  reduce 79
-	']'  reduce 79
-	';'  reduce 79
-	','  reduce 79
-
-
-state 125
-	expr : expr . '*' expr  (70)
-	expr : expr . '/' expr  (71)
-	expr : expr . '%' expr  (72)
-	expr : expr . '+' expr  (73)
-	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
-	expr : expr LE expr .  (80)
-	expr : expr . '&' expr  (81)
-	expr : expr . '|' expr  (82)
-	expr : expr . '!'  (83)
-
-	'+'  shift 97
-	'-'  shift 98
-	'*'  shift 99
-	'/'  shift 100
-	'%'  shift 101
-	'!'  shift 102
-	DO  reduce 80
-	THEN  reduce 80
-	UPTO  reduce 80
-	DOWNTO  reduce 80
-	STEP  reduce 80
-	NE  reduce 80
-	GE  reduce 80
-	LE  reduce 80
-	EQ  reduce 80
-	'|'  reduce 80
-	'&'  reduce 80
-	'>'  reduce 80
-	'<'  reduce 80
-	')'  reduce 80
-	']'  reduce 80
-	';'  reduce 80
-	','  reduce 80
-
-
-state 126
-	expr : expr . '*' expr  (70)
-	expr : expr . '/' expr  (71)
-	expr : expr . '%' expr  (72)
-	expr : expr . '+' expr  (73)
-	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr EQ expr .  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
-	expr : expr . '&' expr  (81)
-	expr : expr . '|' expr  (82)
-	expr : expr . '!'  (83)
-
-	GE  shift 90
-	LE  shift 91
-	'>'  shift 95
-	'<'  shift 96
 	'+'  shift 97
 	'-'  shift 98
 	'*'  shift 99
@@ -1878,13 +1790,101 @@ state 126
 	DOWNTO  reduce 77
 	STEP  reduce 77
 	NE  reduce 77
+	GE  reduce 77
+	LE  reduce 77
 	EQ  reduce 77
 	'|'  reduce 77
 	'&'  reduce 77
+	'>'  reduce 77
+	'<'  reduce 77
 	')'  reduce 77
 	']'  reduce 77
 	';'  reduce 77
 	','  reduce 77
+
+
+state 125
+	expr : expr . '*' expr  (70)
+	expr : expr . '/' expr  (71)
+	expr : expr . '%' expr  (72)
+	expr : expr . '+' expr  (73)
+	expr : expr . '-' expr  (74)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr LE expr .  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
+	expr : expr . '&' expr  (81)
+	expr : expr . '|' expr  (82)
+	expr : expr . '!'  (83)
+
+	'+'  shift 97
+	'-'  shift 98
+	'*'  shift 99
+	'/'  shift 100
+	'%'  shift 101
+	'!'  shift 102
+	DO  reduce 78
+	THEN  reduce 78
+	UPTO  reduce 78
+	DOWNTO  reduce 78
+	STEP  reduce 78
+	NE  reduce 78
+	GE  reduce 78
+	LE  reduce 78
+	EQ  reduce 78
+	'|'  reduce 78
+	'&'  reduce 78
+	'>'  reduce 78
+	'<'  reduce 78
+	')'  reduce 78
+	']'  reduce 78
+	';'  reduce 78
+	','  reduce 78
+
+
+state 126
+	expr : expr . '*' expr  (70)
+	expr : expr . '/' expr  (71)
+	expr : expr . '%' expr  (72)
+	expr : expr . '+' expr  (73)
+	expr : expr . '-' expr  (74)
+	expr : expr . EQ expr  (75)
+	expr : expr EQ expr .  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
+	expr : expr . '&' expr  (81)
+	expr : expr . '|' expr  (82)
+	expr : expr . '!'  (83)
+
+	GE  shift 90
+	LE  shift 91
+	'>'  shift 95
+	'<'  shift 96
+	'+'  shift 97
+	'-'  shift 98
+	'*'  shift 99
+	'/'  shift 100
+	'%'  shift 101
+	'!'  shift 102
+	DO  reduce 75
+	THEN  reduce 75
+	UPTO  reduce 75
+	DOWNTO  reduce 75
+	STEP  reduce 75
+	NE  reduce 75
+	EQ  reduce 75
+	'|'  reduce 75
+	'&'  reduce 75
+	')'  reduce 75
+	']'  reduce 75
+	';'  reduce 75
+	','  reduce 75
 
 
 state 127
@@ -1893,12 +1893,12 @@ state 127
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr '|' expr .  (82)
@@ -1935,12 +1935,12 @@ state 128
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr '&' expr .  (81)
 	expr : expr . '|' expr  (82)
@@ -1977,13 +1977,13 @@ state 129
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr '>' expr .  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr '>' expr .  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -1994,23 +1994,23 @@ state 129
 	'/'  shift 100
 	'%'  shift 101
 	'!'  shift 102
-	DO  reduce 75
-	THEN  reduce 75
-	UPTO  reduce 75
-	DOWNTO  reduce 75
-	STEP  reduce 75
-	NE  reduce 75
-	GE  reduce 75
-	LE  reduce 75
-	EQ  reduce 75
-	'|'  reduce 75
-	'&'  reduce 75
-	'>'  reduce 75
-	'<'  reduce 75
-	')'  reduce 75
-	']'  reduce 75
-	';'  reduce 75
-	','  reduce 75
+	DO  reduce 79
+	THEN  reduce 79
+	UPTO  reduce 79
+	DOWNTO  reduce 79
+	STEP  reduce 79
+	NE  reduce 79
+	GE  reduce 79
+	LE  reduce 79
+	EQ  reduce 79
+	'|'  reduce 79
+	'&'  reduce 79
+	'>'  reduce 79
+	'<'  reduce 79
+	')'  reduce 79
+	']'  reduce 79
+	';'  reduce 79
+	','  reduce 79
 
 
 state 130
@@ -2019,13 +2019,13 @@ state 130
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr '<' expr .  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
+	expr : expr '<' expr .  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2036,23 +2036,23 @@ state 130
 	'/'  shift 100
 	'%'  shift 101
 	'!'  shift 102
-	DO  reduce 76
-	THEN  reduce 76
-	UPTO  reduce 76
-	DOWNTO  reduce 76
-	STEP  reduce 76
-	NE  reduce 76
-	GE  reduce 76
-	LE  reduce 76
-	EQ  reduce 76
-	'|'  reduce 76
-	'&'  reduce 76
-	'>'  reduce 76
-	'<'  reduce 76
-	')'  reduce 76
-	']'  reduce 76
-	';'  reduce 76
-	','  reduce 76
+	DO  reduce 80
+	THEN  reduce 80
+	UPTO  reduce 80
+	DOWNTO  reduce 80
+	STEP  reduce 80
+	NE  reduce 80
+	GE  reduce 80
+	LE  reduce 80
+	EQ  reduce 80
+	'|'  reduce 80
+	'&'  reduce 80
+	'>'  reduce 80
+	'<'  reduce 80
+	')'  reduce 80
+	']'  reduce 80
+	';'  reduce 80
+	','  reduce 80
 
 
 state 131
@@ -2062,12 +2062,12 @@ state 131
 	expr : expr . '+' expr  (73)
 	expr : expr '+' expr .  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2104,12 +2104,12 @@ state 132
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
 	expr : expr '-' expr .  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2146,12 +2146,12 @@ state 133
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2188,12 +2188,12 @@ state 134
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2230,12 +2230,12 @@ state 135
 	expr : expr '%' expr .  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2313,12 +2313,12 @@ state 141
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2372,12 +2372,12 @@ state 143
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2416,12 +2416,12 @@ state 145
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2518,12 +2518,12 @@ state 152
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2580,12 +2580,12 @@ state 155
 	expr : expr . '%' expr  (72)
 	expr : expr . '+' expr  (73)
 	expr : expr . '-' expr  (74)
-	expr : expr . '>' expr  (75)
-	expr : expr . '<' expr  (76)
-	expr : expr . EQ expr  (77)
-	expr : expr . NE expr  (78)
-	expr : expr . GE expr  (79)
-	expr : expr . LE expr  (80)
+	expr : expr . EQ expr  (75)
+	expr : expr . NE expr  (76)
+	expr : expr . GE expr  (77)
+	expr : expr . LE expr  (78)
+	expr : expr . '>' expr  (79)
+	expr : expr . '<' expr  (80)
 	expr : expr . '&' expr  (81)
 	expr : expr . '|' expr  (82)
 	expr : expr . '!'  (83)
@@ -2639,5 +2639,5 @@ state 157
 	.  reduce 43
 
 
-66 terminals, 21 nonterminals
+76 terminals, 21 nonterminals
 87 grammar rules, 158 states

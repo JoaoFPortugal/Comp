@@ -126,8 +126,18 @@ extern int YYPARSE_DECL();
 #define PARAM 297
 #define INSTRS 298
 #define ARGS 299
-#define BATATA 300
-#define PMINUS 301
+#define POINTER 300
+#define SUM 301
+#define SUBT 302
+#define MUL 303
+#define DIV 304
+#define MOD 305
+#define GT 306
+#define LT 307
+#define AND 308
+#define OR 309
+#define IFX 310
+#define PMINUS 311
 #define YYERRCODE 256
 typedef short YYINT;
 static const YYINT yylhs[] = {                           -1,
@@ -304,48 +314,48 @@ static const YYINT yytable[] = {                         85,
     0,   65,    0,   40,   40,    0,    0,    0,   42,   43,
    44,   45,   46,   47,    0,   48,    0,   49,    0,   40,
    40,    0,   50,   51,    0,    0,    0,    0,    0,    0,
-    0,   78,    0,    0,   78,   65,    0,   78,   52,   53,
+    0,   76,    0,    0,   76,   65,    0,   76,   52,   53,
     0,    0,    0,    0,   42,   43,   44,   45,   46,   47,
-    0,   48,   78,   49,    0,    0,    0,    0,   50,   51,
+    0,   48,   76,   49,    0,    0,    0,    0,   50,   51,
    43,   44,   45,   46,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,   52,   53,    0,    0,   42,   43,
-   44,   45,   46,   47,    0,   48,   78,   49,    0,   52,
+   44,   45,   46,   47,    0,   48,   76,   49,    0,   52,
    53,   73,   50,   51,   73,    0,   73,   73,   73,    0,
    74,    0,    0,   74,    0,   74,   74,   74,   52,   53,
-    0,    0,   73,   73,    0,   73,    0,   78,    0,    0,
-    0,   74,   74,    0,   74,    0,   79,    0,    0,   79,
-    0,    0,   79,    0,    0,   80,    0,    0,   80,    0,
-    0,   80,    0,    0,    0,    0,   73,   79,   79,    0,
-   79,    0,    0,    0,    0,   74,   80,   80,    0,   80,
-    0,   75,    0,    0,   75,    0,    0,   75,    0,    0,
-   76,    0,    0,   76,    0,    0,   76,   73,    0,    0,
-    0,   79,   75,   75,    0,   75,   74,    0,    0,    0,
-   80,   76,   76,    0,   76,    0,   77,    0,    0,   77,
-    0,    0,   77,   65,    0,    0,   65,    0,    0,   65,
-   65,   65,   79,    0,    0,    0,   75,   77,    0,    0,
-    0,   80,    0,    0,    0,   76,    0,    0,    0,    0,
+    0,    0,   73,   73,    0,   73,    0,   76,    0,    0,
+    0,   74,   74,    0,   74,    0,   77,    0,    0,   77,
+    0,    0,   77,    0,    0,   78,    0,    0,   78,    0,
+    0,   78,    0,    0,    0,    0,   73,   77,   77,    0,
+   77,    0,    0,    0,    0,   74,   78,   78,    0,   78,
+    0,   79,    0,    0,   79,    0,    0,   79,    0,    0,
+   80,    0,    0,   80,    0,    0,   80,   73,    0,    0,
+    0,   77,   79,   79,    0,   79,   74,    0,    0,    0,
+   78,   80,   80,    0,   80,    0,   75,    0,    0,   75,
+    0,    0,   75,   65,    0,    0,   65,    0,    0,   65,
+   65,   65,   77,    0,    0,    0,   79,   75,    0,    0,
+    0,   78,    0,    0,    0,   80,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,   75,    0,    0,
-    0,   77,    0,    0,   78,    0,   76,   78,    0,    0,
-   78,   78,   78,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,   78,    0,    0,   78,    0,    0,
-    0,    0,   77,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,   79,    0,    0,
+    0,   75,    0,    0,   76,    0,   80,   76,    0,    0,
+   76,   76,   76,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,   76,    0,    0,   76,    0,    0,
+    0,    0,   75,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,   73,    0,    0,   73,    0,    0,
    73,   73,   73,   74,    0,    0,   74,    0,    0,   74,
    74,   74,    0,    0,   73,   73,   73,   73,    0,    0,
-    0,    0,    0,   74,   74,   74,   74,    0,    0,   79,
-    0,    0,   79,    0,    0,   79,   79,   79,   80,    0,
-    0,   80,    0,    0,   80,   80,   80,    0,    0,   79,
-   79,   79,   79,    0,    0,    0,    0,    0,   80,   80,
-   80,   80,    0,    0,   75,    0,    0,   75,    0,    0,
-   75,   75,   75,   76,    0,    0,   76,    0,    0,   76,
-   76,   76,    0,    0,   75,   75,   75,   75,    0,    0,
-    0,   74,    0,   76,   76,   76,   76,   83,   84,   77,
-    0,    0,   77,    0,    0,   77,   77,   77,    0,    0,
-    0,    0,    0,  112,  114,    0,    0,    0,    0,   77,
-    0,    0,   77,    0,    0,    0,    0,    0,  121,    0,
+    0,    0,    0,   74,   74,   74,   74,    0,    0,   77,
+    0,    0,   77,    0,    0,   77,   77,   77,   78,    0,
+    0,   78,    0,    0,   78,   78,   78,    0,    0,   77,
+   77,   77,   77,    0,    0,    0,    0,    0,   78,   78,
+   78,   78,    0,    0,   79,    0,    0,   79,    0,    0,
+   79,   79,   79,   80,    0,    0,   80,    0,    0,   80,
+   80,   80,    0,    0,   79,   79,   79,   79,    0,    0,
+    0,   74,    0,   80,   80,   80,   80,   83,   84,   75,
+    0,    0,   75,    0,    0,   75,   75,   75,    0,    0,
+    0,    0,    0,  112,  114,    0,    0,    0,    0,   75,
+    0,    0,   75,    0,    0,    0,    0,    0,  121,    0,
     0,  122,  123,  124,  125,  126,  127,  128,  129,  130,
   131,  132,  133,  134,  135,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,  141,    0,
@@ -497,8 +507,8 @@ static const YYINT yycheck[] = {                         33,
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 301
-#define YYUNDFTOKEN 323
+#define YYMAXTOKEN 311
+#define YYUNDFTOKEN 333
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
 static const char *const yyname[] = {
@@ -514,8 +524,9 @@ static const char *const yyname[] = {
 "WHILE","IF","THEN","FOR","IN","UPTO","DOWNTO","STEP","BREAK","CONTINUE","VOID",
 "INTEGER","STRING","NUMBER","CONST","PUBLIC","INCR","DECR","ASSIGN","NE","GE",
 "LE","EQ","ELSE","INC","DEC","PROG","DECLS","DECL","INI","NIL","EXPRS","ALLOC",
-"ARGINST","PARAMS","PARAM","INSTRS","ARGS","BATATA","PMINUS",0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,"illegal-symbol",
+"ARGINST","PARAMS","PARAM","INSTRS","ARGS","POINTER","SUM","SUBT","MUL","DIV",
+"MOD","GT","LT","AND","OR","IFX","PMINUS",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,"illegal-symbol",
 };
 static const char *const yyrule[] = {
 "$accept : file",
@@ -593,12 +604,12 @@ static const char *const yyrule[] = {
 "expr : expr '%' expr",
 "expr : expr '+' expr",
 "expr : expr '-' expr",
-"expr : expr '>' expr",
-"expr : expr '<' expr",
 "expr : expr EQ expr",
 "expr : expr NE expr",
 "expr : expr GE expr",
 "expr : expr LE expr",
+"expr : expr '>' expr",
+"expr : expr '<' expr",
 "expr : expr '&' expr",
 "expr : expr '|' expr",
 "expr : expr '!'",
@@ -642,7 +653,40 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 224 "diy.y"
+#line 230 "diy.y"
+
+int checkOp(Node *op1, Node *op2){
+     if(op1->info==0 || op2->info == 0){
+     	yyerror("Invalid argument type for operation: can't cast void");
+     }
+
+     if(op1->info == 2 || op2->info == 2){
+     	yyerror("Invalid argument type for operation: can't cast string");
+     }
+
+     if(op1->info == 3 || op2->info == 3){
+     	return 3;
+     }
+     return 1;
+}
+
+int checkCompOp(Node *op1, Node *op2){
+	if(op1->info == 0 || op2->info == 0){
+	  yyerror("Invalid argument type for operation: can't compare void");
+	}
+
+	if(op1->info == 2 && op2->info !=2){
+	  yyerror("Invalid argument type for operation: can't compare string to non-string");
+	}
+
+    return 1;
+}
+
+void checkLogicOp(Node *op1, Node *op2){
+	if(op1->info != 1 || op2->info != 2){
+	   yyerror("Invalid argument type for logic operation");
+	}
+}
 
 char **names =
  #if YYDEBUG > 0
@@ -664,7 +708,7 @@ int main(int argc, char *argv[]) {
  return 0;
 }
 
-#line 668 "y.tab.c"
+#line 712 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -895,210 +939,276 @@ case 6:
             					  }
             					}
 break;
+case 8:
+#line 81 "diy.y"
+	{IDnew(yystack.l_mark[-8].n->info+yystack.l_mark[-7].n->info + yystack.l_mark[-6].n->info + yystack.l_mark[-5].n->info,yystack.l_mark[-4].s,0); IDpush();
+            						if(yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info !=0 ){
+            						IDnew(yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info,yystack.l_mark[-4].s,0);
+            						}}
+break;
 case 9:
-#line 83 "diy.y"
+#line 86 "diy.y"
 	{yyval.n=uniNode(DECL,strNode(ID,yystack.l_mark[-3].s));
             						IDnew(yystack.l_mark[-7].n->info+yystack.l_mark[-6].n->info+yystack.l_mark[-5].n->info+yystack.l_mark[-4].n->info,yystack.l_mark[-3].s,0);}
 break;
 case 10:
-#line 85 "diy.y"
+#line 88 "diy.y"
 	{yyerrok;}
 break;
 case 11:
-#line 89 "diy.y"
+#line 92 "diy.y"
 	{yyval.n= nilNode(NIL);}
 break;
 case 12:
-#line 90 "diy.y"
+#line 93 "diy.y"
 	{yyval.n = yystack.l_mark[0].n;}
 break;
 case 14:
-#line 94 "diy.y"
-	{yyval.n = uniNode(REAL,0); yyval.n->info = 4;}
+#line 97 "diy.y"
+	{yyval.n = uniNode(POINTER,0); yyval.n->info = 4;}
 break;
 case 16:
-#line 98 "diy.y"
+#line 101 "diy.y"
 	{yyval.n = uniNode(CONST,0); yyval.n->info = 8;}
 break;
 case 18:
-#line 103 "diy.y"
+#line 106 "diy.y"
 	{yyval.n = uniNode(VOID,0); yyval.n->info = 16;}
 break;
 case 19:
-#line 107 "diy.y"
+#line 110 "diy.y"
 	{yyval.n = uniNode(VOID,0); yyval.n->info = 0;}
 break;
 case 20:
-#line 108 "diy.y"
+#line 111 "diy.y"
 	{yyval.n = uniNode(INTEGER,0); yyval.n->info = 1;}
 break;
 case 21:
-#line 109 "diy.y"
+#line 112 "diy.y"
 	{yyval.n = uniNode(STRING,0); yyval.n->info = 2;}
 break;
 case 22:
-#line 110 "diy.y"
+#line 113 "diy.y"
 	{yyval.n = uniNode(NUMBER,0); yyval.n->info = 3;}
 break;
 case 23:
-#line 115 "diy.y"
+#line 118 "diy.y"
 	{yyval.n = intNode(INT,yystack.l_mark[0].i); yyval.n->info = 1;}
 break;
 case 24:
-#line 116 "diy.y"
+#line 119 "diy.y"
 	{yyval.n = intNode(INT,-yystack.l_mark[0].i); yyval.n->info = 1;}
 break;
 case 25:
-#line 117 "diy.y"
+#line 120 "diy.y"
 	{yyval.n = strNode(STR,yystack.l_mark[0].s); yyval.n->info = yystack.l_mark[-1].n->info+2;}
 break;
 case 26:
-#line 118 "diy.y"
+#line 121 "diy.y"
 	{yyval.n = realNode(REAL,yystack.l_mark[0].r); yyval.n->info = 3;}
 break;
 case 27:
-#line 119 "diy.y"
+#line 122 "diy.y"
 	{yyval.n = realNode(REAL,-yystack.l_mark[0].r); yyval.n->info = 3;}
 break;
 case 28:
-#line 120 "diy.y"
+#line 123 "diy.y"
 	{yyval.n = strNode(ID, yystack.l_mark[0].s); yyval.n->info = IDfind(yystack.l_mark[0].s,0);}
 break;
 case 29:
-#line 124 "diy.y"
+#line 127 "diy.y"
 	{yyval.n = binNode(PARAMS, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[0].n->info;}
 break;
 case 30:
-#line 125 "diy.y"
+#line 128 "diy.y"
 	{yyval.n = uniNode(PARAMS,yystack.l_mark[0].n); yyval.n->info = yystack.l_mark[0].n->info;}
 break;
 case 31:
-#line 128 "diy.y"
+#line 131 "diy.y"
 	{yyval.n = strNode(ID,yystack.l_mark[0].s); IDnew(yystack.l_mark[-2].n->info+yystack.l_mark[-1].n->info,yystack.l_mark[0].s,0);
 				yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[-1].n->info;}
 break;
 case 32:
-#line 133 "diy.y"
+#line 136 "diy.y"
 	{yyval.n = yystack.l_mark[-1].n;}
 break;
 case 33:
-#line 134 "diy.y"
+#line 137 "diy.y"
 	{yyval.n = binNode(ARGS, yystack.l_mark[-2].n, yystack.l_mark[-1].n); yyval.n->info = yystack.l_mark[-2].n->info + yystack.l_mark[-1].n->info; }
 break;
 case 34:
-#line 138 "diy.y"
+#line 141 "diy.y"
 	{yyval.n = nilNode(NIL);}
 break;
 case 35:
-#line 139 "diy.y"
+#line 142 "diy.y"
 	{yyval.n = uniNode(PARAMS,yystack.l_mark[-1].n);}
 break;
 case 36:
-#line 140 "diy.y"
+#line 143 "diy.y"
 	{yyval.n = uniNode(INSTRS,yystack.l_mark[-1].n);}
 break;
 case 37:
-#line 141 "diy.y"
+#line 144 "diy.y"
 	{yyval.n = binNode(ARGINST, yystack.l_mark[-2].n,yystack.l_mark[-1].n);}
 break;
 case 38:
-#line 146 "diy.y"
+#line 149 "diy.y"
 	{yyval.n = yystack.l_mark[0].n;}
 break;
 case 39:
-#line 147 "diy.y"
+#line 150 "diy.y"
 	{yyval.n = binNode(INSTRS,yystack.l_mark[-1].n,yystack.l_mark[0].n);}
 break;
 case 44:
-#line 162 "diy.y"
+#line 165 "diy.y"
 	{yyval.n = yystack.l_mark[-1].n;}
 break;
 case 45:
-#line 163 "diy.y"
+#line 166 "diy.y"
 	{yyval.n = yystack.l_mark[0].n;}
 break;
 case 50:
-#line 168 "diy.y"
+#line 171 "diy.y"
 	{yyval.n = binNode(ALLOC,yystack.l_mark[-3].n,yystack.l_mark[-1].n); yyval.n->info = yystack.l_mark[-3].n->info;}
 break;
 case 51:
-#line 169 "diy.y"
+#line 172 "diy.y"
 	{yyerrok;}
 break;
 case 52:
-#line 172 "diy.y"
+#line 175 "diy.y"
 	{yyval.n = uniNode(UPTO,0);}
 break;
 case 53:
-#line 173 "diy.y"
+#line 176 "diy.y"
 	{yyval.n = uniNode(DOWNTO,0);}
 break;
 case 54:
-#line 176 "diy.y"
+#line 179 "diy.y"
 	{yyval.n = nilNode(NIL);}
 break;
 case 55:
-#line 177 "diy.y"
+#line 180 "diy.y"
 	{yyval.n =uniNode(STEP,yystack.l_mark[0].n);}
 break;
 case 56:
-#line 180 "diy.y"
+#line 183 "diy.y"
 	{yyval.n = binNode(EXPRS, yystack.l_mark[-2].n, yystack.l_mark[0].n);}
 break;
 case 57:
-#line 181 "diy.y"
+#line 184 "diy.y"
 	{yyval.n = yystack.l_mark[0].n;}
 break;
 case 58:
-#line 185 "diy.y"
+#line 188 "diy.y"
 	{yyval.n = intNode(INT,yystack.l_mark[0].i); yyval.n->info = 1;}
 break;
 case 59:
-#line 186 "diy.y"
+#line 189 "diy.y"
 	{yyval.n = realNode(REAL,yystack.l_mark[0].r); yyval.n->info = 3;}
 break;
 case 60:
-#line 187 "diy.y"
+#line 190 "diy.y"
 	{yyval.n = strNode(STR,yystack.l_mark[0].s); yyval.n->info = 2;}
 break;
 case 61:
-#line 188 "diy.y"
+#line 191 "diy.y"
 	{yyval.n = yystack.l_mark[0].n;}
 break;
 case 64:
-#line 191 "diy.y"
+#line 194 "diy.y"
 	{yyval.n = yystack.l_mark[-1].n;}
 break;
+case 65:
+#line 195 "diy.y"
+	{yyval.n = binNode(ASSIGN, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = yystack.l_mark[0].n->info; if(yystack.l_mark[-2].n->info != yystack.l_mark[0].n->info) {
+      				yyerror("Type error: cant assign different types");
+      				 }
+      				}
+break;
 case 66:
-#line 193 "diy.y"
+#line 199 "diy.y"
 	{if(yystack.l_mark[0].n->info!=1){yyerror("Trying to decrement an invalid identifier");}
       				 yyval.n = binNode(DEC, nilNode(NIL), yystack.l_mark[0].n); yyval.n->info = 1;}
 break;
 case 67:
-#line 195 "diy.y"
+#line 201 "diy.y"
 	{if(yystack.l_mark[0].n->info!=1){yyerror("Trying to increment an invalid identifier");}
                                  yyval.n = binNode(INC, nilNode(NIL), yystack.l_mark[0].n); yyval.n->info = 1;}
 break;
 case 68:
-#line 197 "diy.y"
+#line 203 "diy.y"
 	{if(yystack.l_mark[-1].n->info!=1){yyerror("Trying to increment an invalid identifier");}
                                  yyval.n = binNode(INC, nilNode(NIL), yystack.l_mark[-1].n); yyval.n->info = 1;}
 break;
 case 69:
-#line 199 "diy.y"
+#line 205 "diy.y"
 	{if(yystack.l_mark[-1].n->info!=1){yyerror("Trying to decrement an invalid identifier");}
                            	yyval.n = binNode(DEC, nilNode(NIL), yystack.l_mark[-1].n); yyval.n->info = 1;}
 break;
-case 84:
+case 70:
+#line 207 "diy.y"
+	{yyval.n = binNode(MUL, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 71:
+#line 208 "diy.y"
+	{yyval.n = binNode(DIV, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 72:
+#line 209 "diy.y"
+	{yyval.n = binNode(MOD, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 73:
+#line 210 "diy.y"
+	{yyval.n = binNode(SUM, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkOp(yystack.l_mark[-2].n, yystack.l_mark[0].n);}
+break;
+case 74:
+#line 211 "diy.y"
+	{yyval.n = binNode(SUBT , yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 75:
+#line 212 "diy.y"
+	{yyval.n = binNode(EQ, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkCompOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 76:
+#line 213 "diy.y"
+	{yyval.n = binNode(NE, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkCompOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 77:
+#line 214 "diy.y"
+	{yyval.n = binNode(GE, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkCompOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 78:
 #line 215 "diy.y"
+	{yyval.n = binNode(LE, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkCompOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 79:
+#line 216 "diy.y"
+	{yyval.n = binNode(GT, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkCompOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 80:
+#line 217 "diy.y"
+	{yyval.n = binNode(LT, yystack.l_mark[-2].n, yystack.l_mark[0].n); yyval.n->info = checkCompOp(yystack.l_mark[-2].n,yystack.l_mark[0].n); }
+break;
+case 81:
+#line 218 "diy.y"
+	{yyval.n = binNode(AND, yystack.l_mark[-2].n, yystack.l_mark[0].n); checkLogicOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 82:
+#line 219 "diy.y"
+	{yyval.n = binNode(OR, yystack.l_mark[-2].n, yystack.l_mark[0].n); checkLogicOp(yystack.l_mark[-2].n,yystack.l_mark[0].n);}
+break;
+case 84:
+#line 221 "diy.y"
 	{if(yystack.l_mark[0].n->info == 0 || yystack.l_mark[0].n->info==2){yyerror("Invalid type for symmetrical assigment");}
 				yyval.n=uniNode(PMINUS, yystack.l_mark[0].n); yyval.n->info=yystack.l_mark[0].n->info;}
 break;
 case 85:
-#line 219 "diy.y"
+#line 225 "diy.y"
 	{yyval.n = strNode(ID,yystack.l_mark[0].s); yyval.n->info = IDfind(yystack.l_mark[0].s,0);}
 break;
-#line 1102 "y.tab.c"
+#line 1212 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

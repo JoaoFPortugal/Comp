@@ -33,10 +33,10 @@ char *mklbl(int n); /* generate counter based label */
 %token DO WHILE IF THEN FOR IN UPTO DOWNTO STEP BREAK CONTINUE
 %token VOID INTEGER STRING NUMBER CONST PUBLIC INCR DECR
 %token ASSIGN NE GE LE EQ ELSE INC DEC
-%token PROG DECLS DECL INI NIL EXPRS ALLOC ARGINST PARAMS PARAM INSTRS ARGS
+%token PROG DECLS DECL INI NIL EXPRS ALLOC ARGINST PARAMS PARAM INSTRS ARGS POINTER
+%token SUM SUBT MUL DIV MOD GT LT AND OR
 
-
-%nonassoc BATATA
+%nonassoc IFX
 %nonassoc ELSE
 %right ASSIGN
 %left '|'
@@ -78,7 +78,10 @@ declaracao  : pub const type ptr ID ';'		{$$=uniNode(DECL, strNode(ID,$5));
 
             | pub const type ptr ID '(' params ')'  bodys ';'
 
-            | pub const type ptr ID '(' ')' body ';'
+            | pub const type ptr ID '(' ')' body ';'	{IDnew($1->info+$2->info + $3->info + $4->info,$5,0); IDpush();
+            						if($3->info+$4->info !=0 ){
+            						IDnew($3->info+$4->info,$5,0);
+            						}}
 
             | pub const type ptr ID '(' ')' ';'		{$$=uniNode(DECL,strNode(ID,$5));
             						IDnew($1->info+$2->info+$3->info+$4->info,$5,0);}
@@ -90,11 +93,11 @@ bodys :				{$$= nilNode(NIL);}
        | body			{$$ = $1;}
        ;
 
-ptr	: //empty
-	| '*'			{$$ = uniNode(REAL,0); $$->info = 4;}
+ptr	: //empty		{$$ = nilNode(NIL); $$->info = 0;
+	| '*'			{$$ = uniNode(POINTER,0); $$->info = 4;}
 	;
 
-const	: //empty		{$$ = uniNode(NIL); $$->info = 0;}
+const	: //empty		{$$ = nilNode(NIL); $$->info = 0;}
 	| CONST			{$$ = uniNode(CONST,0); $$->info = 8;}
 	;
 
@@ -144,30 +147,30 @@ body: '{' '}'			{$$ = nilNode(NIL);}
 
 
 instrs : instr			{$$ = $1;}
-           | instrs instr	{$$ = binNode(INSTRS,$1,$2);}
-           ;
+       | instrs instr		{$$ = binNode(INSTRS,$1,$2);}
+       ;
 
 
 
 
-instr : IF expr THEN instr  %prec BATATA
+instr : IF expr THEN instr  %prec IFX
 
-          | IF expr THEN instr ELSE instr
+       | IF expr THEN instr ELSE instr
 
 
-          | DO instr  WHILE expr ';'
+       | DO instr  WHILE expr ';'
 
-          | FOR leftvalue IN expr updw expr step DO instr
+       | FOR leftvalue IN expr updw expr step DO instr
 
-          | expr ';'		{$$ = $1;}
-          | body		{$$ = $1;}
-          | BREAK INT ';'
-          | CONTINUE INT ';'
-          | BREAK ';'
-          | CONTINUE ';'
-          | leftvalue '#' expr ';'	{$$ = binNode(ALLOC,$1,$3); $$->info = $1->info;}
-          | error ';'		{yyerrok;}
-          ;
+       | expr ';'		{$$ = $1;}
+       | body			{$$ = $1;}
+       | BREAK INT ';'
+       | CONTINUE INT ';'
+       | BREAK ';'
+       | CONTINUE ';'
+       | leftvalue '#' expr ';'	{$$ = binNode(ALLOC,$1,$3); $$->info = $1->info;}
+       | error ';'		{yyerrok;}
+       ;
 
 updw  :  UPTO			{$$ = uniNode(UPTO,0);}
         | DOWNTO		{$$ = uniNode(DOWNTO,0);}
@@ -189,7 +192,10 @@ expr :	INT		{$$ = intNode(INT,$1); $$->info = 1;}
       | ID '(' exprs ')'
       | ID '(' ')'
       | '(' expr ')'		{$$ = $2;}
-      | leftvalue ASSIGN expr
+      | leftvalue ASSIGN expr	{$$ = binNode(ASSIGN, $1, $3); $$->info = $3->info; if($1->info != $3->info) {
+      				yyerror("Type error: cant assign different types");
+      				 }
+      				}
       | DEC leftvalue		{if($2->info!=1){yyerror("Trying to decrement an invalid identifier");}
       				 $$ = binNode(DEC, nilNode(NIL), $2); $$->info = 1;}
       | INC leftvalue		{if($2->info!=1){yyerror("Trying to increment an invalid identifier");}
@@ -198,19 +204,19 @@ expr :	INT		{$$ = intNode(INT,$1); $$->info = 1;}
                                  $$ = binNode(INC, nilNode(NIL), $1); $$->info = 1;}
       | leftvalue DEC		{if($1->info!=1){yyerror("Trying to decrement an invalid identifier");}
                            	$$ = binNode(DEC, nilNode(NIL), $1); $$->info = 1;}
-      | expr '*' expr
-      | expr '/' expr
-      | expr '%' expr
-      | expr '+' expr
-      | expr '-' expr
-      | expr '>' expr
-      | expr '<' expr
-      | expr EQ expr
-      | expr NE expr
-      | expr GE expr
-      | expr LE expr
-      | expr '&' expr
-      | expr '|' expr
+      | expr '*' expr		{$$ = binNode(MUL, $1, $3); $$->info = checkOp($1,$3);}
+      | expr '/' expr		{$$ = binNode(DIV, $1, $3); $$->info = checkOp($1,$3);}
+      | expr '%' expr		{$$ = binNode(MOD, $1, $3); $$->info = checkOp($1,$3);}
+      | expr '+' expr		{$$ = binNode(SUM, $1, $3); $$->info = checkOp($1, $3);}
+      | expr '-' expr		{$$ = binNode(SUBT , $1, $3); $$->info = checkOp($1,$3);}
+      | expr EQ expr		{$$ = binNode(EQ, $1, $3); $$->info = checkCompOp($1,$3);}
+      | expr NE expr		{$$ = binNode(NE, $1, $3); $$->info = checkCompOp($1,$3);}
+      | expr GE expr		{$$ = binNode(GE, $1, $3); $$->info = checkCompOp($1,$3);}
+      | expr LE expr		{$$ = binNode(LE, $1, $3); $$->info = checkCompOp($1,$3);}
+      | expr '>' expr		{$$ = binNode(GT, $1, $3); $$->info = checkCompOp($1,$3);}
+      | expr '<' expr		{$$ = binNode(LT, $1, $3); $$->info = checkCompOp($1,$3); }
+      | expr '&' expr		{$$ = binNode(AND, $1, $3); checkLogicOp($1,$3);}
+      | expr '|' expr		{$$ = binNode(OR, $1, $3); checkLogicOp($1,$3);}
       | expr '!'
       | '-' expr %prec PMINUS	{if($2->info == 0 || $2->info==2){yyerror("Invalid type for symmetrical assigment");}
 				$$=uniNode(PMINUS, $2); $$->info=$2->info;}
@@ -221,6 +227,39 @@ leftvalue: ID			{$$ = strNode(ID,$1); $$->info = IDfind($1,0);}
           | ID '[' expr ']'
           ;
 %%
+
+int checkOp(Node *op1, Node *op2){
+     if(op1->info==0 || op2->info == 0){
+     	yyerror("Invalid argument type for operation: can't cast void");
+     }
+
+     if(op1->info == 2 || op2->info == 2){
+     	yyerror("Invalid argument type for operation: can't cast string");
+     }
+
+     if(op1->info == 3 || op2->info == 3){
+     	return 3;
+     }
+     return 1;
+}
+
+int checkCompOp(Node *op1, Node *op2){
+	if(op1->info == 0 || op2->info == 0){
+	  yyerror("Invalid argument type for operation: can't compare void");
+	}
+
+	if(op1->info == 2 && op2->info !=2){
+	  yyerror("Invalid argument type for operation: can't compare string to non-string");
+	}
+
+    return 1;
+}
+
+void checkLogicOp(Node *op1, Node *op2){
+	if(op1->info != 1 || op2->info != 2){
+	   yyerror("Invalid argument type for logic operation");
+	}
+}
 
 char **names =
  #if YYDEBUG > 0

@@ -1,5 +1,5 @@
 /*
-generated at Mon Apr  8 02:21:45 2019
+generated at Tue Apr  9 03:42:43 2019
 by $Id: pburg.c,v 2.5 2017/11/16 09:41:42 prs Exp $
 */
 #include <stdio.h>
@@ -97,8 +97,18 @@ static YYCONST char *yytermname[] = {
 	/* 298 */ "PARAM",
 	/* 299 */ "INSTRS",
 	/* 300 */ "ARGS",
-	/* 301 */ "BATATA",
-	/* 302 */ "PMINUS",
+	/* 301 */ "POINTER",
+	/* 302 */ "SUM",
+	/* 303 */ "SUBT",
+	/* 304 */ "MUL",
+	/* 305 */ "DIV",
+	/* 306 */ "MOD",
+	/* 307 */ "GT",
+	/* 308 */ "LT",
+	/* 309 */ "AND",
+	/* 310 */ "OR",
+	/* 311 */ "IFX",
+	/* 312 */ "PMINUS",
 	""
 };
 
@@ -255,9 +265,29 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		return;
 	case 299: /* ARGS */
 		return;
-	case 300: /* BATATA */
+	case 300: /* POINTER */
 		return;
-	case 301: /* PMINUS */
+	case 301: /* SUM */
+		return;
+	case 302: /* SUBT */
+		return;
+	case 303: /* MUL */
+		return;
+	case 304: /* DIV */
+		return;
+	case 305: /* MOD */
+		return;
+	case 306: /* GT */
+		return;
+	case 307: /* LT */
+		return;
+	case 308: /* AND */
+		return;
+	case 309: /* OR */
+		return;
+	case 310: /* IFX */
+		return;
+	case 311: /* PMINUS */
 		return;
 	default:
 		PANIC("yylabel", "Bad terminal", OP_LABEL(a));

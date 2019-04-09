@@ -41,8 +41,18 @@
 #define PARAM 297
 #define INSTRS 298
 #define ARGS 299
-#define BATATA 300
-#define PMINUS 301
+#define POINTER 300
+#define SUM 301
+#define SUBT 302
+#define MUL 303
+#define DIV 304
+#define MOD 305
+#define GT 306
+#define LT 307
+#define AND 308
+#define OR 309
+#define IFX 310
+#define PMINUS 311
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1

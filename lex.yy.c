@@ -607,15 +607,17 @@ char *yytext_ptr;
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include "node.h"
 #include "y.tab.h"
+
 static int eoi; /* end of instruction */
 static int ncom; /* comment nesting level */
 static int in; /* in string */
 void yyerror(char *s);
 int octal(char *s);
-#line 617 "lex.yy.c"
-
 #line 619 "lex.yy.c"
+
+#line 621 "lex.yy.c"
 
 #define INITIAL 0
 #define COM 1
@@ -840,9 +842,9 @@ YY_DECL
 		}
 
 	{
-#line 15 "diy.l"
+#line 17 "diy.l"
 
-#line 846 "lex.yy.c"
+#line 848 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -916,270 +918,270 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 16 "diy.l"
+#line 18 "diy.l"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 17 "diy.l"
+#line 19 "diy.l"
 ncom = 1; BEGIN COM;
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 18 "diy.l"
+#line 20 "diy.l"
 ;
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 19 "diy.l"
+#line 21 "diy.l"
 ;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 20 "diy.l"
+#line 22 "diy.l"
 ncom++;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 21 "diy.l"
+#line 23 "diy.l"
 if (--ncom == 0) BEGIN 0;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 23 "diy.l"
+#line 25 "diy.l"
 eoi = 0; return GE;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 24 "diy.l"
+#line 26 "diy.l"
 eoi = 0; return LE;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 25 "diy.l"
+#line 27 "diy.l"
 eoi = 0; return NE;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 26 "diy.l"
+#line 28 "diy.l"
 eoi = 0; return EQ;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 27 "diy.l"
+#line 29 "diy.l"
 eoi = 0; return ASSIGN;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 28 "diy.l"
+#line 30 "diy.l"
 eoi = 0; return INCR;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 29 "diy.l"
+#line 31 "diy.l"
 eoi = 0; return DECR;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 30 "diy.l"
+#line 32 "diy.l"
 eoi = 0; return IF;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 31 "diy.l"
+#line 33 "diy.l"
 eoi = 0; return THEN;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 32 "diy.l"
+#line 34 "diy.l"
 eoi = 0; return ELSE;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 33 "diy.l"
+#line 35 "diy.l"
 eoi = 0; return WHILE;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 34 "diy.l"
+#line 36 "diy.l"
 eoi = 0; return DO;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 35 "diy.l"
+#line 37 "diy.l"
 eoi = 0; return FOR;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 36 "diy.l"
+#line 38 "diy.l"
 eoi = 0; return IN;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 37 "diy.l"
+#line 39 "diy.l"
 eoi = 0; return UPTO;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 38 "diy.l"
+#line 40 "diy.l"
 eoi = 0; return DOWNTO;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 39 "diy.l"
+#line 41 "diy.l"
 eoi = 0; return STEP;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 40 "diy.l"
+#line 42 "diy.l"
 eoi = 0; return VOID;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 41 "diy.l"
+#line 43 "diy.l"
 eoi = 0; return INTEGER;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 42 "diy.l"
+#line 44 "diy.l"
 eoi = 0; return STRING;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 43 "diy.l"
+#line 45 "diy.l"
 eoi = 0; return NUMBER;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 44 "diy.l"
+#line 46 "diy.l"
 eoi = 0; return PUBLIC;
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 45 "diy.l"
+#line 47 "diy.l"
 eoi = 0; return CONST;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 46 "diy.l"
+#line 48 "diy.l"
 eoi = 0; return BREAK;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 47 "diy.l"
+#line 49 "diy.l"
 eoi = 0; return CONTINUE;
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 49 "diy.l"
+#line 51 "diy.l"
 eoi = 1; yylval.s = strdup(yytext); return ID;
 	YY_BREAK
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 50 "diy.l"
+#line 52 "diy.l"
 eoi = 1; yylval.s = malloc(yyleng); *yylval.s = 0; in = 1; REJECT;
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 51 "diy.l"
+#line 53 "diy.l"
 if (in) BEGIN CHR; else { yyerror("unterminated string"); return 0; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 52 "diy.l"
+#line 54 "diy.l"
 eoi = 1; BEGIN 0; return STR;
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 53 "diy.l"
+#line 55 "diy.l"
 strcat(yylval.s, "\"");
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 54 "diy.l"
+#line 56 "diy.l"
 strcat(yylval.s, "\n");
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 55 "diy.l"
+#line 57 "diy.l"
 strcat(yylval.s, "\n");
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 56 "diy.l"
+#line 58 "diy.l"
 strcat(yylval.s, "\n");
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 57 "diy.l"
+#line 59 "diy.l"
 { char s[2]; s[1] = 0; s[0] = strtol(yytext+1,0,16); strcat(yylval.s, s); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 58 "diy.l"
+#line 60 "diy.l"
 yyerror("invalid escape sequence in string");
 	YY_BREAK
 case 42:
 /* rule 42 can match eol */
 YY_RULE_SETUP
-#line 59 "diy.l"
+#line 61 "diy.l"
 strcat(yylval.s, yytext);
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 60 "diy.l"
+#line 62 "diy.l"
 eoi = 1; yylval.i = octal(yytext); return INT;
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 61 "diy.l"
+#line 63 "diy.l"
 eoi = 1; errno = 0; yylval.i = strtol(yytext, 0, 10); if (errno == ERANGE) yyerror("overflow in decimal constant"); return INT;
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 62 "diy.l"
+#line 64 "diy.l"
 eoi = 1; errno = 0; yylval.i = strtol(yytext+2, 0, 2); if (errno == ERANGE) yyerror("overflow in binary constant"); return INT;
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 63 "diy.l"
+#line 65 "diy.l"
 eoi = 1; yylval.r = strtod(yytext, 0); return REAL;
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 64 "diy.l"
+#line 66 "diy.l"
 eoi = 0; return *yytext;
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 65 "diy.l"
+#line 67 "diy.l"
 eoi = 1; return *yytext;
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 67 "diy.l"
+#line 69 "diy.l"
 ; /* ignore whitespace */
 	YY_BREAK
 case 50:
 /* rule 50 can match eol */
 YY_RULE_SETUP
-#line 68 "diy.l"
+#line 70 "diy.l"
 if (eoi == 1) { eoi = 0; return ';'; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 70 "diy.l"
+#line 72 "diy.l"
 yyerror("Unknown character");
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 71 "diy.l"
+#line 73 "diy.l"
 ECHO;
 	YY_BREAK
-#line 1183 "lex.yy.c"
+#line 1185 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 			case YY_STATE_EOF(COM):
 			case YY_STATE_EOF(CHR):
@@ -2171,7 +2173,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 71 "diy.l"
+#line 73 "diy.l"
 
 int yywrap(void) {
   if (YYSTATE == COM) yyerror("unterminated comment");
