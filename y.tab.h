@@ -51,8 +51,11 @@
 #define LT 307
 #define AND 308
 #define OR 309
-#define IFX 310
-#define PMINUS 311
+#define FAC 310
+#define ARR 311
+#define FUNC 312
+#define IFX 313
+#define PMINUS 314
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1

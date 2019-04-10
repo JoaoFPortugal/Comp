@@ -35,7 +35,7 @@ int ciclo=0;
 %token VOID INTEGER STRING NUMBER CONST PUBLIC INCR DECR
 %token ASSIGN NE GE LE EQ ELSE INC DEC
 %token PROG DECLS DECL INI NIL EXPRS ALLOC ARGINST PARAMS PARAM INSTRS ARGS POINTER
-%token SUM SUBT MUL DIV MOD GT LT AND OR
+%token SUM SUBT MUL DIV MOD GT LT AND OR FAC ARR FUNC
 
 %nonassoc IFX
 %nonassoc ELSE
@@ -94,16 +94,16 @@ bodys :				{$$= nilNode(NIL);}
        | body			{$$ = $1;}
        ;
 
-ptr	: //empty		{$$ = nilNode(NIL); $$->info = 0;
+ptr	: 			{$$ = nilNode(NIL); $$->info = 0;}
 	| '*'			{$$ = uniNode(POINTER,0); $$->info = 4;}
 	;
 
-const	: //empty		{$$ = nilNode(NIL); $$->info = 0;}
+const	:			{$$ = nilNode(NIL); $$->info = 0;}
 	| CONST			{$$ = uniNode(CONST,0); $$->info = 8;}
 	;
 
 
-pub	: //empty		{$$ = nilNode(NIL); $$->info = 0;}
+pub	: 			{$$ = nilNode(NIL); $$->info = 0;}
 	| PUBLIC		{$$ = uniNode(VOID,0); $$->info = 16;}
 	;
 
@@ -159,16 +159,16 @@ instr : IF expr THEN instr  %prec IFX				 {$$ = binNode(THEN,binNode(IF,$2,nilNo
        | IF expr THEN instr ELSE instr				 {$$ = binNode(ELSE,binNode(THEN,binNode(IF,$2,nilNode(NIL)),$4),$6);}
 
 
-       | DO {ciclo++;} instr  WHILE {ciclo--;} expr ';'		{$$ = binNode(DO,binNode(WHILE,$4,nilNode(WHILE)),$3);}
+       | DO {ciclo++;} instr  WHILE {ciclo--;} expr ';'		{$$ = binNode(DO, binNode(WHILE,$5,nilNode(PROG)),$3);}
 
        | FOR leftvalue IN expr updw expr step DO {ciclo++;} instr {ciclo--;}
 
        | expr ';'		{$$ = $1;}
        | body			{$$ = $1;}
-       | BREAK INT ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");} $$ = uniNode(BREAK,intNode($2));}
-       | CONTINUE INT ';'	{if(ciclo==0){yyerror("Error; Continue outside of a loop");} $$ = uniNode(CONTINUE, intNode($2));}
-       | BREAK ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");}  $$ = uniNode(BREAK,1);}
-       | CONTINUE ';'		{if(ciclo==0){yyerror("Error; Continue outside of a loop");}  $$ = uniNode(CONTINUE,1);}
+       | BREAK INT ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");} $$ = uniNode(BREAK,intNode(INT,$2));}
+       | CONTINUE INT ';'	{if(ciclo==0){yyerror("Error; Continue outside of a loop");} $$ = uniNode(CONTINUE, intNode(INT,$2));}
+       | BREAK ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");}  $$ = uniNode(BREAK,intNode(INT,1));}
+       | CONTINUE ';'		{if(ciclo==0){yyerror("Error; Continue outside of a loop");}  $$ = uniNode(CONTINUE,intNode(INT,1));}
        | leftvalue '#' expr ';'	{$$ = binNode(ALLOC,$1,$3); $$->info = $1->info;}
        | error ';'		{yyerrok;}
        ;
@@ -190,8 +190,8 @@ expr :	INT		{$$ = intNode(INT,$1); $$->info = 1;}
       | REAL		{$$ = realNode(REAL,$1); $$->info = 3;}
       | STR		{$$ = strNode(STR,$1); $$->info = 2;}
       | leftvalue	{$$ = $1;}
-      | ID '(' exprs ')'
-      | ID '(' ')'
+      | ID '(' exprs ')'	{$$ = binNode(FUNC, strNode(ID,$1),$3); IDfind($1,0);}
+      | ID '(' ')'		{$$ = strNode(ID, $1); IDfind($1,0);}
       | '(' expr ')'		{$$ = $2;}
       | leftvalue ASSIGN expr	{$$ = binNode(ASSIGN, $1, $3); $$->info = $3->info; if($1->info != $3->info) {
       				yyerror("Type error: cant assign different types");
@@ -218,14 +218,14 @@ expr :	INT		{$$ = intNode(INT,$1); $$->info = 1;}
       | expr '<' expr		{$$ = binNode(LT, $1, $3); $$->info = checkCompOp($1,$3); }
       | expr '&' expr		{$$ = binNode(AND, $1, $3); checkLogicOp($1,$3);}
       | expr '|' expr		{$$ = binNode(OR, $1, $3); checkLogicOp($1,$3);}
-      | expr '!'
+      | expr '!'		{$$ = uniNode(FAC, $1); if($1->info != 1){yyerror("Factorail error: Not an integer");}}
       | '-' expr %prec PMINUS	{if($2->info == 0 || $2->info==2){yyerror("Invalid type for symmetrical assigment");}
 				$$=uniNode(PMINUS, $2); $$->info=$2->info;}
       ;
 
 leftvalue: ID			{$$ = strNode(ID,$1); $$->info = IDfind($1,0);}
 
-          | ID '[' expr ']'
+          | ID '[' expr ']'	{$$ = binNode(ARR,strNode(ID, $1), $3); IDfind($1,0);}
           ;
 %%
 
