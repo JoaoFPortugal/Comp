@@ -35,7 +35,7 @@ int ciclo=0;
 %token VOID INTEGER STRING NUMBER CONST PUBLIC INCR DECR
 %token ASSIGN NE GE LE EQ ELSE INC DEC
 %token PROG DECLS DECL INI NIL EXPRS ALLOC ARGINST PARAMS PARAM INSTRS ARGS POINTER
-%token SUM SUBT MUL DIV MOD GT LT AND OR FAC ARR FUNC
+%token SUM SUBT MUL DIV MOD GT LT AND OR FAC ARR FUNC NEG
 
 %nonassoc IFX
 %nonassoc ELSE
@@ -45,17 +45,17 @@ int ciclo=0;
 %left EQ NE
 %left GE LE '>' '<'
 %left '+' '-'
-%left '*' '/' '%'
+%left '*' '/' '%' '~'
 %nonassoc '!' INC DEC PMINUS
 %nonassoc '(' ')' '[' ']'
 
-%type <n> leftvalue ini expr exprs body bodys instr instrs args seq declaracao type ptr const pub param params  updw step
+%type <n> leftvalue ini expr exprs body bodys instr instrs args seq declaracao type ptr const pub param params file updw step
 
 
 
 %%
 
-file: seq			{Node *n = uniNode(PROG, $1); printNode(n,0,names);}
+file: seq			{$$ = uniNode(PROG, $1); printNode($1,0,names);}
       | //empty
       ;
 
@@ -68,7 +68,7 @@ declaracao  : pub const type ptr ID ';'		{$$=uniNode(DECL, strNode(ID,$5));
 						IDnew($1->info+$2->info+$3->info+$4->info,$5,0);}
 
             | pub const type ptr ID ini ';'	{ IDnew($1->info+$2->info+$3->info+$4->info,$5,0);
-            					  $$=binNode(INI, strNode(ID, $5), $6);
+            					  $$=binNode(DECL, strNode(ID, $5), $6);
             					  $$->info = $1->info + $2->info + $3->info + $4->info;
             					  if($3->info+$4->info != 4) {
             					     if($3->info+$4->info != $6->info){
@@ -79,10 +79,9 @@ declaracao  : pub const type ptr ID ';'		{$$=uniNode(DECL, strNode(ID,$5));
 
             | pub const type ptr ID '(' params ')'  bodys ';'
 
-            | pub const type ptr ID '(' ')' body ';'	{IDnew($1->info+$2->info + $3->info + $4->info,$5,0); IDpush();
-            						if($3->info+$4->info !=0 ){
-            						IDnew($3->info+$4->info,$5,0);
-            						}}
+            | pub const type ptr ID '(' ')' {IDnew($1->info+$2->info + $3->info + $4->info,$5,0); IDpush();
+            				     if($3->info+$4->info !=0 ){ IDnew($3->info+$4->info,$5,0); IDpush();
+            			     }}  body ';' {$$ = binNode(DECL,strNode(ID,$5),$9); IDpop();}
 
             | pub const type ptr ID '(' ')' ';'		{$$=uniNode(DECL,strNode(ID,$5));
             						IDnew($1->info+$2->info+$3->info+$4->info,$5,0);}
@@ -139,10 +138,10 @@ args: param ';'			{$$ = $1;}
      ;
 
 
-body: '{' '}'			{$$ = nilNode(NIL);}
-     | '{' args '}'		{$$ = uniNode(PARAMS,$2);}
-     | '{' instrs '}'		{$$ = uniNode(INSTRS,$2);}
-     | '{' args instrs '}'	{$$ = binNode(ARGINST, $2,$3);}
+body: '{' '}'			{$$ = nilNode(NIL);IDpop();}
+     | '{' args '}' 		{$$ = uniNode(PARAMS,$2); IDpop();}
+     | '{' instrs '}' {IDpop();}		{$$ = uniNode(INSTRS,$2); IDpop();}
+     | '{' args instrs '}'	{$$ = binNode(ARGINST, $2,$3);IDpop();}
      ;
 
 
@@ -164,7 +163,7 @@ instr : IF expr THEN instr  %prec IFX				 {$$ = binNode(THEN,binNode(IF,$2,nilNo
        | FOR leftvalue IN expr updw expr step DO {ciclo++;} instr {ciclo--;}
 
        | expr ';'		{$$ = $1;}
-       | body			{$$ = $1;}
+       | body			{$$ = $1; IDpush();}
        | BREAK INT ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");} $$ = uniNode(BREAK,intNode(INT,$2));}
        | CONTINUE INT ';'	{if(ciclo==0){yyerror("Error; Continue outside of a loop");} $$ = uniNode(CONTINUE, intNode(INT,$2));}
        | BREAK ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");}  $$ = uniNode(BREAK,intNode(INT,1));}
@@ -218,14 +217,15 @@ expr :	INT		{$$ = intNode(INT,$1); $$->info = 1;}
       | expr '<' expr		{$$ = binNode(LT, $1, $3); $$->info = checkCompOp($1,$3); }
       | expr '&' expr		{$$ = binNode(AND, $1, $3); checkLogicOp($1,$3);}
       | expr '|' expr		{$$ = binNode(OR, $1, $3); checkLogicOp($1,$3);}
-      | expr '!'		{$$ = uniNode(FAC, $1); if($1->info != 1){yyerror("Factorail error: Not an integer");}}
+      | expr '!'		{$$ = uniNode(FAC, $1); if($1->info != 1){yyerror("Factorial error: Not an integer");}}
       | '-' expr %prec PMINUS	{if($2->info == 0 || $2->info==2){yyerror("Invalid type for symmetrical assigment");}
 				$$=uniNode(PMINUS, $2); $$->info=$2->info;}
+      | '~' expr		{$$ = uniNode(NEG,$2); if($2->info!=1){yyerror("Error: not an integer");}}
       ;
 
 leftvalue: ID			{$$ = strNode(ID,$1); $$->info = IDfind($1,0);}
 
-          | ID '[' expr ']'	{$$ = binNode(ARR,strNode(ID, $1), $3); IDfind($1,0);}
+          | ID '[' expr ']'	{$$ = binNode(ARR,strNode(ID, $1), $3); IDfind($1,0); if($3->info!=1){yyerror("Index needs to be an integer");}}
           ;
 %%
 

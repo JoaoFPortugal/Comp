@@ -54,8 +54,9 @@
 #define FAC 310
 #define ARR 311
 #define FUNC 312
-#define IFX 313
-#define PMINUS 314
+#define NEG 313
+#define IFX 314
+#define PMINUS 315
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
