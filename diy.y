@@ -6,6 +6,10 @@
 #include "node.h"
 #include "tabid.h"
 #include "y.tab.h"
+#DEFINE IINTEGER 1
+#DEFINE ISTRING 2
+#DEFINE INUMBER 3
+#DEFINE IVOID -2
 
 extern int yylex();
 int yyerror(char *s);
@@ -77,7 +81,8 @@ declaracao  : pub const type ptr ID ';'		{$$=uniNode(DECL, strNode(ID,$5));
             					  }
             					}
 
-            | pub const type ptr ID '(' params ')'  bodys ';'
+            | pub const type ptr ID {IDnew($1->info + $2->info + $3->info + $4->info,$5,0); IDpush();} '(' params ')'  bodys ';'	{$$ = binNode(DECL, strNode(ID,$5,binNode(ARGS,$8,$10)));IDpop();}
+
 
             | pub const type ptr ID '(' ')' {IDnew($1->info+$2->info + $3->info + $4->info,$5,0); IDpush();
             				     if($3->info+$4->info !=0 ){ IDnew($3->info+$4->info,$5,0); IDpush();
@@ -107,19 +112,18 @@ pub	: 			{$$ = nilNode(NIL); $$->info = 0;}
 	;
 
 
-type: VOID			{$$ = uniNode(VOID,0); $$->info = 0;}
-    | INTEGER			{$$ = uniNode(INTEGER,0); $$->info = 1;}
-    | STRING			{$$ = uniNode(STRING,0); $$->info = 2;}
-    | NUMBER			{$$ = uniNode(NUMBER,0); $$->info = 3;}
+type: VOID			{$$ = uniNode(VOID,0); $$->info = IVOID;}
+    | INTEGER			{$$ = uniNode(INTEGER,0); $$->info = IINTEGER;}
+    | STRING			{$$ = uniNode(STRING,0); $$->info = ISTRING;}
+    | NUMBER			{$$ = uniNode(NUMBER,0); $$->info = INUMBER;}
     ;
 
 
-
-ini: ASSIGN INT			{$$ = intNode(INT,$2); $$->info = 1;}
-   | ASSIGN '-' INT		{$$ = intNode(INT,-$3); $$->info = 1;}
+ini: ASSIGN INT			{$$ = intNode(INT,$2); $$->info = IINTEGER;}
+   | ASSIGN '-' INT		{$$ = intNode(INT,-$3); $$->info = IINTEGER;}
    | ASSIGN const STR		{$$ = strNode(STR,$3); $$->info = $2->info+2;}
-   | ASSIGN REAL		{$$ = realNode(REAL,$2); $$->info = 3;}
-   | ASSIGN '-' REAL		{$$ = realNode(REAL,-$3); $$->info = 3;}
+   | ASSIGN REAL		{$$ = realNode(REAL,$2); $$->info = INUMBER;}
+   | ASSIGN '-' REAL		{$$ = realNode(REAL,-$3); $$->info = INUMBER;}
    | ASSIGN ID			{$$ = strNode(ID, $2); $$->info = IDfind($2,0);}
    ;
 
@@ -138,10 +142,10 @@ args: param ';'			{$$ = $1;}
      ;
 
 
-body: '{' '}'			{$$ = nilNode(NIL);IDpop();}
-     | '{' args '}' 		{$$ = uniNode(PARAMS,$2); IDpop();}
-     | '{' instrs '}' {IDpop();}		{$$ = uniNode(INSTRS,$2); IDpop();}
-     | '{' args instrs '}'	{$$ = binNode(ARGINST, $2,$3);IDpop();}
+body: '{' '}'			{$$ = nilNode(NIL);}
+     | '{' args '}' 		{$$ = uniNode(PARAMS,$2);}
+     | '{' instrs '}' 		{$$ = uniNode(INSTRS,$2);}
+     | '{' args instrs '}'	{$$ = binNode(ARGINST, $2,$3);}
      ;
 
 
@@ -152,7 +156,6 @@ instrs : instr			{$$ = $1;}
 
 
 
-
 instr : IF expr THEN instr  %prec IFX				 {$$ = binNode(THEN,binNode(IF,$2,nilNode(NIL)),$4);}
 
        | IF expr THEN instr ELSE instr				 {$$ = binNode(ELSE,binNode(THEN,binNode(IF,$2,nilNode(NIL)),$4),$6);}
@@ -160,10 +163,10 @@ instr : IF expr THEN instr  %prec IFX				 {$$ = binNode(THEN,binNode(IF,$2,nilNo
 
        | DO {ciclo++;} instr  WHILE {ciclo--;} expr ';'		{$$ = binNode(DO, binNode(WHILE,$5,nilNode(PROG)),$3);}
 
-       | FOR leftvalue IN expr updw expr step DO {ciclo++;} instr {ciclo--;}
+       | FOR leftvalue IN expr updw expr step DO {ciclo++;} instr {ciclo--;} {$$ = binNode(DO, binNode(FOR,binNode(IN,binNode(STEP,$6,$7),$4),$2),$9);}
 
        | expr ';'		{$$ = $1;}
-       | body			{$$ = $1; IDpush();}
+       | body			{$$ = $1;}
        | BREAK INT ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");} $$ = uniNode(BREAK,intNode(INT,$2));}
        | CONTINUE INT ';'	{if(ciclo==0){yyerror("Error; Continue outside of a loop");} $$ = uniNode(CONTINUE, intNode(INT,$2));}
        | BREAK ';'		{if(ciclo==0){yyerror("Error; Break outside of a loop");}  $$ = uniNode(BREAK,intNode(INT,1));}
@@ -185,9 +188,9 @@ exprs  : exprs ',' expr		{$$ = binNode(EXPRS, $1, $3);}
        ;
 
 
-expr :	INT		{$$ = intNode(INT,$1); $$->info = 1;}
-      | REAL		{$$ = realNode(REAL,$1); $$->info = 3;}
-      | STR		{$$ = strNode(STR,$1); $$->info = 2;}
+expr :	INT		{$$ = intNode(INT,$1); $$->info = IINTEGER;}
+      | REAL		{$$ = realNode(REAL,$1); $$->info = INUMBER;}
+      | STR		{$$ = strNode(STR,$1); $$->info = ISTRING;}
       | leftvalue	{$$ = $1;}
       | ID '(' exprs ')'	{$$ = binNode(FUNC, strNode(ID,$1),$3); IDfind($1,0);}
       | ID '(' ')'		{$$ = strNode(ID, $1); IDfind($1,0);}
@@ -225,7 +228,7 @@ expr :	INT		{$$ = intNode(INT,$1); $$->info = 1;}
 
 leftvalue: ID			{$$ = strNode(ID,$1); $$->info = IDfind($1,0);}
 
-          | ID '[' expr ']'	{$$ = binNode(ARR,strNode(ID, $1), $3); IDfind($1,0); if($3->info!=1){yyerror("Index needs to be an integer");}}
+          | ID '[' expr ']'	{$$ = binNode(ARR,strNode(ID, $1), $3); IDfind($1,0); if($3->info!=IINTEGER){yyerror("Index needs to be an integer");}}
           ;
 %%
 
@@ -245,11 +248,11 @@ int checkOp(Node *op1, Node *op2){
 }
 
 int checkCompOp(Node *op1, Node *op2){
-	if(op1->info == 0 || op2->info == 0){
+	if(op1->info == IVOID || op2->info == IVOID){
 	  yyerror("Invalid argument type for operation: can't compare void");
 	}
 
-	if(op1->info == 2 && op2->info !=2){
+	if(op1->info == ISTRING && op2->info !=ISTRING){
 	  yyerror("Invalid argument type for operation: can't compare string to non-string");
 	}
 
@@ -257,7 +260,7 @@ int checkCompOp(Node *op1, Node *op2){
 }
 
 void checkLogicOp(Node *op1, Node *op2){
-	if(op1->info != 1 || op2->info != 2){
+	if(op1->info != IINTEGER || op2->info != IINTEGER){
 	   yyerror("Invalid argument type for logic operation");
 	}
 }
@@ -268,17 +271,3 @@ char **names =
  #else
  0;
  #endif
-
-int yyerror(char *s) { printf("%s\n",s); return 1; }
-char *dupstr(const char*s) { return strdup(s); }
-int main(int argc, char *argv[]) {
- extern YYSTYPE yylval;
- int tk;
- while ((tk = yylex()))
-  if (tk > YYERRCODE)
-   printf("%d:\t%s\n", tk, yyname[tk]);
-  else
-   printf("%d:\t%c\n", tk, tk);
- return 0;
-}
-
