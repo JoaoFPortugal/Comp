@@ -1,5 +1,5 @@
 /*
-generated at Thu Apr 11 01:12:19 2019
+generated at Mon Apr 15 04:05:37 2019
 by $Id: pburg.c,v 2.5 2017/11/16 09:41:42 prs Exp $
 */
 #include <stdio.h>
@@ -83,36 +83,39 @@ static YYCONST char *yytermname[] = {
 	/* 284 */ "LE",
 	/* 285 */ "EQ",
 	/* 286 */ "ELSE",
-	/* 287 */ "INC",
-	/* 288 */ "DEC",
-	/* 289 */ "PROG",
-	/* 290 */ "DECLS",
-	/* 291 */ "DECL",
-	/* 292 */ "INI",
-	/* 293 */ "NIL",
-	/* 294 */ "EXPRS",
-	/* 295 */ "ALLOC",
-	/* 296 */ "ARGINST",
-	/* 297 */ "PARAMS",
-	/* 298 */ "PARAM",
-	/* 299 */ "INSTRS",
-	/* 300 */ "ARGS",
-	/* 301 */ "POINTER",
-	/* 302 */ "SUM",
-	/* 303 */ "SUBT",
-	/* 304 */ "MUL",
-	/* 305 */ "DIV",
-	/* 306 */ "MOD",
-	/* 307 */ "GT",
-	/* 308 */ "LT",
-	/* 309 */ "AND",
-	/* 310 */ "OR",
-	/* 311 */ "FAC",
-	/* 312 */ "ARR",
-	/* 313 */ "FUNC",
-	/* 314 */ "NEG",
-	/* 315 */ "IFX",
-	/* 316 */ "PMINUS",
+	/* 287 */ "PROG",
+	/* 288 */ "DECLS",
+	/* 289 */ "DECL",
+	/* 290 */ "INI",
+	/* 291 */ "NIL",
+	/* 292 */ "EXPRS",
+	/* 293 */ "ALLOC",
+	/* 294 */ "ARGINST",
+	/* 295 */ "PARAMS",
+	/* 296 */ "PARAM",
+	/* 297 */ "INSTRS",
+	/* 298 */ "ARGS",
+	/* 299 */ "POINTER",
+	/* 300 */ "SUM",
+	/* 301 */ "SUBT",
+	/* 302 */ "MUL",
+	/* 303 */ "DIV",
+	/* 304 */ "MOD",
+	/* 305 */ "GT",
+	/* 306 */ "LT",
+	/* 307 */ "AND",
+	/* 308 */ "OR",
+	/* 309 */ "FAC",
+	/* 310 */ "ARR",
+	/* 311 */ "FUNC",
+	/* 312 */ "NEG",
+	/* 313 */ "PNTR",
+	/* 314 */ "LOC",
+	/* 315 */ "PUB",
+	/* 316 */ "IFX",
+	/* 317 */ "INC",
+	/* 318 */ "DEC",
+	/* 319 */ "PMINUS",
 	""
 };
 
@@ -241,65 +244,71 @@ static void yylabel(NODEPTR_TYPE a, NODEPTR_TYPE u) {
 		return;
 	case 285: /* ELSE */
 		return;
-	case 286: /* INC */
+	case 286: /* PROG */
 		return;
-	case 287: /* DEC */
+	case 287: /* DECLS */
 		return;
-	case 288: /* PROG */
+	case 288: /* DECL */
 		return;
-	case 289: /* DECLS */
+	case 289: /* INI */
 		return;
-	case 290: /* DECL */
+	case 290: /* NIL */
 		return;
-	case 291: /* INI */
+	case 291: /* EXPRS */
 		return;
-	case 292: /* NIL */
+	case 292: /* ALLOC */
 		return;
-	case 293: /* EXPRS */
+	case 293: /* ARGINST */
 		return;
-	case 294: /* ALLOC */
+	case 294: /* PARAMS */
 		return;
-	case 295: /* ARGINST */
+	case 295: /* PARAM */
 		return;
-	case 296: /* PARAMS */
+	case 296: /* INSTRS */
 		return;
-	case 297: /* PARAM */
+	case 297: /* ARGS */
 		return;
-	case 298: /* INSTRS */
+	case 298: /* POINTER */
 		return;
-	case 299: /* ARGS */
+	case 299: /* SUM */
 		return;
-	case 300: /* POINTER */
+	case 300: /* SUBT */
 		return;
-	case 301: /* SUM */
+	case 301: /* MUL */
 		return;
-	case 302: /* SUBT */
+	case 302: /* DIV */
 		return;
-	case 303: /* MUL */
+	case 303: /* MOD */
 		return;
-	case 304: /* DIV */
+	case 304: /* GT */
 		return;
-	case 305: /* MOD */
+	case 305: /* LT */
 		return;
-	case 306: /* GT */
+	case 306: /* AND */
 		return;
-	case 307: /* LT */
+	case 307: /* OR */
 		return;
-	case 308: /* AND */
+	case 308: /* FAC */
 		return;
-	case 309: /* OR */
+	case 309: /* ARR */
 		return;
-	case 310: /* FAC */
+	case 310: /* FUNC */
 		return;
-	case 311: /* ARR */
+	case 311: /* NEG */
 		return;
-	case 312: /* FUNC */
+	case 312: /* PNTR */
 		return;
-	case 313: /* NEG */
+	case 313: /* LOC */
 		return;
-	case 314: /* IFX */
+	case 314: /* PUB */
 		return;
-	case 315: /* PMINUS */
+	case 315: /* IFX */
+		return;
+	case 316: /* INC */
+		return;
+	case 317: /* DEC */
+		return;
+	case 318: /* PMINUS */
 		return;
 	default:
 		PANIC("yylabel", "Bad terminal", OP_LABEL(a));

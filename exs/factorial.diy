@@ -13,7 +13,10 @@ public integer entry (integer argc, string *argv, string *envp) {
   if argc > 1 then
     n := atoi(argv[1])
 
-  printi(n); prints("! = "); printd(factorial(n)); println()
+  printi(n);
+  prints("! = ");
+  printd(factorial(n));
+  println()
 
   entry := 0
 };
