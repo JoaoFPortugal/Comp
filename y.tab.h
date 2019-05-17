@@ -21,45 +21,24 @@
 #define PUBLIC 277
 #define INCR 278
 #define DECR 279
-#define ASSIGN 280
-#define NE 281
-#define GE 282
-#define LE 283
-#define EQ 284
-#define ELSE 285
-#define PROG 286
-#define DECLS 287
-#define DECL 288
-#define INI 289
-#define NIL 290
-#define EXPRS 291
-#define ALLOC 292
-#define ARGINST 293
-#define PARAMS 294
-#define PARAM 295
-#define INSTRS 296
-#define ARGS 297
-#define POINTER 298
-#define SUM 299
-#define SUBT 300
-#define MUL 301
-#define DIV 302
-#define MOD 303
-#define GT 304
-#define LT 305
-#define AND 306
-#define OR 307
-#define FAC 308
-#define ARR 309
-#define FUNC 310
-#define NEG 311
-#define PNTR 312
-#define LOC 313
-#define PUB 314
-#define IFX 315
-#define INC 316
-#define DEC 317
-#define PMINUS 318
+#define EQ 280
+#define IFX 281
+#define ELSE 282
+#define ATR 283
+#define NE 284
+#define GE 285
+#define LE 286
+#define UMINUS 287
+#define NOT 288
+#define REF 289
+#define LOCAL 290
+#define POSINC 291
+#define POSDEC 292
+#define PTR 293
+#define CALL 294
+#define START 295
+#define PARAM 296
+#define NIL 297
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -67,10 +46,10 @@
 #ifndef YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
 typedef union {
-  int i;      /* integer value */
-  double r;    /* double value */
-  char *s;    /* symbol name or string literal */
-  Node *n ;
+	int i;			/* integer value */
+	double r;		/* real value */
+	char *s;		/* symbol name or string literal */
+	Node *n;		/* node pointer */
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
 extern YYSTYPE yylval;

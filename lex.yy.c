@@ -971,7 +971,7 @@ eoi = 0; return EQ;
 case 11:
 YY_RULE_SETUP
 #line 29 "diy.l"
-eoi = 0; return ASSIGN;
+eoi = 0; return ATR;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
