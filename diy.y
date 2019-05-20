@@ -62,11 +62,11 @@ file	:
 	| file public VOID ID { enter($2, 4, $4); } finit { function($2, intNode(VOID, 4), $4, $6); }
 	;
 
-public	:               { $$ = 0; }
+public	:               { $$ = nilNode(NIL); }
 	| PUBLIC        { $$ = 1; }
 	;
 
-ptr	:               { $$ = 0; }
+ptr	:               { $$ = nilNode(NIL); }
 	| '*'           { $$ = 10; }
 	;
 
@@ -88,7 +88,7 @@ finit   : '(' params ')' blocop { $$ = binNode('(', $4, $2); }
 	| '(' ')' blocop        { $$ = binNode('(', $3, 0); }
 	;
 
-blocop  : ';'   { $$ = 0; }
+blocop  : ';'   { $$ = nilNode(NIL); }
         | bloco ';'   { $$ = $1; }
         ;
 
@@ -99,7 +99,7 @@ params	: param
 bloco	: '{' { IDpush(); } decls list end '}'    { $$ = binNode('{', $5 ? binNode(';', $4, $5) : $4, $3); IDpop(); }
 	;
 
-decls	:                       { $$ = 0; }
+decls	:                       { $$ = nilNode(NIL); }
 	| decls param ';'       { $$ = binNode(';', $1, $2); }
 	;
 
@@ -125,7 +125,7 @@ base	: ';'                   { $$ = nilNode(VOID); }
 	| error ';'       { $$ = nilNode(NIL); }
 	;
 
-end	:		{ $$ = 0; }
+end	:		{ $$ = nilNode(NIL); }
 	| brk;
 
 brk : BREAK intp ';'        { $$ = intNode(BREAK, $2); if ($2 <= 0 || $2 > ncicl) yyerror("invalid break argument"); }
@@ -190,7 +190,7 @@ expr	: lv		{ $$ = uniNode(PTR, $1); $$->info = $1->info; }
 	| expr GE expr  { $$ = binNode(GE, $1, $3); $$->info = 1; }
 	| expr LE expr  { $$ = binNode(LE, $1, $3); $$->info = 1; }
 	| expr NE expr  { $$ = binNode(NE, $1, $3); $$->info = 1; }
-	| expr EQ expr { $$ = binNode('=', $1, $3); $$->info = 1; }
+	| expr EQ expr { $$ = binNode(EQ, $1, $3); $$->info = 1; }
 	| expr '&' expr { $$ = binNode('&', $1, $3); $$->info = intonly($1, 0); intonly($3, 0); }
 	| expr '|' expr { $$ = binNode('|', $1, $3); $$->info = intonly($1, 0); intonly($3, 0); }
 	| '(' expr ')' { $$ = $2; $$->info = $2->info; }

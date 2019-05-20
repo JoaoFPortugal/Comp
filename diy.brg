@@ -5,19 +5,69 @@
 #include <string.h>
 #include "node.h"
 #include "tabid.h"
-#include "postfix.h"
 #include "y.tab.h"
+#include "postfix.h"
+
 extern void yyerror(const char*);
 extern char **yynames;
 extern int trace;
 extern FILE *yyout;
+char *dupstr(const char *s);
+
+char *mklbl(int n) {
+    static char buf[20];
+    sprintf(buf, "_i%d", n);
+    return strcpy(malloc(strlen(buf)+1),buf);
+}
 
 %}
-%term END=';'
+
+%term END=';' ADD = '+' SUB = '-' MUL = '*' DIV = '/' MOD = '%' GT = '>' LT = '<'
+%term AND = '&' OR = '|' VEC = '[' FACT = '!' END = ';'
+
 %include "y.tab.h"
 
 %%
 stmt:	END	1	{	}
+
+expr:  ADD(expr,expr) 1 {fprintf(yyout, pfADD);}
+expr:  SUB(expr,expr) 1 {fprintf(yyout, pfSUB)};
+expr:	MUL(expr,expr)	1 { fprintf(yyout, pfMUL); }
+expr:	DIV(expr,expr)	1 { fprintf(yyout, pfDIV); }
+expr:	MOD(expr,expr)	1 { fprintf(yyout, pfMOD); }
+expr:	EQ(expr,expr)	1 { fprintf(yyout, pfEQ); }
+expr:	NE(expr,expr)	1 { fprintf(yyout, pfNE); }
+expr:	LT(expr,expr)	1 { fprintf(yyout, pfLT); }
+expr:	LE(expr,expr)	1 { fprintf(yyout, pfLE); }
+expr:	GT(expr,expr)	1 { fprintf(yyout, pfGT); }
+expr:	GE(expr,expr)	1 { fprintf(yyout, pfGE); }
+expr:	UMINUS(expr)	1 { fprintf(yyout, pfNEG); }
+expr:	NOT(expr)       1 { fprintf(yyout, pfIMM pfEQ, 0); }
+expr:	OR(or,expr)	1 { fprintf(outfp, pfLABEL, mklbl(LEFT_CHILD(p)->place)); }
+or:	expr		1 { p->place = ++lbl; fprintf(outfp, pfDUP pfJNZ pfTRASH, mklbl(p->place), pfWORD); }
+expr:	AND(and,expr)	1 { fprintf(outfp, pfLABEL, mklbl(LEFT_CHILD(p)->place)); }
+and:	expr		1 { p->place = ++lbl; fprintf(outfp, pfDUP pfJZ pfTRASH, mklbl(p->place), pfWORD); }
+expr:	INT	    1 { fprintf(yyout, pfIMM, p->value.i); }
+expr:	REAL    1 { fprintf(yyout, pfIMM, p->value.r); }
+expr:   PTR     1 {};
+expr:   STR     1 {fprintf(yyout, pfRODATA, pfALIGN, pfLABEL,) /*stillmissing*/}
+expr: ATR(dupexpr,lv)   1   {fprintf(yyout,pfSTORE);}
+expr: PTR(PTR)  1   {fprintf(yyout,pfLOAD);}
+
+
+expr: INCR(lv)  1       {fprintf(yyout,pfDUP pfINCR pfLOAD, p->value.i);}
+expr: DECR(lv)  1       {fprintf(yyout,pfDUP pfDECR pfLOAD, p->value.i);}
+expr: POSINC(lv)    1   {fprintf(yyout, pfDUP pfLOAD pfSWAP pfINCR, p->value.i);}
+expr: POSDEC(lv)    1   {fprintf(yyout,pfDUP pfLOAD pfSWAP pfDECR, p->value.i);}
+
+dupexpr: expr    1 {fprintf(yyout,pfDUP); }
+
+
+lv:	VECTOR(expr,expr) 1 { fprintf(yyout, pfIMM pfMUL pfADD, pfWORD); }
+lv: ID  1 {fprintf(yyout), pfADDR, p->value.s);}
+
+
+
 
 file:
 
